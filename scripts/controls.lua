@@ -9,23 +9,23 @@ function love.keypressed(key)
 end
 
 local pressedBool = false -- used in drawOutlines
-function love.mousepressed(mx,my,btn)
+function love.mousepressed(mx,my)
 	pressedBool = true
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			if v:is(Level0) then
-				v:mousepressed(mx,my,btn)
+				v:mousepressed(mx,my)
 			end
 		end
 	end
 end
 
-function love.mousereleased(mx,my,btn)
+function love.mousereleased(mx,my)
 	pressedBool = false
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			if v:is(Level0) then
-				v:mousereleased(mx,my,btn)
+				v:mousereleased(mx,my)
 			end
 		end
 	end

@@ -3,9 +3,12 @@ local sT = 3
 
 function Level0:new()
 	self.directory = "levels/level0/level0-assets/"
+	self.gA = "levels/globalAssets/"
 	self.music = love.audio.newSource(self.directory.."Boku No Senpai_Ongzellig.ogg","stream")
 	self.music:setLooping(true)
+	self.music:setVolume(0)
 	self.music:play()
+	self.sfx_mClicked = love.audio.newSource(self.gA.."clicked-sfx-behold.ogg","static")
 	self.btn = {}
 	self.btn.freq = 0.25
 	self.titleImage={}
@@ -21,6 +24,8 @@ function Level0:new()
 	self.btn.newgame.w = self.btn.newgame.i:getWidth()*sT*gsr
 	self.btn.newgame.h = self.btn.newgame.i:getHeight()*sT*gsr
 	self.btn.newgame.s = sT*gsr
+	self.btn.newgame.mBrushOnce = true -- play only once
+	self.btn.newgame.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
 	self.btn.newgame.mcb = false -- mouse clicked bool
 	self.btn.options = {}
 	self.btn.options.i = love.graphics.newImage(self.directory.."t_options.png")
@@ -30,6 +35,8 @@ function Level0:new()
 	self.btn.options.w = self.btn.options.i:getWidth()*sT*gsr
 	self.btn.options.h = self.btn.options.i:getHeight()*sT*gsr
 	self.btn.options.s = sT*gsr
+	self.btn.options.mBrushOnce = true
+	self.btn.options.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
 	self.btn.options.mcb = false
 	self.btn.album = {}
 	self.btn.album.i = love.graphics.newImage(self.directory.."t_album.png")
@@ -39,6 +46,8 @@ function Level0:new()
 	self.btn.album.w = self.btn.album.i:getWidth()*sT*gsr
 	self.btn.album.h = self.btn.album.i:getHeight()*sT*gsr
 	self.btn.album.s = sT*gsr
+	self.btn.album.mBrushOnce = true
+	self.btn.album.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
 	self.btn.options.mcb = false
 end
 
@@ -53,36 +62,46 @@ function Level0:draw()
 end
 
 -- Unique functions:
-function Level0:tHover(button,btn) --textBoxHover Highlight, I could have use this to other levels
+function Level0:tHover(button) --textBoxHover Highlight, I could have use this to other levels
 	-- guess its not so unique, I may have to create a new files, that I can call it whenever I want to.
-	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h and love.mouse.isDown(1) then
-		if button.mcb == true then
-			love.graphics.setColor(0.5,1,0)
+	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
+		if button.mcb == true then -- wondering what mcb is for? its basically for this...
+			love.graphics.setColor(0.5,1,0)		--changes color when clicked
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
 			love.graphics.setColor(1,1,1)
 		else
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
-			return true
+			if button.mBrushOnce then
+				button.mBrush:play()
+				button.mBrushOnce = false
+			end
+			if love.mouse.isDown(1) then --if mouse.isDown is being click
+				return true -- then so...
+			end
 		end
 	else
 		love.graphics.draw(button.i,button.x,button.y,0,button.s)
-		return false
+		button.mBrushOnce = true
+		return false -- changes mcb values if mouse.isDown is not clicked
 	end
 end
 
 -- Special functions:
-function Level0:mousepressed(mx,my,btn)
-	self.btn.newgame.mcb = self:tHover(self.btn.newgame,btn)
-	self.btn.options.mcb = self:tHover(self.btn.options,btn)
-	self.btn.album.mcb = self:tHover(self.btn.album,btn)
+function Level0:mousepressed(mx,my)
+	self.btn.newgame.mcb = self:tHover(self.btn.newgame)
+	self.btn.options.mcb = self:tHover(self.btn.options)
+	self.btn.album.mcb = self:tHover(self.btn.album)
 end
 
-function Level0:mousereleased(mx,my,btn) -- btn == 1 is not working :(
+function Level0:mousereleased(mx,my) -- btn == 1 is not working :(
 	if self.btn.newgame.mcb == true then
+		self.sfx_mClicked:play()
 		self.btn.newgame.mcb = false
 	elseif self.btn.options.mcb == true then
+		self.sfx_mClicked:play()
 		self.btn.options.mcb = false
 	elseif self.btn.album.mcb == true then
+		self.sfx_mClicked:play()
 		self.btn.album.mcb = false
 	end
 end
