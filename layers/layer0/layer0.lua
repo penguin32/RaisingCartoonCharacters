@@ -1,9 +1,9 @@
-Level0 = Object:extend()
+Layer0 = Object:extend()
 local sT = 3
 
-function Level0:new()
-	self.directory = "levels/level0/level0-assets/"
-	self.gA = "levels/globalAssets/"
+function Layer0:new()
+	self.directory = "layers/layer0/layer0-assets/"
+	self.gA = "layers/globalAssets/"
 	self.music = love.audio.newSource(self.directory.."Boku No Senpai_Ongzellig.ogg","stream")
 	self.music:setLooping(true)
 	self.music:setVolume(0.1)
@@ -51,10 +51,10 @@ function Level0:new()
 	self.btn.options.mcb = false
 end
 
-function Level0:update(dt)
+function Layer0:update(dt)
 end
 
-function Level0:draw()
+function Layer0:draw()
 	love.graphics.draw(self.titleImage.i,self.titleImage.x,self.titleImage.y,0,gsr)
 	self:tHover(self.btn.newgame)
 	self:tHover(self.btn.options)
@@ -62,7 +62,7 @@ function Level0:draw()
 end
 
 -- Unique functions:
-function Level0:tHover(button) --textBoxHover Highlight, I could have use this to other levels
+function Layer0:tHover(button) --textBoxHover Highlight, I could have use this to other layers
 	-- guess its not so unique, I may have to create a new files, that I can call it whenever I want to.
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
 		if button.mcb == true then -- wondering what mcb is for? its basically for this...
@@ -87,13 +87,13 @@ function Level0:tHover(button) --textBoxHover Highlight, I could have use this t
 end
 
 -- Special functions:
-function Level0:mousepressed(mx,my)
+function Layer0:mousepressed(mx,my)
 	self.btn.newgame.mcb = self:tHover(self.btn.newgame)
 	self.btn.options.mcb = self:tHover(self.btn.options)
 	self.btn.album.mcb = self:tHover(self.btn.album)
 end
 
-function Level0:mousereleased(mx,my) -- btn == 1 is not working :(
+function Layer0:mousereleased(mx,my) -- btn == 1 is not working :(
 	if self.btn.newgame.mcb == true then
 		self.sfx_mClicked:play()
 		self.btn.newgame.mcb = false
@@ -109,7 +109,7 @@ function Level0:mousereleased(mx,my) -- btn == 1 is not working :(
 	end
 end
 
-function Level0:updateScaling()
+function Layer0:updateScaling()
 	self.titleImage.x,self.titleImage.y = game.cartX,game.cartY
 	self.titleImage.w = self.titleImage.i:getWidth()
 	self.titleImage.h = self.titleImage.i:getHeight()
@@ -133,7 +133,7 @@ function Level0:updateScaling()
 	self.btn.album.mcb = false
 end
 
-function Level0:drawOutlines()
+function Layer0:drawOutlines()
 	love.graphics.rectangle('line',self.btn.newgame.x,self.btn.newgame.y,self.btn.newgame.w,self.btn.newgame.h)
 	love.graphics.rectangle('line',self.btn.options.x,self.btn.options.y,self.btn.options.w,self.btn.options.h)
 	love.graphics.rectangle('line',self.btn.album.x,self.btn.album.y,self.btn.album.w,self.btn.album.h)

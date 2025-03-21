@@ -13,7 +13,7 @@ function love.mousepressed(mx,my)
 	pressedBool = true
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
-			if v:is(Level0) then
+			if v:is(Layer0) then
 				v:mousepressed(mx,my)
 			end
 		end
@@ -24,7 +24,7 @@ function love.mousereleased(mx,my)
 	pressedBool = false
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
-			if v:is(Level0) then
+			if v:is(Layer0) then
 				v:mousereleased(mx,my)
 			end
 		end

@@ -1,44 +1,44 @@
-Level1 = Object:extend()
+Layer1 = Object:extend()
 local sT = 3 -- for scaling, example: scales for textboxes
 
-function Level1:new()
+function Layer1:new()
 end
 
-function Level1:update(dt)
+function Layer1:update(dt)
 end
 
-function Level1:draw()
+function Layer1:draw()
 end
 
 --Unique functions:
 --(Functions only used here)
 --example:
---	function Level1:hangMyself(rope) --(only called inside this file)
+--	function Layer1:hangMyself(rope) --(only called inside this file)
 --	end
 
 --Special Functions:
 --(looped in list of tables in LevelLoader, then only called on main.lua)
 -- Functions below are called with the loops of LevelLoader, then that LevelLoader function will be called
 -- on main.lua, this way is for compartmentalizing it within only a single if-statement or by having an ability
--- of disabling or enabling a specific functions globaly, which means it affects all other levels,
+-- of disabling or enabling a specific functions globaly, which means it affects all other layers,
 -- I have a feeling its necessary also to write these functions out, whether it has none.
--- these functions need to exist on each new levels to be created or else LevelLoader will throw an error for
+-- these functions need to exist on each new layers to be created or else LevelLoader will throw an error for
 -- a missing functions they loop through.
 
 -- I think I don't have to write them everytime, if I'd just check the screening first,
--- screening(if-statements that looks for a specific level before it loops through its functions
+-- screening(if-statements that looks for a specific layer before it loops through its functions
 -- inside controls.lua and LevelLoader.lua(maybe)
 -- but example of these non-mandatory functions are mousepressed and mousereleased, see controls.lua,
-	-- that it loops through it to check what "levels" it is first, before calling it, thats why.
+	-- that it loops through it to check what "layers" it is first, before calling it, thats why.
 
-function Level1:mousepressed(mx,my,btn) -- use in controls.lua
+function Layer1:mousepressed(mx,my,btn) -- use in controls.lua
 end
 
-function Level1:mousereleased(mx,my,btn)
+function Layer1:mousereleased(mx,my,btn)
 end
 
-function Level1:updateScaling()
+function Layer1:updateScaling()
 end
 
-function Level1:drawOutlines()
+function Layer1:drawOutlines()
 end

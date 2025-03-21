@@ -14,7 +14,7 @@ end
 
 function LevelLoader.update(dt)
 	if LevelLoader.level == 0 and LevelLoader.bool == true then --The MainMenu
-		table.insert(LevelLoader.ui,Level0())
+		table.insert(LevelLoader.ui,Layer0())
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	end
 

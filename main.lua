@@ -36,24 +36,25 @@ function love.load()
 							--nvm, I switch to using love.mousemoved at controls.lua
 							--maybe it works on windows.
 	font = love.graphics.newFont(34*(gsr)) --runtime update!
---modules
+--modules:
 	Object = require "modules.classic.classic"
 	require "modules.modulesOutsideLove2d.strict"
---scripts
+--scripts:
 	require "scripts.controls"
 	require "scripts.gameData"
---objectShapes
+--objectShapes:
 	require "scripts.objectShapes.circle"
 	require "scripts.objectShapes.isometric"
 	require "scripts.objectShapes.isometricBeta"
 	require "scripts.objectShapes.isometricInteract"
 	require "scripts.objectShapes.rectangle"
---typesOfObjects
+--typesOfObjects:
 	require "scripts.typesOfObjects.explorableArea"
 	require "scripts.typesOfObjects.flooredIsometricObject"
 
---levels
-	require "levels.level0.level0"
+--levels, all layers use for a specific levels:
+	require "layers.layer0.layer0"
+	require "layers.layer1.layer1"
 	require "scripts.levelLoader" --require the levels first before the levelLoader.
 	LevelLoader.load(0,true)
 end
