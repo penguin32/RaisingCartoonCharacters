@@ -13,6 +13,12 @@ end
 -- Unique functions:
 
 -- Special functions:
+function Level1:mousepressed(mx,my,btn)
+end
+
+function Level1:mousereleased(mx,my,btn)
+end
+
 function Level1:updateScaling()
 end
 

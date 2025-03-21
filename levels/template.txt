@@ -1,5 +1,5 @@
 Level1 = Object:extend()
-local sT = 3
+local sT = 3 -- for scaling, example: scales for textboxes
 
 function Level1:new()
 end
@@ -24,7 +24,17 @@ end
 -- I have a feeling its necessary also to write these functions out, whether it has none.
 -- these functions need to exist on each new levels to be created or else LevelLoader will throw an error for
 -- a missing functions they loop through.
-function Level1:mousepressed(mx,my) -- use in controls.lua
+
+-- I think I don't have to write them everytime, if I'd just check the screening first,
+-- screening(if-statements that looks for a specific level before it loops through its functions
+-- inside controls.lua and LevelLoader.lua(maybe)
+-- but example of these non-mandatory functions are mousepressed and mousereleased, see controls.lua,
+	-- that it loops through it to check what "levels" it is first, before calling it, thats why.
+
+function Level1:mousepressed(mx,my,btn) -- use in controls.lua
+end
+
+function Level1:mousereleased(mx,my,btn)
 end
 
 function Level1:updateScaling()

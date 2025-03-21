@@ -42,13 +42,13 @@ function LevelLoader.draw()
 	--//--
 	love.graphics.push()
 	if #LevelLoader.objects > 0 then
-		--love.graphics.translate with respect to player here.
+		--love.graphics.translate with respect to player here.(not added yet)
 		for i,v in ipairs(LevelLoader.objects)do
 			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then
 				--To see the collider as black outline.
 				love.graphics.setColor(0,0,0)
 				v:draw()
-				love.graphics.setColor(255,255,255)
+				love.graphics.setColor(1,1,1)
 			else
 				v:draw()
 			end

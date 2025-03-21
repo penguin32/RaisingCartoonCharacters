@@ -1,5 +1,5 @@
 function love.load()
-	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
+	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
 	newForZoomingIn = 2
 	forZoomingIn = 2	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,
@@ -26,14 +26,16 @@ function love.load()
 	game.middleX = game.cartX + game.width*(gsr)/2
 	game.middleY = game.cartY + game.height*(gsr)/2 -- Middle part of viewport,
 				-- Regardless of viewport's width & height ratio.
-	love.mouse.setPosition(game.middleX,game.middleY) -- shit stopped working after multiple attempts of 
-							--debugging along love.mouse.getPosition()
-							--maybe it works on windows.
 	cursor = { x = 0, y = 0, visible = true }
 	cursor.x, cursor.y = game.middleX, game.middleY
-	font = love.graphics.newFont(34*(gsr)) --runtime update!
 --	love.mouse.setRelativeMode(true) -- Hides mouse cursor and lock mouse inside window,
 					-- not sure if I want to make an in game mouse.
+					-- note(wiki) if setRelativeMode == true, x,y are not guaranteed to...
+	love.mouse.setPosition(game.middleX,game.middleY) -- shit stopped working after multiple attempts of 
+							--debugging along love.mouse.getPosition()
+							--nvm, I switch to using love.mousemoved at controls.lua
+							--maybe it works on windows.
+	font = love.graphics.newFont(34*(gsr)) --runtime update!
 --modules
 	Object = require "modules.classic.classic"
 	require "modules.modulesOutsideLove2d.strict"
@@ -57,21 +59,20 @@ function love.load()
 end
 
 function love.update(dt)
-	cursor.x,cursor.y = love.mouse.getPosition()
 	LevelLoader.update(dt)
 	updateEveryScale()
 end
 
 function love.draw()
 	LevelLoader.draw()
+
 	love.graphics.setBackgroundColor(255,255,255)
 	love.graphics.setColor(0,0,0)
-
 	drawOutlines()
 	drawBorders()
-
         love.graphics.setColor(1,1,1)
-	--Draw Player's controllers below here, if Im going to add android joystick etc.
+
+	--Draw Player's controllers below here, if Im going to add android joystick etc,draw-orders matters...
 end
 
 function getScale(w,h)
