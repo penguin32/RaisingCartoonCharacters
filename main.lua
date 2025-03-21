@@ -1,5 +1,5 @@
 function love.load()
-	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
+	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
 	newForZoomingIn = 2
 	forZoomingIn = 2	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,
@@ -57,8 +57,8 @@ function love.load()
 end
 
 function love.update(dt)
-	LevelLoader.update(dt)
 	cursor.x,cursor.y = love.mouse.getPosition()
+	LevelLoader.update(dt)
 	updateEveryScale()
 end
 
@@ -106,14 +106,14 @@ end
 function drawOutlines()
 	if showOutlines == true then
 		love.graphics.setColor(0.5,0,0)
-		love.graphics.rectangle("fill",game.middleX,game.middleY,10,10)
 	-- it tells where is game.middleX and middleY
+		love.graphics.rectangle("fill",game.middleX,game.middleY,10,10)
+	-- show top left side, new origin, that is visible in the game, after translated by borders
 		love.graphics.rectangle("fill",game.cartX,game.cartY,10,10)
-	-- it tells where is game.cartX and cartY
-		love.graphics.circle("line",cursor.x,cursor.y,5)
-	-- tells mouse cursor coordinates
+	-- shows Player activities like mouse cursor clicked buttons coordinates etc..
+		Player.drawOutlines()
+	-- for Levels, hitbox, click area etc..
 		LevelLoader.drawOutlines()
-	-- for Levels
 		love.graphics.setColor(0,0,0)
 	end
 end

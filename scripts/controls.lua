@@ -1,5 +1,7 @@
 Player = {}
+
 Player.Keyboard = {z=false}
+
 function love.keypressed(key)
 	if key == "z" then
 		Player.Keyboard.z = true
@@ -14,4 +16,9 @@ function love.mousepressed(mx,my)
 			end
 		end
 	end
+end
+
+function Player.drawOutlines() -- See player activity for testings.
+	-- Mouse activites:
+	love.graphics.circle("line",cursor.x,cursor.y,5)
 end

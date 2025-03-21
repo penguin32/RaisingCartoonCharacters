@@ -1,0 +1,34 @@
+Level1 = Object:extend()
+local sT = 3
+
+function Level1:new()
+end
+
+function Level1:update(dt)
+end
+
+function Level1:draw()
+end
+
+--Unique functions:
+--(Functions only used here)
+--example:
+--	function Level1:hangMyself(rope) --(only called inside this file)
+--	end
+
+--Special Functions:
+--(looped in list of tables in LevelLoader, then only called on main.lua)
+-- Functions below are called with the loops of LevelLoader, then that LevelLoader function will be called
+-- on main.lua, this way is for compartmentalizing it within only a single if-statement or by having an ability
+-- of disabling or enabling a specific functions globaly, which means it affects all other levels,
+-- I have a feeling its necessary also to write these functions out, whether it has none.
+-- these functions need to exist on each new levels to be created or else LevelLoader will throw an error for
+-- a missing functions they loop through.
+function Level1:mousepressed(mx,my) -- use in controls.lua
+end
+
+function Level1:updateScaling()
+end
+
+function Level1:drawOutlines()
+end
