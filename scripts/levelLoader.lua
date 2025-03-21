@@ -7,15 +7,15 @@ LevelLoader = {
 	-- and is percieved as isometric map.
 }
 
-function LevelLoader.load(level)
+function LevelLoader.load(level,lvlBool)
 	LevelLoader.level = level or 0
-	LevelLoader.bool = 1
+	LevelLoader.bool = lvlBool or false
 end
 
 function LevelLoader.update(dt)
-	if LevelLoader.level == 0 and LevelLoader.bool == 1 then --The MainMenu
+	if LevelLoader.level == 0 and LevelLoader.bool == true then --The MainMenu
 		table.insert(LevelLoader.ui,Level0())
-		LevelLoader.bool = 0
+		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	end
 
 	if #LevelLoader.objects > 0 then

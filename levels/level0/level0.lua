@@ -6,7 +6,7 @@ function Level0:new()
 	self.gA = "levels/globalAssets/"
 	self.music = love.audio.newSource(self.directory.."Boku No Senpai_Ongzellig.ogg","stream")
 	self.music:setLooping(true)
-	self.music:setVolume(0)
+	self.music:setVolume(0.1)
 	self.music:play()
 	self.sfx_mClicked = love.audio.newSource(self.gA.."clicked-sfx-behold.ogg","static")
 	self.btn = {}
@@ -97,6 +97,9 @@ function Level0:mousereleased(mx,my) -- btn == 1 is not working :(
 	if self.btn.newgame.mcb == true then
 		self.sfx_mClicked:play()
 		self.btn.newgame.mcb = false
+		self.music:stop()
+		table.remove(LevelLoader.ui,#LevelLoader.ui)
+		LevelLoader.load(1,true)
 	elseif self.btn.options.mcb == true then
 		self.sfx_mClicked:play()
 		self.btn.options.mcb = false

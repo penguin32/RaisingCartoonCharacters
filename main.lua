@@ -55,7 +55,7 @@ function love.load()
 --levels
 	require "levels.level0.level0"
 	require "scripts.levelLoader" --require the levels first before the levelLoader.
-	LevelLoader.load(0)
+	LevelLoader.load(0,true)
 end
 
 function love.update(dt)
