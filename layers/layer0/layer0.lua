@@ -1,4 +1,4 @@
-Layer0 = Object:extend()
+Layer0 = Object:extend() -- The MainMenu
 local sT = 3
 
 function Layer0:new()

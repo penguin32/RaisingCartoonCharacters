@@ -1,7 +1,8 @@
 function love.load()
-	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
-	newForZoomingIn = 2
-	forZoomingIn = 2	--Is used for attribs in game objects' like scaling/distances.
+	origin = {x=0,y=0} --world origin, origin for all layers.
+	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
+	newForZoomingIn = 1
+	forZoomingIn = 1	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,
 				--	Because game.scale take care of the in-game objects if the
 				--	viewport is small.
@@ -11,6 +12,9 @@ function love.load()
 				--	viewport,
 				--	which negates that "zooming" effect and only follows
 				--	viewport's scaling.
+				--
+				--	game.scale alone is affected by forZoomingIn
+				--	gsr is not affect forZoomingIn because itself is a divisor of gsr.
 	window = { width = love.graphics.getWidth(), height = love.graphics.getHeight() }--runtime update!
 	window.newWidth = 0
 	window.newHeight = 0
@@ -18,9 +22,20 @@ function love.load()
 	game.scale = getScale(window.width,window.height) -- Is for configuring ratios of in-game objs.
 				-- Is dependent of the viewport's resolution.
 				-- Use to compensate with the devices(android's screen, desktop)
+				-- commonly use to scale game objects, and is affected by newForZoomingIn
+	--	game.scale will now be replaced, could still be useful for simple ui's though..
+	-- NEW IDea trying: March 23 2025,
+	-- I'm going to try to resort to matrix-vector multiplication when scaling now, instead of game.scale,
+	-- thats because game.scale only is dependent on window.width, height,
+	-- but with matrix-vector method, I'm thinking of being able to zoom in and out with respect to
+	-- game.middleX/Y
+	--
+	-- ill try givin world origin, and when i zoom out/in, it will scale to it and should my position also.
+
 	--Do not repeat mathematic operations dumb ass,
 	gsr = game.scale/forZoomingIn -- global scale ratio
 		--use by cartScale, so gsr should be ran first,before cartScale, and during update.
+				-- Not affected by newForZoomingIn
 	game.cartX,game.cartY = cartScale(game.cartX,game.cartY) -- Is for telling visible coord(0,0),
 				-- Regardless of viewport's width & height ratio.
 	game.middleX = game.cartX + game.width*(gsr)/2
@@ -40,6 +55,7 @@ function love.load()
 	Object = require "modules.classic.classic"
 	require "modules.modulesOutsideLove2d.strict"
 --scripts:
+	require "scripts.direction"
 	require "scripts.controls"
 	require "scripts.gameData"
 --objectShapes:
@@ -51,7 +67,9 @@ function love.load()
 --typesOfObjects:
 	require "scripts.typesOfObjects.explorableArea"
 	require "scripts.typesOfObjects.flooredIsometricObject"
-
+	require "scripts.typesOfObjects.explorableAreaRectangle"
+--globalCharacters:
+	require "layers.globalCharacters.mymy.mymy"
 --levels, all layers use for a specific levels:
 	require "layers.layer0.layer0"
 	require "layers.layer1.layer1"
@@ -60,6 +78,7 @@ function love.load()
 end
 
 function love.update(dt)
+	Player.update()
 	LevelLoader.update(dt)
 	updateEveryScale()
 end
@@ -117,6 +136,7 @@ function drawOutlines()
 	-- for Levels, hitbox, click area etc..
 		LevelLoader.drawOutlines()
 		love.graphics.setColor(0,0,0)
+		love.graphics.print("Origin: x "..origin.x.." and y "..origin.y, game.cartX+30*gsr,game.cartY+120*gsr)
 	end
 end
 

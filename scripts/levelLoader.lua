@@ -9,13 +9,23 @@ LevelLoader = {
 
 function LevelLoader.load(level,lvlBool)
 	LevelLoader.level = level or 0
-	LevelLoader.bool = lvlBool or false
+	LevelLoader.bool = lvlBool or false -- This need to explicitly told to be 'true' when 
+	-- switching level between, so that after the update of moving to a new level, table.insert wouldn't
+	-- run a multiple instance of the layers.
 end
 
 function LevelLoader.update(dt)
-	if LevelLoader.level == 0 and LevelLoader.bool == true then --The MainMenu
-		table.insert(LevelLoader.ui,Layer0())
+	if LevelLoader.level == 0 and LevelLoader.bool == true then -- The MainMenu
+		table.insert(LevelLoader.ui,Layer0()) 
+		-- Always remove your LevelLoader.ui or objects tables
+		-- first on the interacted txtbox for example within their if-statement before inserting a
+		-- new layers from this LevelLoader's table, then
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
+	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
+		forZoomingIn = 0.05
+		newForZoomingIn = 0.05 --reset zoom
+		table.insert(LevelLoader.objects,Layer1(250,100,0.2))
+		LevelLoader.bool = false
 	end
 
 	if #LevelLoader.objects > 0 then

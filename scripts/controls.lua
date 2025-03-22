@@ -1,16 +1,61 @@
 Player = {}
 
-Player.Keyboard = {z=false}
+Player.Mouse = {isPressed=false}
+
+Player.Keyboard = {z=false,lctrl=false,one=false,two=false}
+
+function Player.update()
+	Player.Keyboard.updateCombinePresses()
+end
+
+Player.Keyboard.updateCombinePresses = function()
+	if Player.Keyboard.lctrl == true and Player.Keyboard.one == true then
+		newForZoomingIn = newForZoomingIn + 0.05
+		if newForZoomingIn > 1 then
+			newForZoomingIn = 1
+		end
+	end
+	if Player.Keyboard.lctrl == true and Player.Keyboard.two == true then
+		newForZoomingIn = newForZoomingIn - 0.05
+		if newForZoomingIn < 0.05 then
+			newForZoomingIn = 0.05
+		end
+	end
+
+end
 
 function love.keypressed(key)
-	if key == "z" then
+	if key == 'z' then
 		Player.Keyboard.z = true
+	end
+	if key == "lctrl" then
+		Player.Keyboard.lctrl = true
+	end
+	if key == '1' then
+		Player.Keyboard.one = true
+	end
+	if key == '2' then
+		Player.Keyboard.two = true
 	end
 end
 
-local pressedBool = false -- used in drawOutlines
+function love.keyreleased(key)
+	if key == 'z' then
+		Player.Keyboard.z = false
+	end
+	if key == "lctrl" then
+		Player.Keyboard.lctrl = false
+	end
+	if key == '1' then
+		Player.Keyboard.one = false
+	end
+	if key == '2' then
+		Player.Keyboard.two = false
+	end
+end
+
 function love.mousepressed(mx,my)
-	pressedBool = true
+	Player.Mouse.isPressed = true
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			if v:is(Layer0) then
@@ -21,7 +66,7 @@ function love.mousepressed(mx,my)
 end
 
 function love.mousereleased(mx,my)
-	pressedBool = false
+	Player.Mouse.isPressed = false
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			if v:is(Layer0) then
@@ -38,8 +83,15 @@ end
 function Player.drawOutlines() -- See player activity for testings.
 	-- Mouse activites:
 	love.graphics.circle("line",cursor.x,cursor.y,5)
-	if pressedBool == true then
+	if Player.Mouse.isPressed == true then
 		love.graphics.circle("fill",cursor.x,cursor.y,5)
 	end
-
+	-- Keyboard activities:
+	if Player.Keyboard.z == true then
+		love.graphics.print("z active: pressed",game.cartX+30*gsr,game.cartY)
+	else
+		love.graphics.print("z active: released",game.cartX+30*gsr,game.cartY)
+	end
+	-- Others:
+	love.graphics.print("forZoomingIn: "..forZoomingIn,game.cartX+30*gsr,game.cartY+30*gsr)
 end
