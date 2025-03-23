@@ -70,6 +70,8 @@ function love.load()
 	require "scripts.typesOfObjects.explorableArea"
 	require "scripts.typesOfObjects.flooredIsometricObject"
 	require "scripts.typesOfObjects.explorableAreaRectangle"
+	require "scripts.typesOfObjects.characterSprite"
+	require "scripts.typesOfObjects.character"
 --globalCharacters:
 	require "layers.globalCharacters.mymy.mymy"
 --levels, all layers use for a specific levels:
@@ -80,7 +82,7 @@ function love.load()
 end
 
 function love.update(dt)
-	Player.update()
+	Player.update(dt)
 	LevelLoader.update(dt)
 	updateEveryScale()
 end

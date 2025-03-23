@@ -29,6 +29,6 @@ function ExplorableAreaRectangle:updateScaling()
 end
 
 function ExplorableAreaRectangle:drawOutlines()
-	love.graphics.print("obj coord with respect to world origin: "..self.x - origin.x.." , "..self.y - origin.y ,game.cartX+650*gsr,game.cartY)
-	love.graphics.print("dx/dy : "..(self.x - origin.x)/(self.y - origin.y) ,game.cartX+650*gsr,game.cartY+30*gsr)
+	love.graphics.print("obj coord with respect to world origin: "..self.x - origin.x.." , "..self.y - origin.y ,self.x,self.y)
+	love.graphics.print("dx/dy : "..(self.x - origin.x)/(self.y - origin.y) ,self.x,self.y+30*gsr)
 end

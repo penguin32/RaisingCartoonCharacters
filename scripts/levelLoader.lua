@@ -22,7 +22,7 @@ function LevelLoader.update(dt)
 		-- new layers from this LevelLoader's table, then
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
-		table.insert(LevelLoader.objects,Layer1(250,100,0.2))
+		table.insert(LevelLoader.objects,Layer1(0*gsr,0*gsr,0.2))
 		table.insert(LevelLoader.ui,Camera())
 		LevelLoader.bool = false
 	end
@@ -51,12 +51,13 @@ function LevelLoader.draw()
 	--//--
 	love.graphics.push()
 	if #LevelLoader.objects > 0 then
+		love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
 		--love.graphics.translate with respect to player here.(not added yet)
 		for i,v in ipairs(LevelLoader.objects)do
 			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then
 				--To see the collider as black outline.
 				love.graphics.setColor(0,0,0)
-				v:draw()
+				v:draw()--im planning to replace thems as drawOutlines, in the future
 				love.graphics.setColor(1,1,1)
 			else
 				v:draw()
@@ -166,6 +167,8 @@ function LevelLoader.SortObjects(a,b)
                 return false
         elseif a:is(ExplorableArea) and b:is(ExplorableArea) then
                 return b.y > a.y
+	else
+		--do nothing, it maybe the camera, when ui to objects now
         end
 end
 
@@ -188,11 +191,16 @@ function LevelLoader.updateLevelScaling()--ran inside main.lua updateEveryScale(
 end
 
 function LevelLoader.drawOutlines()
+	--cant add objects.drawOutlines here, they don't get translated :(, not sure how i would compartmentalize
+	--but they get covered under images because of drawing order so... ill just add another if statements
+	love.graphics.push()
 	if #LevelLoader.objects > 0 then
+		love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
 		for i,v in ipairs(LevelLoader.objects)do
 			v:drawOutlines()
 		end
 	end
+	love.graphics.pop()
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			v:drawOutlines()

@@ -4,16 +4,51 @@ Player.Mouse = {isPressed=false}
 
 Player.Keyboard = {
 	z=false, -- just for testing, remove later
+	up=false,
+	down=false,
+	left=false,
+	right=false,
 	lctrl=false,
 	one=false,
 	two=false
 }
 
-function Player.update()
-	Player.Keyboard.updateCombinePresses()
+Player.Camera = {
+	base_x = 0, -- use for LevelLoader, love.graphics.translate()
+	base_y = 0
+}
+
+Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
+	local velocity = 325*forZoomingIn -- for testing movements
+	if Player.Keyboard.up == true then
+		v.base_y = v.base_y - velocity*dt
+	end
+	if Player.Keyboard.down == true then
+		v.base_y = v.base_y + velocity*dt
+	end
+	if Player.Keyboard.left == true then
+		v.base_x = v.base_x - velocity*dt
+	end
+	if Player.Keyboard.right == true then
+		v.base_x = v.base_x + velocity*dt
+	end
 end
 
-Player.Keyboard.updateCombinePresses = function()
+function Player.update(dt)
+	Player.Keyboard.updatePresses()
+	if #LevelLoader.ui > 0 then
+		for i,v in ipairs(LevelLoader.ui)do
+			if v:is(Camera) then
+				Player.Camera.ArrowKeys(dt,v)
+				Player.Camera.base_x = -v.base_x + game.middleX
+				Player.Camera.base_y = -v.base_y + game.middleY
+
+			end
+		end
+	end
+end
+
+Player.Keyboard.updatePresses = function()
 	if Player.Keyboard.lctrl == true and Player.Keyboard.one == true then
 		newForZoomingIn = newForZoomingIn + 0.05
 		if newForZoomingIn > 10 then
@@ -32,6 +67,18 @@ function love.keypressed(key)
 	if key == 'z' then
 		Player.Keyboard.z = true
 	end
+	if key == "up" then
+		Player.Keyboard.up = true
+	end
+	if key == "down" then
+		Player.Keyboard.down = true
+	end
+	if key == "left" then
+		Player.Keyboard.left = true
+	end
+	if key == "right" then
+		Player.Keyboard.right = true
+	end
 	if key == "lctrl" then
 		Player.Keyboard.lctrl = true
 	end
@@ -47,6 +94,19 @@ function love.keyreleased(key)
 	if key == 'z' then
 		Player.Keyboard.z = false
 	end
+	if key == "up" then
+		Player.Keyboard.up = false
+	end
+	if key == "down" then
+		Player.Keyboard.down = false
+	end
+	if key == "left" then
+		Player.Keyboard.left = false
+	end
+	if key == "right" then
+		Player.Keyboard.right = false
+	end
+
 	if key == "lctrl" then
 		Player.Keyboard.lctrl = false
 	end
@@ -101,4 +161,6 @@ function Player.drawOutlines() -- See player activity for testings.
 	-- Others:
 	love.graphics.print("forZoomingIn: "..forZoomingIn,game.cartX+30*gsr,game.cartY+30*gsr)
 	love.graphics.print("origin x:"..origin.x.." ,origin y: "..origin.y ,game.cartX+30*gsr,game.cartY+60*gsr)
+	love.graphics.print("base_x and y :" ..Player.Camera.base_x.." , "..Player.Camera.base_y,game.cartX + 30*gsr, game.cartY+90*gsr)
+	love.graphics.print("origin to middleXY :" ..game.middleX-origin.x.." , "..game.middleY-origin.y,game.cartX + 30*gsr, game.cartY+150*gsr)
 end
