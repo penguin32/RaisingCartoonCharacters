@@ -42,7 +42,6 @@ function Player.update(dt)
 				Player.Camera.ArrowKeys(dt,v)
 				Player.Camera.base_x = -v.base_x + game.middleX
 				Player.Camera.base_y = -v.base_y + game.middleY
-
 			end
 		end
 	end

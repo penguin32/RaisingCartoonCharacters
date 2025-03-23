@@ -106,7 +106,7 @@ end
 
 function cartScale(x,y)
 	local sx,sy = window.width/game.width, window.height/game.height
-	if sx < sy then return x,y+(window.height - game.height*(gsr))/2 else return x+(window.width - game.width*(gsr))/2,y end
+	if sx < sy then return x,y+(window.height - game.height*gsr)/2 else return x+(window.width - game.width*gsr)/2,y end
 end
 
 function updateEveryScale()

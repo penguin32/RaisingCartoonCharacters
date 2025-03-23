@@ -1,3 +1,7 @@
+--// what if i create a scale of a unit vector(that origin.x origin.y to a 1 unit) get their ratio, then scale,
+--that instead for dx dy (changing x and y)
+--basically multiplying forZoomingIn*by 1, it make sense, but it doesnt make sense at the same time >:(
+
 SimpleMovement = Object:extend()
 
 function SimpleMovement:new(base_x,base_y,base_v)
