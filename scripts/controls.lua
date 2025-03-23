@@ -2,7 +2,12 @@ Player = {}
 
 Player.Mouse = {isPressed=false}
 
-Player.Keyboard = {z=false,lctrl=false,one=false,two=false}
+Player.Keyboard = {
+	z=false, -- just for testing, remove later
+	lctrl=false,
+	one=false,
+	two=false
+}
 
 function Player.update()
 	Player.Keyboard.updateCombinePresses()
@@ -11,8 +16,8 @@ end
 Player.Keyboard.updateCombinePresses = function()
 	if Player.Keyboard.lctrl == true and Player.Keyboard.one == true then
 		newForZoomingIn = newForZoomingIn + 0.05
-		if newForZoomingIn > 1 then
-			newForZoomingIn = 1
+		if newForZoomingIn > 10 then
+			newForZoomingIn = 10
 		end
 	end
 	if Player.Keyboard.lctrl == true and Player.Keyboard.two == true then
@@ -21,7 +26,6 @@ Player.Keyboard.updateCombinePresses = function()
 			newForZoomingIn = 0.05
 		end
 	end
-
 end
 
 function love.keypressed(key)
@@ -63,6 +67,8 @@ function love.mousepressed(mx,my)
 			end
 		end
 	end
+--	if #LevelLoader.objects > 0  -- STOP! note to self, not all objects, should be clickable!,
+--					don't bloat shit.
 end
 
 function love.mousereleased(mx,my)
@@ -94,4 +100,5 @@ function Player.drawOutlines() -- See player activity for testings.
 	end
 	-- Others:
 	love.graphics.print("forZoomingIn: "..forZoomingIn,game.cartX+30*gsr,game.cartY+30*gsr)
+	love.graphics.print("origin x:"..origin.x.." ,origin y: "..origin.y ,game.cartX+30*gsr,game.cartY+60*gsr)
 end

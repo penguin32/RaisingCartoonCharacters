@@ -56,7 +56,9 @@ function love.load()
 	require "modules.modulesOutsideLove2d.strict"
 --scripts:
 	require "scripts.direction"
+	require "scripts.simpleMovement"
 	require "scripts.controls"
+	require "scripts.camera"
 	require "scripts.gameData"
 --objectShapes:
 	require "scripts.objectShapes.circle"

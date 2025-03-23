@@ -7,6 +7,7 @@ function Layer1:new(x,y,scale)
 end
 
 function Layer1:update(dt)
+	Layer1.super.update(self)
 end
 
 function Layer1:draw()

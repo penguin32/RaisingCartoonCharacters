@@ -49,6 +49,7 @@ function Layer0:new()
 	self.btn.album.mBrushOnce = true
 	self.btn.album.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
 	self.btn.options.mcb = false
+	self.updateScaling(self)
 end
 
 function Layer0:update(dt)

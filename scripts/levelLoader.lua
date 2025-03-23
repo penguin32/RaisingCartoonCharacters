@@ -22,9 +22,8 @@ function LevelLoader.update(dt)
 		-- new layers from this LevelLoader's table, then
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
-		forZoomingIn = 0.05
-		newForZoomingIn = 0.05 --reset zoom
 		table.insert(LevelLoader.objects,Layer1(250,100,0.2))
+		table.insert(LevelLoader.ui,Camera())
 		LevelLoader.bool = false
 	end
 
