@@ -14,35 +14,33 @@ Player.Keyboard = {
 }
 
 Player.Camera = {
-	velocity = 0,
+--	velocity = 0,
 	base_x = 0, -- use for LevelLoader, love.graphics.translate()
 	base_y = 0,
-	dftottcx = 0, --distance from the origin to the camera x
-	dftottcy = 0
 }
 
-Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
-	Player.Camera.velocity = 525/forZoomingIn -- for testing movements
-	if Player.Keyboard.up == true then
-		v.base_y = v.base_y - Player.Camera.velocity*dt
-	end
-	if Player.Keyboard.down == true then
-		v.base_y = v.base_y + Player.Camera.velocity*dt
-	end
-	if Player.Keyboard.left == true then
-		v.base_x = v.base_x - Player.Camera.velocity*dt
-	end
-	if Player.Keyboard.right == true then
-		v.base_x = v.base_x + Player.Camera.velocity*dt
-	end
-end
+--Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
+--	Player.Camera.velocity = 525*forZoomingIn -- for testing movements
+--	if Player.Keyboard.up == true then
+--		v.base_y = v.base_y - Player.Camera.velocity*dt
+--	end
+--	if Player.Keyboard.down == true then
+--		v.base_y = v.base_y + Player.Camera.velocity*dt
+--	end
+--	if Player.Keyboard.left == true then
+--		v.base_x = v.base_x - Player.Camera.velocity*dt
+--	end
+--	if Player.Keyboard.right == true then
+--		v.base_x = v.base_x + Player.Camera.velocity*dt
+--	end
+--end -- i may re use this, so don't delete
 
 function Player.update(dt)
 	Player.Keyboard.updatePresses(dt)
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			if v:is(Camera) then
-				Player.Camera.ArrowKeys(dt,v)
+--				Player.Camera.ArrowKeys(dt,v)
 				Player.Camera.base_x = -v.base_x*forZoomingIn + game.middleX
 				Player.Camera.base_y = -v.base_y*forZoomingIn + game.middleY
 			end

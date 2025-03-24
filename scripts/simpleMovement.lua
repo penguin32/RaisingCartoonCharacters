@@ -4,16 +4,17 @@
 
 SimpleMovement = Object:extend()
 
-function SimpleMovement:new(base_x,base_y,base_v)
+function SimpleMovement:new(base_x,base_y,init_v)
 	self.base_x = base_x or 0
 	self.base_y = base_y or 0
-	self.base_v = base_v or 35 -- remember to scale this by forZoomingIn
-	self.base_dai = 430*gsr --idle area
-	self.base_cfd = 0 --cursorFocusDistance, magnitude from game.middleX&Y to cursor.x,cursor.y
-	self.base_damv = 680*gsr --max distance allowed to limit character's velocity.
-	self.base_cos, self.base_sin = 0-- Use to calculate for radians to vector of
+	self.init_v = init_v or 35
+	self.base_v = init_v or 35 -- remember to scale this by forZoomingIn using init_v
+--	self.base_dai = 430*gsr  --variables moved to updateScaling
+--	self.base_cfd = 0 --cursorFocusDistance, magnitude from game.middleX&Y to cursor.x,cursor.y
+--	self.base_damv = 680*gsr --max distance allowed to limit character's velocity.
+--	self.base_cos, self.base_sin = 0-- Use to calculate for radians to vector of
 					-- mouse cursor to game.middleX,game.middleY(forPlayer)
-	self.base_da = self.base_damv*1.2 -- Max acceleration for a given distance.
+--	self.base_da = self.base_damv*1.2 -- Max acceleration for a given distance.
 end
 
 function SimpleMovement:update(dt,animal_x,animal_y,food_x,food_y)
@@ -31,10 +32,12 @@ end
 
 --Special Functions:
 function SimpleMovement:updateScaling()
-	self.base_dai = 430*gsr
-	self.base_damv = 680*gsr
+	self.base_dai = 100*gsr --idle area
+	self.base_damv = 480*gsr --max distance allowed to limit character's velocity.
 	self.base_da = self.base_damv*1.2 -- idont know how to fix that velocity im tired and resources is
+					-- Max acceleration for a given distance.
 						-- running out on me fuck
+	self.base_v = self.init_v/forZoomingIn
 end
 
 function SimpleMovement:drawOutlines()

@@ -1,6 +1,6 @@
 function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
-	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
+	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
 	newForZoomingIn = 1
 	forZoomingIn = 1	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,
@@ -146,8 +146,8 @@ end
 
 function drawBorders()
 	-- Four rectangles below acts as borders.
-        love.graphics.rectangle("fill",0,0,game.cartX,window.width)
-        love.graphics.rectangle("fill",game.cartX+game.width*(gsr),0,game.cartX,window.width)
-        love.graphics.rectangle("fill",0,0,window.width,game.cartY)
-        love.graphics.rectangle("fill",0,game.cartY+game.height*(gsr),game.width,game.cartY)
+        love.graphics.rectangle("fill",0,0,game.cartX,window.height) --left border
+        love.graphics.rectangle("fill",window.width-game.cartX,0,game.cartX,window.width) --right border
+	love.graphics.rectangle("fill",game.cartX,0,window.width-game.cartX,game.cartY) --top border
+	love.graphics.rectangle("fill",game.cartX,window.height-game.cartY,window.width-game.cartX,game.cartY)
 end

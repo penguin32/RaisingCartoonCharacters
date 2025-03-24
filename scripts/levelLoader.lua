@@ -23,7 +23,7 @@ function LevelLoader.update(dt)
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
 		table.insert(LevelLoader.objects,Layer1(-500,-500,1))
-		table.insert(LevelLoader.ui,Camera(0,0,400))
+		table.insert(LevelLoader.ui,Camera(0,0,200))
 		LevelLoader.bool = false
 	end
 
@@ -42,19 +42,11 @@ function LevelLoader.update(dt)
 end
 
 function LevelLoader.draw()
-	--//
-	--love.graphics.push()
-	--	move all objects base on characters position
-	--	then end statement with pop()
-	--love.graphics.pop()
-	--After only pop(), draw UIs
-	--//--
 	love.graphics.push()
 --	love.graphics.scale(forZoomingIn) -- test phase --iremember now why i stopped using this
 --		it only works on drawings :(
+	love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
 	if #LevelLoader.objects > 0 then
-		love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
-		--love.graphics.translate with respect to player here.(not added yet)
 		for i,v in ipairs(LevelLoader.objects)do
 			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then
 				--To see the collider as black outline.
@@ -64,9 +56,6 @@ function LevelLoader.draw()
 			else
 				v:draw()
 			end
-			-- recheck showOutlines at main.lua
-			-- love.graphics.setColor(0,255,0) -- xy positions represented as green dots.
-			-- love.graphics.circle("fill",v.x,v.y,10) --Shows object's xy positions.
 		end
 	end
 	love.graphics.pop()
@@ -198,11 +187,13 @@ function LevelLoader.drawOutlines()
 	love.graphics.push()
 --	love.graphics.scale(forZoomingIn) -- test phase
 	if #LevelLoader.objects > 0 then
-		love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
+	love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
 		for i,v in ipairs(LevelLoader.objects)do
 			v:drawOutlines()
+			love.graphics.circle("fill",v.x,v.y,10) --Shows object's xy positions.
 		end
 	end
+	love.graphics.circle("fill",origin.x,origin.y,10)
 	love.graphics.pop()
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do

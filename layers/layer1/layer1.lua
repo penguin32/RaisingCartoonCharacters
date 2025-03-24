@@ -4,6 +4,11 @@ Layer1 = ExplorableAreaRectangle:extend() -- The Home
 function Layer1:new(x,y,scale)
 	Layer1.super.new(self,x,y,scale)
 	self.waf = love.graphics.newImage("layers/layer1/layer1-assets/home_bg.png")
+	--Coliders:
+	table.insert(LevelLoader.objects,Rectangle(self.x-100,self.y+self.waf:getHeight()+100,100,self.waf:getHeight()+200))--left side
+	table.insert(LevelLoader.objects,Rectangle(self.x+self.waf:getWidth(),self.y+self.waf:getHeight()+100,100,self.waf:getHeight()+200))--right side
+	table.insert(LevelLoader.objects,Rectangle(self.x-100,self.y,self.waf:getWidth()+200,100)) --top side
+	table.insert(LevelLoader.objects,Rectangle(self.x-100,self.y+self.waf:getHeight()+100,self.waf:getWidth()+200,100)) --bot side
 end
 
 function Layer1:update(dt)
