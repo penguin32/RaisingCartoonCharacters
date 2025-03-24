@@ -17,7 +17,8 @@ function SimpleMovement:new(base_x,base_y,base_v)
 end
 
 function SimpleMovement:update(dt,animal_x,animal_y,food_x,food_y)
-	self.base_cfd = Direction.GetDistance(animal_x,animal_y,food_x,food_y)*forZoomingIn
+	self.updateScaling(self)
+	self.base_cfd = Direction.GetDistance(animal_x,animal_y,food_x,food_y)
 	self.base_cos,self.base_sin = Direction.GetVector(animal_x,animal_y,food_x,food_y)
 	if self.base_cfd > self.base_dai and self.base_cfd < self.base_damv then
 		self.base_x = self.base_x + self.base_v*self.base_cos*(self.base_cfd/50)*dt
@@ -32,6 +33,8 @@ end
 function SimpleMovement:updateScaling()
 	self.base_dai = 430*gsr
 	self.base_damv = 680*gsr
+	self.base_da = self.base_damv*1.2 -- idont know how to fix that velocity im tired and resources is
+						-- running out on me fuck
 end
 
 function SimpleMovement:drawOutlines()

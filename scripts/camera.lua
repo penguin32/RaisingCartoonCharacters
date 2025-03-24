@@ -4,7 +4,8 @@ function Camera:new(base_x,base_y,base_v)
 	Camera.super.new(self,base_x,base_y,base_v)
 end
 
-function Camera:update()
+function Camera:update(dt)
+	Camera.super.update(self,dt,game.middleX,game.middleY,cursor.x,cursor.y)
 end
 
 function Camera:draw()

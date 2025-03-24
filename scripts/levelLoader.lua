@@ -23,7 +23,7 @@ function LevelLoader.update(dt)
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
 		table.insert(LevelLoader.objects,Layer1(-500,-500,1))
-		table.insert(LevelLoader.ui,Camera())
+		table.insert(LevelLoader.ui,Camera(0,0,400))
 		LevelLoader.bool = false
 	end
 

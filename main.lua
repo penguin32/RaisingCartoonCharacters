@@ -1,6 +1,6 @@
 function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
-	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
+	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
 	newForZoomingIn = 1
 	forZoomingIn = 1	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,

@@ -51,7 +51,7 @@ function Player.update(dt)
 end
 
 Player.Keyboard.updatePresses = function(dt)
-	local rate = 0.5
+	local rate = 0.5*2
 	if Player.Keyboard.lctrl == true and Player.Keyboard.one == true then
 		newForZoomingIn = newForZoomingIn + rate*dt
 		if newForZoomingIn > 10 then
