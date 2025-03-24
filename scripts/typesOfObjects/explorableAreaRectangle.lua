@@ -9,6 +9,8 @@ function ExplorableAreaRectangle:new(x,y,scale)
 	self.wo_to_x = x - origin.x --world origin.x to self.x
 	self.wo_to_y = y - origin.y --this thing should be updated in runtime if an object is moving actively
 					--with respect to the world origin.
+					--if so, i need to figure out Player.Camera.base_x/y first, its a
+					--similar problem.
 	self.updateScaling(self)
 end
 

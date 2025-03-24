@@ -14,48 +14,52 @@ Player.Keyboard = {
 }
 
 Player.Camera = {
+	velocity = 0,
 	base_x = 0, -- use for LevelLoader, love.graphics.translate()
-	base_y = 0
+	base_y = 0,
+	dftottcx = 0, --distance from the origin to the camera x
+	dftottcy = 0
 }
 
 Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
-	local velocity = 325*forZoomingIn -- for testing movements
+	Player.Camera.velocity = 525/forZoomingIn -- for testing movements
 	if Player.Keyboard.up == true then
-		v.base_y = v.base_y - velocity*dt
+		v.base_y = v.base_y - Player.Camera.velocity*dt
 	end
 	if Player.Keyboard.down == true then
-		v.base_y = v.base_y + velocity*dt
+		v.base_y = v.base_y + Player.Camera.velocity*dt
 	end
 	if Player.Keyboard.left == true then
-		v.base_x = v.base_x - velocity*dt
+		v.base_x = v.base_x - Player.Camera.velocity*dt
 	end
 	if Player.Keyboard.right == true then
-		v.base_x = v.base_x + velocity*dt
+		v.base_x = v.base_x + Player.Camera.velocity*dt
 	end
 end
 
 function Player.update(dt)
-	Player.Keyboard.updatePresses()
+	Player.Keyboard.updatePresses(dt)
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			if v:is(Camera) then
 				Player.Camera.ArrowKeys(dt,v)
-				Player.Camera.base_x = -v.base_x + game.middleX
-				Player.Camera.base_y = -v.base_y + game.middleY
+				Player.Camera.base_x = -v.base_x*forZoomingIn + game.middleX
+				Player.Camera.base_y = -v.base_y*forZoomingIn + game.middleY
 			end
 		end
 	end
 end
 
-Player.Keyboard.updatePresses = function()
+Player.Keyboard.updatePresses = function(dt)
+	local rate = 0.5
 	if Player.Keyboard.lctrl == true and Player.Keyboard.one == true then
-		newForZoomingIn = newForZoomingIn + 0.05
+		newForZoomingIn = newForZoomingIn + rate*dt
 		if newForZoomingIn > 10 then
 			newForZoomingIn = 10
 		end
 	end
 	if Player.Keyboard.lctrl == true and Player.Keyboard.two == true then
-		newForZoomingIn = newForZoomingIn - 0.05
+		newForZoomingIn = newForZoomingIn - rate*dt
 		if newForZoomingIn < 0.05 then
 			newForZoomingIn = 0.05
 		end
@@ -160,6 +164,6 @@ function Player.drawOutlines() -- See player activity for testings.
 	-- Others:
 	love.graphics.print("forZoomingIn: "..forZoomingIn,game.cartX+30*gsr,game.cartY+30*gsr)
 	love.graphics.print("origin x:"..origin.x.." ,origin y: "..origin.y ,game.cartX+30*gsr,game.cartY+60*gsr)
-	love.graphics.print("base_x and y :" ..Player.Camera.base_x.." , "..Player.Camera.base_y,game.cartX + 30*gsr, game.cartY+90*gsr)
+	love.graphics.print("base_x and y :" ..Player.Camera.base_x.." , "..Player.Camera.base_y,game.cartX + 30*gsr, game.cartY+290*gsr)
 	love.graphics.print("origin to middleXY :" ..game.middleX-origin.x.." , "..game.middleY-origin.y,game.cartX + 30*gsr, game.cartY+150*gsr)
 end
