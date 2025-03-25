@@ -22,11 +22,11 @@ function SimpleMovement:update(dt,animal_x,animal_y,food_x,food_y)
 	self.base_cfd = Direction.GetDistance(animal_x,animal_y,food_x,food_y)
 	self.base_cos,self.base_sin = Direction.GetVector(animal_x,animal_y,food_x,food_y)
 	if self.base_cfd > self.base_dai and self.base_cfd < self.base_damv then
-		self.base_x = self.base_x + self.base_v*self.base_cos*(self.base_cfd/50)*dt
-		self.base_y = self.base_y + self.base_v*self.base_sin*(self.base_cfd/50)*dt
+		self.base_x = self.base_x + (self.base_v*self.base_cos*(self.base_cfd/50)*dt)/forZoomingIn
+		self.base_y = self.base_y + (self.base_v*self.base_sin*(self.base_cfd/50)*dt)/forZoomingIn
 	elseif self.base_cfd >= self.base_damv then
-		self.base_x = self.base_x + self.base_v*self.base_cos*(self.base_da/50)*dt
-		self.base_y = self.base_y + self.base_v*self.base_sin*(self.base_da/50)*dt
+		self.base_x = self.base_x + (self.base_v*self.base_cos*(self.base_da/50)*dt)/forZoomingIn
+		self.base_y = self.base_y + (self.base_v*self.base_sin*(self.base_da/50)*dt)/forZoomingIn
 	end
 end
 
@@ -37,7 +37,7 @@ function SimpleMovement:updateScaling()
 	self.base_da = self.base_damv*1.2 -- idont know how to fix that velocity im tired and resources is
 					-- Max acceleration for a given distance.
 						-- running out on me fuck
-	self.base_v = self.init_v/forZoomingIn
+	self.base_v = self.init_v*forZoomingIn
 end
 
 function SimpleMovement:drawOutlines()

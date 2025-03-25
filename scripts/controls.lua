@@ -16,7 +16,7 @@ Player.Keyboard = {
 Player.Camera = {
 --	velocity = 0,
 	base_x = 0, -- use for LevelLoader, love.graphics.translate()
-	base_y = 0,
+	base_y = 0
 }
 
 --Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)

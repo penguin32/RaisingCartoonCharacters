@@ -124,7 +124,7 @@ function updateEveryScale()
 		game.cartX,game.cartY = cartScale(game.cartX,game.cartY)
 		game.middleX = game.cartX + game.width*(gsr)/2
 		game.middleY = game.cartY + game.height*(gsr)/2
-		font = love.graphics.newFont(34*(gsr))
+		font = love.graphics.newFont(34*gsr)
 		love.graphics.setFont(font)
 		LevelLoader.updateLevelScaling()
 	end
