@@ -3,11 +3,11 @@ Player = {}
 Player.Mouse = {isPressed=false}
 
 Player.Keyboard = {
-	mlatch=false,
+	m=false, --toggleMute, Keyboard
+	mlatch=false,--toggleMute's latch
 	mlatch2=false,
-	m=false, --toggleMute
-	up=false,
-	down=false,
+	up=false, --use for testing movements, for now theyre uncommented out
+	down=false, --including down left right
 	left=false,
 	right=false,
 	lctrl=false,
@@ -81,22 +81,7 @@ Player.Keyboard.updatePresses = function(dt)
 			newForZoomingIn = 0.05
 		end
 	end
-	if Player.Keyboard.m == false and Player.Keyboard.mlatch2 == true then
-		if Player.Keyboard.mlatch == false then
-			Player.Keyboard.mlatch = true
-		else
-			Player.Keyboard.mlatch = false
-		end
-		Player.Keyboard.mlatch2 = false
-	end
-	if Player.Keyboard.m == true then
-		Player.Keyboard.mlatch2 = true
-		if Player.Keyboard.mlatch == true then
-			toggleMute = true
-		else
-			toggleMute = false
-		end
-	end
+	toggleMute, Player.Keyboard.mlatch, Player.Keyboard.mlatch2 = latch( Player.Keyboard.m, Player.Keyboard.mlatch, Player.Keyboard.mlatch2, toggleMute)
 end
 
 function love.keypressed(key)

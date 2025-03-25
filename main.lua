@@ -1,7 +1,7 @@
 function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
 	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
-	toggleMute = false
+	toggleMute = true
 	newForZoomingIn = 1
 	forZoomingIn = 1	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,
@@ -56,6 +56,7 @@ function love.load()
 	Object = require "modules.classic.classic"
 	require "modules.modulesOutsideLove2d.strict"
 --scripts:
+	require "scripts.someSimpleTools"
 	require "scripts.direction"
 	require "scripts.simpleMovement"
 	require "scripts.controls"

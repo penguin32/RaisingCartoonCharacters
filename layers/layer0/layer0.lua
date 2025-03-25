@@ -51,10 +51,10 @@ function Layer0:new()
 end
 
 function Layer0:update(dt)
-	self:toggleMute()
+	self:toggleMuteThis()
 end
 
-function Layer0:toggleMute()
+function Layer0:toggleMuteThis()
 	if toggleMute then
 		love.audio.pause(self.music)
 	else

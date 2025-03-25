@@ -32,7 +32,7 @@ end
 
 --Special Functions:
 function SimpleMovement:updateScaling()
-	self.base_dai = 100*gsr --idle area
+	self.base_dai = 200*gsr --idle area
 	self.base_damv = 480*gsr --max distance allowed to limit character's velocity.
 	self.base_da = self.base_damv*1.2 -- idont know how to fix that velocity im tired and resources is
 					-- Max acceleration for a given distance.
