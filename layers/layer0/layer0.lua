@@ -19,7 +19,7 @@ function Layer0:new()
 	self.btn.newgame.i = love.graphics.newImage(self.directory.."t_newgame.png")
 	self.btn.newgame.ib = love.graphics.newImage(self.directory.."tb_newgame.png")
 	self.btn.newgame.x = game.middleX - 135*gsr
-	self.btn.newgame.y = game.middleY + 100*gsr
+	self.btn.newgame.y = game.middleY - 10*gsr
 	self.btn.newgame.w = self.btn.newgame.i:getWidth()*sT*gsr
 	self.btn.newgame.h = self.btn.newgame.i:getHeight()*sT*gsr
 	self.btn.newgame.s = sT*gsr
@@ -30,8 +30,8 @@ function Layer0:new()
 	self.btn.options.i = love.graphics.newImage(self.directory.."t_options.png")
 	self.btn.options.ib = love.graphics.newImage(self.directory.."tb_options.png")
 	self.btn.options.x = self.btn.newgame.x
-	self.btn.options.y = self.btn.newgame.y + 150*gsr
-	self.btn.options.w = self.btn.options.i:getWidth()*sT*gsr
+	self.btn.options.y = self.btn.newgame.y + 150*gsr --- when updating these variables, remember
+	self.btn.options.w = self.btn.options.i:getWidth()*sT*gsr	--to do so in update() below also
 	self.btn.options.h = self.btn.options.i:getHeight()*sT*gsr
 	self.btn.options.s = sT*gsr
 	self.btn.options.mBrushOnce = true
@@ -131,7 +131,7 @@ function Layer0:updateScaling()
 	self.titleImage.w = self.titleImage.i:getWidth()
 	self.titleImage.h = self.titleImage.i:getHeight()
 	self.btn.newgame.x = game.middleX - 135*gsr
-	self.btn.newgame.y = game.middleY + 100*gsr
+	self.btn.newgame.y = game.middleY - 10*gsr
 	self.btn.newgame.w = self.btn.newgame.i:getWidth()*sT*gsr
 	self.btn.newgame.h = self.btn.newgame.i:getHeight()*sT*gsr
 	self.btn.newgame.s = sT*gsr
