@@ -43,4 +43,5 @@ end
 function SimpleMovement:drawOutlines()
 	love.graphics.circle("line",game.middleX,game.middleY,self.base_dai)
 	love.graphics.circle("line",game.middleX,game.middleY,self.base_damv)
+	love.graphics.print("camera x,y :"..self.base_x.." , "..self.base_y,game.middleX,game.middleY)
 end

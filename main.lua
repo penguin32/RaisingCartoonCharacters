@@ -60,6 +60,8 @@ function love.load()
 	require "scripts.controls"
 	require "scripts.camera"
 	require "scripts.gameData"
+--collidersInherit:
+	require "scripts.collidersInherit.rectangle"
 --objectShapes:
 	require "scripts.objectShapes.circle"
 	require "scripts.objectShapes.isometric"
