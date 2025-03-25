@@ -7,7 +7,6 @@ function Layer0:new()
 	self.music = love.audio.newSource(self.directory.."Boku No Senpai_Ongzellig.ogg","stream")
 	self.music:setLooping(true)
 	self.music:setVolume(0.1)
-	self.music:play()
 	self.sfx_mClicked = love.audio.newSource(self.gA.."clicked-sfx-behold.ogg","static")
 	self.btn = {}
 	self.btn.freq = 0.25
@@ -49,16 +48,19 @@ function Layer0:new()
 	self.btn.album.mBrushOnce = true
 	self.btn.album.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
 	self.btn.options.mcb = false
-	self.updateScaling(self)
 end
 
 function Layer0:update(dt)
+	self:toggleMute()
+end
+
+function Layer0:toggleMute()
 	if toggleMute then
 		love.audio.pause(self.music)
 	else
 		love.audio.play(self.music)
+		self.music:play()
 	end
-
 end
 
 function Layer0:draw()

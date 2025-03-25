@@ -65,11 +65,6 @@ function Player.update(dt)
 			end
 		end
 	end
-	if Player.Keyboard.mlatch == true then
-		toggleMute = true
-	else
-		toggleMute = false
-	end
 end
 
 Player.Keyboard.updatePresses = function(dt)
@@ -86,9 +81,6 @@ Player.Keyboard.updatePresses = function(dt)
 			newForZoomingIn = 0.05
 		end
 	end
-	if Player.Keyboard.m == true then
-		Player.Keyboard.mlatch2 = true
-	end
 	if Player.Keyboard.m == false and Player.Keyboard.mlatch2 == true then
 		if Player.Keyboard.mlatch == false then
 			Player.Keyboard.mlatch = true
@@ -96,6 +88,14 @@ Player.Keyboard.updatePresses = function(dt)
 			Player.Keyboard.mlatch = false
 		end
 		Player.Keyboard.mlatch2 = false
+	end
+	if Player.Keyboard.m == true then
+		Player.Keyboard.mlatch2 = true
+		if Player.Keyboard.mlatch == true then
+			toggleMute = true
+		else
+			toggleMute = false
+		end
 	end
 end
 
