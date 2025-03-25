@@ -23,7 +23,10 @@ function LevelLoader.update(dt)
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
 		table.insert(LevelLoader.objects,Layer1(-500,-500,1))
-		table.insert(LevelLoader.ui,Camera(0,0,200))
+--		table.insert(LevelLoader.ui,Camera(0,0,200))
+		table.insert(LevelLoader.objects,Camera(0,0,200))
+		--test:
+--		table.insert(LevelLoader.objects,Rectangle(0,0,200,nil,nil,nil,1,200))
 		LevelLoader.bool = false
 	end
 
@@ -48,14 +51,14 @@ function LevelLoader.draw()
 	love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects)do
-			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then
-				--To see the collider as black outline.
-				love.graphics.setColor(0,0,0)
-				v:draw()--im planning to replace thems as drawOutlines, in the future
-				love.graphics.setColor(1,1,1)
-			else
+--			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then
+--				--To see the collider as black outline.
+--				love.graphics.setColor(0,0,0)
+--				v:draw()--im planning to replace thems as drawOutlines, in the future
+--				love.graphics.setColor(1,1,1)
+--			else
 				v:draw()
-			end
+--			end
 		end
 	end
 	love.graphics.pop()
@@ -189,12 +192,25 @@ function LevelLoader.drawOutlines()
 	if #LevelLoader.objects > 0 then
 	love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
 		for i,v in ipairs(LevelLoader.objects)do
-			v:drawOutlines()
-			love.graphics.circle("fill",v.x,v.y,10) --Shows object's xy positions.
+			if not(v:is(Camera)) then
+				v:drawOutlines()
+			end
 		end
 	end
-	love.graphics.circle("fill",origin.x,origin.y,10)
+	love.graphics.circle("fill",origin.x,origin.y,15*gsr)
 	love.graphics.pop()
+
+	if #LevelLoader.objects >0 then -- i just made an exception to this Camera, Im testing out
+			-- if it could collides with the rectangles regardless of wierd translation.
+			-- for now im deciding wether i should extend objectShapes rectangle from Objects classic
+			-- I should save first before trying that
+			-- now that im atleast a bit confident that zoom functionality wouldnt affect npc movement
+		for i,v in ipairs(LevelLoader.objects)do
+			if v:is(Camera) then
+				v:drawOutlines()
+			end
+		end
+	end
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			v:drawOutlines()

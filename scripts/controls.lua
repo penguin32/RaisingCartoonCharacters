@@ -19,28 +19,45 @@ Player.Camera = {
 	base_y = 0
 }
 
---Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
+Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
 --	Player.Camera.velocity = 525*forZoomingIn -- for testing movements
---	if Player.Keyboard.up == true then
---		v.base_y = v.base_y - Player.Camera.velocity*dt
---	end
---	if Player.Keyboard.down == true then
---		v.base_y = v.base_y + Player.Camera.velocity*dt
---	end
---	if Player.Keyboard.left == true then
---		v.base_x = v.base_x - Player.Camera.velocity*dt
---	end
---	if Player.Keyboard.right == true then
---		v.base_x = v.base_x + Player.Camera.velocity*dt
---	end
---end -- i may re use this, so don't delete
+--	--recently tested on rectangle movement,
+--	long story short:
+--	dy, dx is used in wo_to_x, wo_to_y variables
+--	wo_to_x = dx - origin.x,	see where im getting at?
+--	after that, that distance is being scaled by forZoomingIn
+--	and is equated to self.x and y,
+--	the reason it works this time, is because I inserted that object that is the player moving it
+--	to the LevelLoader.objects this time,
+--
+--	last time it didnt work probably because i added camera on the LevelLoader.ui table which fucks up the
+--	love.graphics.translation()
+	if Player.Keyboard.up == true then
+		v.dy = v.dy - v.v*dt
+	end
+	if Player.Keyboard.down == true then
+		v.dy = v.dy + v.v*dt
+	end
+	if Player.Keyboard.left == true then
+		v.dx = v.dx - v.v*dt
+	end
+	if Player.Keyboard.right == true then
+		v.dx = v.dx + v.v*dt
+	end
+end -- i may re use this, so don't delete
 
 function Player.update(dt)
 	Player.Keyboard.updatePresses(dt)
-	if #LevelLoader.ui > 0 then
-		for i,v in ipairs(LevelLoader.ui)do
+	if #LevelLoader.objects > 0 then
+		for i,v in ipairs(LevelLoader.objects)do
+	--		if v:is(Rectangle) and v.group == 1 then
 			if v:is(Camera) then
 --				Player.Camera.ArrowKeys(dt,v)
+		--tested on rectangle, cant believe it actually works this time,
+		--my guess would be because i am now translating with respect to that LevelLoader.objects
+		--and not ui
+--				Player.Camera.base_x = -v.dx*forZoomingIn + game.middleX
+--				Player.Camera.base_y = -v.dy*forZoomingIn + game.middleY
 				Player.Camera.base_x = -v.base_x*forZoomingIn + game.middleX
 				Player.Camera.base_y = -v.base_y*forZoomingIn + game.middleY
 			end

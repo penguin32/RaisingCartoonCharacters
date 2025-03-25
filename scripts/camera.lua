@@ -2,7 +2,6 @@ Camera = SimpleMovement:extend() -- View game's environment, like not used in ma
 
 function Camera:new(base_x,base_y,base_v)
 	Camera.super.new(self,base_x,base_y,base_v)
---hmm i thought it run only once when called, function inside here still gets updated
 end
 
 function Camera:update(dt)
