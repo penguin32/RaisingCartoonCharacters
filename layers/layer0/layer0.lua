@@ -53,6 +53,12 @@ function Layer0:new()
 end
 
 function Layer0:update(dt)
+	if toggleMute then
+		love.audio.pause(self.music)
+	else
+		love.audio.play(self.music)
+	end
+
 end
 
 function Layer0:draw()
@@ -73,7 +79,9 @@ function Layer0:tHover(button) --textBoxHover Highlight, I could have use this t
 		else
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
 			if button.mBrushOnce then
-				button.mBrush:play()
+				if not(toggleMute) then
+					button.mBrush:play()
+				end
 				button.mBrushOnce = false
 			end
 			if love.mouse.isDown(1) then --if mouse.isDown is being click
@@ -96,16 +104,22 @@ end
 
 function Layer0:mousereleased(mx,my) -- btn == 1 is not working :(
 	if self.btn.newgame.mcb == true then
-		self.sfx_mClicked:play()
+		if not(toggleMute) then
+			self.sfx_mClicked:play()
+			self.music:stop()
+		end
 		self.btn.newgame.mcb = false
-		self.music:stop()
 		table.remove(LevelLoader.ui,#LevelLoader.ui)
 		LevelLoader.load(1,true)
 	elseif self.btn.options.mcb == true then
-		self.sfx_mClicked:play()
+		if not(toggleMute) then
+			self.sfx_mClicked:play()
+		end
 		self.btn.options.mcb = false
 	elseif self.btn.album.mcb == true then
-		self.sfx_mClicked:play()
+		if not(toggleMute) then
+			self.sfx_mClicked:play()
+		end
 		self.btn.album.mcb = false
 	end
 end

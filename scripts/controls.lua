@@ -3,7 +3,9 @@ Player = {}
 Player.Mouse = {isPressed=false}
 
 Player.Keyboard = {
-	z=false, -- just for testing, remove later
+	mlatch=false,
+	mlatch2=false,
+	m=false, --toggleMute
 	up=false,
 	down=false,
 	left=false,
@@ -63,6 +65,11 @@ function Player.update(dt)
 			end
 		end
 	end
+	if Player.Keyboard.mlatch == true then
+		toggleMute = true
+	else
+		toggleMute = false
+	end
 end
 
 Player.Keyboard.updatePresses = function(dt)
@@ -79,11 +86,22 @@ Player.Keyboard.updatePresses = function(dt)
 			newForZoomingIn = 0.05
 		end
 	end
+	if Player.Keyboard.m == true then
+		Player.Keyboard.mlatch2 = true
+	end
+	if Player.Keyboard.m == false and Player.Keyboard.mlatch2 == true then
+		if Player.Keyboard.mlatch == false then
+			Player.Keyboard.mlatch = true
+		else
+			Player.Keyboard.mlatch = false
+		end
+		Player.Keyboard.mlatch2 = false
+	end
 end
 
 function love.keypressed(key)
-	if key == 'z' then
-		Player.Keyboard.z = true
+	if key == 'm' then
+		Player.Keyboard.m = true
 	end
 	if key == "up" then
 		Player.Keyboard.up = true
@@ -109,8 +127,8 @@ function love.keypressed(key)
 end
 
 function love.keyreleased(key)
-	if key == 'z' then
-		Player.Keyboard.z = false
+	if key == 'm' then
+		Player.Keyboard.m = false
 	end
 	if key == "up" then
 		Player.Keyboard.up = false
@@ -171,10 +189,10 @@ function Player.drawOutlines() -- See player activity for testings.
 		love.graphics.circle("fill",cursor.x,cursor.y,5)
 	end
 	-- Keyboard activities:
-	if Player.Keyboard.z == true then
-		love.graphics.print("z active: pressed",game.cartX+30*gsr,game.cartY)
+	if Player.Keyboard.m == true then
+		love.graphics.print("m active: pressed",game.cartX+30*gsr,game.cartY)
 	else
-		love.graphics.print("z active: released",game.cartX+30*gsr,game.cartY)
+		love.graphics.print("m active: released",game.cartX+30*gsr,game.cartY)
 	end
 	-- Others:
 	love.graphics.print("forZoomingIn: "..forZoomingIn,game.cartX+30*gsr,game.cartY+30*gsr)
