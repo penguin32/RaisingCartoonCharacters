@@ -21,7 +21,7 @@ function RectangleCollider:CollideToRectangle(obj)
 	local sTop = self.dy-self.init_h < obj.dy
 	local sBot = self.dy>obj.dy-obj.init_h
 	local ioost = true  --insert object on self.table
-	if self.loco ~= nil then
+	if #self.loco > 0 then
 		--does self.loco objects, get updated at runtime? probably not and not a copy
 		--and not a memory pointer,
 		--i'll just try it either way
@@ -50,15 +50,22 @@ function RectangleCollider:CollideToRectangle(obj)
 				local isTop = self.dy-self.init_h < v.dy
 				local isBot = self.dy>v.dy-v.init_h
 				if not(isLeft and isRight and isTop and isBot) then
-					v.collided = false -- I can't fix the flickering
+					if #v.loco > 0 then
+						v.collided = true
+					else
+						v.collided = false
+					end
 					table.remove(self.loco,i)
+					if #self.loco > 0 then
+						self.collided = true
+					end
 				elseif isLeft and isRight and isTop and isBot then
 					self.collided = true
 				end
 			end
 		end
---	else
---		self.collided = false
+	else
+		self.collided = false
 	end
 	if sBot and sTop and sLeft and sRight and ioost then
 		obj.collided = true
