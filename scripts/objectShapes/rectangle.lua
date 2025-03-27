@@ -41,8 +41,8 @@ function Rectangle:new(x,y,init_w,init_h,init_scale,set_collider,group,velocity,
 end
 
 function Rectangle:update(dt)--Exist to stay consistent with Environment.update(dt) loops
-	self:updateCoordinates()
 --updating movements here:
+	self:updateCoordinates()
 	if self.set_collider then
 		self:Colliders()
 	end

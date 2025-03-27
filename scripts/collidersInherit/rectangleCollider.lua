@@ -16,10 +16,10 @@ function RectangleCollider:Colliders()
 end
 
 function RectangleCollider:CollideToRectangle(obj)
-	local sLeft = self.x < obj.x+obj.w --self left
-	local sRight = self.x+self.w > obj.x
-	local sTop = self.y+self.h < obj.y
-	local sBot = self.y>obj.y+obj.h
+	local sLeft = self.dx < obj.dx+obj.init_w --self left
+	local sRight = self.dx+self.init_w > obj.dx
+	local sTop = self.dy-self.init_h < obj.dy
+	local sBot = self.dy>obj.dy-obj.init_h
 	local ioost = true  --insert object on self.table
 	if self.loco ~= nil then
 		--does self.loco objects, get updated at runtime? probably not and not a copy
@@ -36,14 +36,19 @@ function RectangleCollider:CollideToRectangle(obj)
 
 		--For this part, I really have no idea why it wont let me change the attributes for "self"
 --		self.collided = true
+--
+--		okay at this commit, i had to reverse value for self.init_h
+--		because the last self.h variable last commit is multiplied by a negative because 
+--		it was put there to accomodate with the love.graphics.drawing()
+--		and since init_h (initial height) therefore it has not been tampered, normally in this code.
 		for i,v in ipairs(self.loco) do
 			if v == obj then
 				ioost = false
 			else
-				local isLeft = self.x < v.x+v.w --inner self left
-				local isRight = self.x+self.w > v.x
-				local isTop = self.y+self.h < v.y
-				local isBot = self.y>v.y+v.h
+				local isLeft = self.dx < v.dx+v.init_w --inner self left
+				local isRight = self.dx+self.init_w > v.dx
+				local isTop = self.dy-self.init_h < v.dy
+				local isBot = self.dy>v.dy-v.init_h
 				if not(isLeft and isRight and isTop and isBot) then
 					v.collided = false -- I can't fix the flickering
 					table.remove(self.loco,i)
