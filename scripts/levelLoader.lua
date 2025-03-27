@@ -26,7 +26,7 @@ function LevelLoader.update(dt)
 		table.insert(LevelLoader.objects,Layer1(-1024,-713.5,1))
 	--	table.insert(LevelLoader.objects,Camera(0,0,500))
 		--test:
-		table.insert(LevelLoader.objects,Rectangle(0,0,0,200,200,1,true,0,500,true))
+		table.insert(LevelLoader.objects,Rectangle(0,0,200,200,1,true,0,500,true))
 		LevelLoader.bool = false
 	end
 

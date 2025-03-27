@@ -5,26 +5,75 @@ function RectangleCollider:Colliders()
 	--the update() function of those classes inheriting me.
 	if #LevelLoader.objects > 0 then
 		for i, v in ipairs(LevelLoader.objects) do
-			self:CollideToRectangle(v)
+			-- shit loops throught itself, (costed my 13 fucking hours fuck
+			--fuck fuck my iq probably 30 below average
+		if v:is(Rectangle) and v.group == self.group and v.set_collider and self ~= v then
+			self:CollideToRectangle(v)--this collision works with each other rectangles
+		end
+
 		end
 	end
 end
 
 function RectangleCollider:CollideToRectangle(obj)
-	local similar = self.id == obj.id -- shit loops throught itself, (costed my 13 fucking hours fuck
-					--fuck fuck my iq probably 30 below average
-	if obj:is(Rectangle) and obj.group == self.group and obj.set_collider and not(similar) then
-		local sLeft = self.x < obj.x + obj.w --self left
-		local sRight = self.x+self.w > obj.x
-		local sTop = self.y+self.h < obj.y
-		local sBot = self.y>obj.y+obj.h
-		if sBot and sTop and sLeft and sRight then
-			self.collided = true
-		else
-			self.collided = false
+	local sLeft = self.x < obj.x+obj.w --self left
+	local sRight = self.x+self.w > obj.x
+	local sTop = self.y+self.h < obj.y
+	local sBot = self.y>obj.y+obj.h
+	local ioost = true  --insert object on self.table
+	if self.loco ~= nil then
+		--does self.loco objects, get updated at runtime? probably not and not a copy
+		--and not a memory pointer,
+		--i'll just try it either way
+		--for now treating self.loco as a memory pointer that changes overtime like addressing to
+		--another table of LevelLoader.lua
+		--maybe no
+		--hmm it actually works, so if i changed some part of the variable inside
+		--that self.loco table, it actually changes that variable that
+		--LevelLoader table of that objects looped on.
+		--so it is a memory address
+
+
+		--For this part, I really have no idea why it wont let me change the attributes for "self"
+--		self.collided = true
+		for i,v in ipairs(self.loco) do
+			if v == obj then
+				ioost = false
+			else
+				local isLeft = self.x < v.x+v.w --inner self left
+				local isRight = self.x+self.w > v.x
+				local isTop = self.y+self.h < v.y
+				local isBot = self.y>v.y+v.h
+				if not(isLeft and isRight and isTop and isBot) then
+					v.collided = false -- I can't fix the flickering
+					table.remove(self.loco,i)
+				elseif isLeft and isRight and isTop and isBot then
+					self.collided = true
+				end
+			end
 		end
+--	else
+--		self.collided = false
 	end
+	if sBot and sTop and sLeft and sRight and ioost then
+		obj.collided = true
+		table.insert(self.loco,obj)
+	end
+
 	--//Every object that has a collider gonna need some id, or lets just say every object just incase
+	-- new problem(march 27 2025): this function fight over each objects, so
+	-- when an object interact with my object, that objects run functions on both rectangle objects.
+	-- what i need is to prioritize object that has collided, but how...
+	-- maybe i need a latch() that self.collided becomes false
+	-- only if that object let go(goes out boundary)
+	-- nah, i just need to identify which objects are collided with my object self.list of object?
+	-- how bout just turn this to another Object:update that detect collisions?
+	-- forget about inheritance? what ya say?
+	-- nope, it going to be just a nested for loops and that object is going to iterate that table again
+	-- and see itself, thus running the function to it self(that is fix) but trouble for multiple objects will
+	-- still persist.
+	-- ahaha fuck yeah, solved it
+	-- fuck nvm
 end
 
 --Special Functions:

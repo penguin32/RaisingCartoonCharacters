@@ -1,8 +1,9 @@
 Rectangle = Object:extend()
 Rectangle:implement(RectangleCollider)
 --not tested for moving rectangles during zoom function.
-function Rectangle:new(id,x,y,init_w,init_h,init_scale,set_collider,group,velocity,gameDev)
-	self.id = id	--necessary, didnt put 'or' so that it may throw an error
+function Rectangle:new(x,y,init_w,init_h,init_scale,set_collider,group,velocity,gameDev)
+--	self.id = id	--necessary, didnt put 'or' so that it may throw an error, dont need shit,
+--			delete line after git push
 	self.gameDev = gameDev or false --temporary variable,
 					--for testing out collission so that i could control them,
 					--to differentiate among the tables of objects when being loop by
@@ -10,6 +11,7 @@ function Rectangle:new(id,x,y,init_w,init_h,init_scale,set_collider,group,veloci
 				--parameters are added in order on how commonly theyre going to be use.
 	self.v = velocity or 0
 	self.group = group or 0 --variable use in collidersInherit, objs the in same groups does not collide
+	self.loco = {} --list of colliding objects
 	self.collided = false	--boolean use by this class,
 	self.set_collider = set_collider or false ---decides wether to set colliders on or off
 	self.x = x or 0				-- variables use in implement(RectangleColliders)

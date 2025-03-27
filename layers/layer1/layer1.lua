@@ -9,39 +9,43 @@ function Layer1:new(x,y,init_scale)
 	--Coliders:
 	table.insert(LevelLoader.objects,
 	Rectangle(
-		1,
+--		1,--self.id	--//maybe i dont need this, i got reminded of memory object ~= object2
+--					yup i was fucking right
+		x-100,--self.x
+		y+self.waf:getHeight(),--self.y
+		100,--init_w
+		self.waf:getHeight(),--init_h
+		1,--init_scale
+		true--set_collider
+			--group,
+			--velocity,
+			--gameDev
+	))--left side
+	table.insert(LevelLoader.objects,Rectangle(
+		x+self.waf:getWidth(),	--x
+		y+self.waf:getHeight(),	--y
+		100,			--init_w
+		self.waf:getHeight(),	--init_h
+		1,			--init_scale
+		true			--set_collider
+	))--right side
+	table.insert(LevelLoader.objects,Rectangle(
 		x-100,
-		y+self.waf:getHeight(),
+		y,
+		self.waf:getWidth()+200,
 		100,
-		self.waf:getHeight(),
 		1,
 		true
-	))--left side
---	table.insert(LevelLoader.objects,Rectangle(
---		x+self.waf:getWidth(),
---		y+self.waf:getHeight(),
---		100,
---		self.waf:getHeight(),
---		1,
---		true
---	))--right side
---	table.insert(LevelLoader.objects,Rectangle(
---		x-100,
---		y,
---		self.waf:getWidth()+200,
---		100,
---		1,
---		true
---	)) --top side
+	)) --top side
 	--temporarily removed this so player can go outside.
---	table.insert(LevelLoader.objects,Rectangle(
---		x-100,
---		y+self.waf:getHeight()+100,
---		self.waf:getWidth()+200,
---		100,
---		1,
---		true
---	)) --bottom side
+	table.insert(LevelLoader.objects,Rectangle(
+		x-100,
+		y+self.waf:getHeight()+100,
+		self.waf:getWidth()+200,
+		100,
+		1,
+		true
+	)) --bottom side
 
 	self.updateScaling(self)
 end
