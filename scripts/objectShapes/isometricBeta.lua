@@ -1,3 +1,6 @@
+--// March 2025, need refactoring
+
+
 IsometricBeta = Object:extend() --Colliderless, interactable. November 9 2022 : Only effective
 				-- for smaller spawns of isometricClick objects, for now.
 			-- EXPLAINED in

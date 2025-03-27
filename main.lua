@@ -1,8 +1,9 @@
 function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
 	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
-	toggleMute = true
-	newForZoomingIn = 1
+	toggleMute = true		-- I can adjust these 2 statements here
+	newForZoomingIn = 0.43
+--	newForZoomingIn = 1		-- for testings,during developing.
 	forZoomingIn = 1	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,
 				--	Because game.scale take care of the in-game objects if the
@@ -63,7 +64,7 @@ function love.load()
 	require "scripts.camera"
 	require "scripts.gameData"
 --collidersInherit:
-	require "scripts.collidersInherit.rectangle"
+	require "scripts.collidersInherit.rectangleCollider"
 --objectShapes:
 	require "scripts.objectShapes.circle"
 	require "scripts.objectShapes.isometric"
@@ -128,7 +129,7 @@ function updateEveryScale()
 		game.middleY = game.cartY + game.height*(gsr)/2
 		font = love.graphics.newFont(34*gsr)
 		love.graphics.setFont(font)
-		LevelLoader.updateLevelScaling()
+		LevelLoader.updateLevelScaling() --objects,uis in a table v.updateScaling()
 	end
 end
 

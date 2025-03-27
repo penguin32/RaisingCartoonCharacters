@@ -1,3 +1,7 @@
+--// March 2025, need refactoring
+
+
+
 ExplorableArea = Object:extend()     --They are always drawn first in-order,
 				     --Environment.SortObjects()
 				     --Objects inheriting this are drawn first,

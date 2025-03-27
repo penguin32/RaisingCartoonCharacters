@@ -1,3 +1,5 @@
+--// March 2025, need refactoring
+
 Isometric = Object:extend() -- Just the shapes(attributes) and for categorizing in Env.Ordering
 
 function Isometric:new(x,y,ll,rl,scale)

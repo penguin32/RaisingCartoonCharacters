@@ -15,14 +15,16 @@ Player.Keyboard = {
 	two=false
 }
 
-Player.Camera = {
+Player.Viewport = { -- The main focus of love.graphics.translate()
 --	velocity = 0,
 	base_x = 0, -- use for LevelLoader, love.graphics.translate()
 	base_y = 0
-}
+}--edited a variable name: the difference with Player.Camera and Player.Viewport is that
+--Player.Viewport can move any objects or just move at all without any objects,
+--with a camera, it has a rectangle that should collides the bondary of any given layer if provided.
 
-Player.Camera.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
---	Player.Camera.velocity = 525*forZoomingIn -- for testing movements
+Player.Viewport.ArrowKeys = function(dt, v) -- played inside update(dt) because of loop is(Camera)
+--	Player.Viewport.velocity = 525*forZoomingIn -- for testing movements
 --	--recently tested on rectangle movement,
 --	long story short:
 --	dy, dx is used in wo_to_x, wo_to_y variables
@@ -52,16 +54,61 @@ function Player.update(dt)
 	Player.Keyboard.updatePresses(dt)
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects)do
-	--		if v:is(Rectangle) and v.group == 1 then
-			if v:is(Camera) then
---				Player.Camera.ArrowKeys(dt,v)
-		--tested on rectangle, cant believe it actually works this time,
-		--my guess would be because i am now translating with respect to that LevelLoader.objects
-		--and not ui
---				Player.Camera.base_x = -v.dx*forZoomingIn + game.middleX
---				Player.Camera.base_y = -v.dy*forZoomingIn + game.middleY
-				Player.Camera.base_x = -v.base_x*forZoomingIn + game.middleX
-				Player.Camera.base_y = -v.base_y*forZoomingIn + game.middleY
+			if v:is(Rectangle) and v.gameDev == true then
+				Player.Viewport.ArrowKeys(dt,v)
+				Player.Viewport.base_x = -v.x + game.middleX
+				Player.Viewport.base_y = -v.y + game.middleY
+--			if v:is(Camera) then
+--				Player.Viewport.base_x = -v.x + game.middleX
+--				Player.Viewport.base_y = -v.y + game.middleY
+
+
+
+			--//EUREKA!
+--	I fully understand it now! think of objects with and height,
+--they need to be scaled by forZoomingIn variable, right,
+--their coordinates however can also be scaled as forZoomingIn(scalar),
+--to make the thoughts easier, think of the triangle-equality postulate,
+--
+--yeah i already know them from the start when i begun coding this shit,
+--what makes it difficult is how i should implement it, not understanding love.graphics.translate() and
+--only as a blackbox,
+--
+--i came up for a solution after multiple attempts of hypothising this shit for the last year of 2022,
+--
+--we have an origin.x&y to be (0,0) and they kept it the same value after love.graphics.translate,
+--so I've decided to use that get the vectors of those objects
+--		those objects's vectors is represented as self.dx, self.dy
+--	their values should stay true regardless of love.graphics.translate,
+--	meaning that if a stationary object on a coordinate with respect to the world origin(0,0)
+--	and love.graphics.translate() is used LevelLoader.lua
+--	it wouldn't affect their values,
+--
+--	so the conclusion that I came up would be to use that vector and scale it with forZoomingIn variable,
+
+--	but i came across with a problem that updating a variable that is being multiplied to itself is not a
+--	good idea as it changes that value during runtime.
+--		self.dx = (self.dx - origin.x)*forZoomingIn   which is a bitch
+--
+--	so a better idea  would be create a new variable(self.x,y) that is after being scaled by a scalar
+--		self.wo_to_dx = self.dx-origin.x --x-component from dx(change in x) to origin.x
+--		self.wo_to_dy = self.dy-origin.y
+--		self.x = self.wo_to_dx*forZoomingIn
+--		self.y = self.wo_to_dy*forZoomingIn
+--
+--
+--self.x and self.y are only use in love.graphics.draw() etc...
+--	for position as their new-coordinates after zoom function,
+--	while self.dx and self.dy acts as their original coordinate that can be change and affected,
+--	hence not needing of scaling the object's velocity anymore, like those java games tutorial that
+--	i couldn't bare to watch for some reason.
+--
+--	as for the usage of love.graphics.translate()
+--	it translate toward the objects on the screen the thing we see, windows pixel, i dont' actually know what
+--	it calls but once i understand that it follows the objects that im trying to follow,
+--	i had an ephiphany of using self.x and self.y as the focus of that function translate() because
+--	that scaled new-coordiantes is that object's position, and that dx,dy are just information hidden
+--	 from our eyes.
 			end
 		end
 	end
@@ -182,6 +229,6 @@ function Player.drawOutlines() -- See player activity for testings.
 	-- Others:
 	love.graphics.print("forZoomingIn: "..forZoomingIn,game.cartX+30*gsr,game.cartY+30*gsr)
 	love.graphics.print("origin x:"..origin.x.." ,origin y: "..origin.y ,game.cartX+30*gsr,game.cartY+60*gsr)
-	love.graphics.print("base_x and y :" ..Player.Camera.base_x.." , "..Player.Camera.base_y,game.cartX + 30*gsr, game.cartY+290*gsr)
+	love.graphics.print("base_x and y :" ..Player.Viewport.base_x.." , "..Player.Viewport.base_y,game.cartX + 30*gsr, game.cartY+290*gsr)
 	love.graphics.print("origin to middleXY :" ..game.middleX-origin.x.." , "..game.middleY-origin.y,game.cartX + 30*gsr, game.cartY+150*gsr)
 end

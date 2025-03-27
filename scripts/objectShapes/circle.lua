@@ -1,3 +1,6 @@
+--// March 2025, need refactoring
+
+
 Circle = Object:extend()
 function Circle:new(x,y,r,scale)
 	self.scale = scale or game.scale

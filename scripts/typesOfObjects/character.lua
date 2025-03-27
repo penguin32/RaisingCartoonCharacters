@@ -1,3 +1,6 @@
+--// March 2025, need refactoring
+
+
 Character = CharacterSprite:extend()
 -- To tell if the object is a character.
 -- Yes, CharacterSprite is not exclusive to character's only, sorry for bad coding skills. :P

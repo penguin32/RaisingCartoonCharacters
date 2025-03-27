@@ -2,9 +2,11 @@ Layer1 = Object:extend()
 local sT = 3 -- for scaling, example: scales for textboxes
 
 function Layer1:new()
+	--call updateScaling() here for load() --see simpleMovement.lua for explanation
 end
 
 function Layer1:update(dt)
+	--update coordinates dx,dy here.
 end
 
 function Layer1:draw()
@@ -37,8 +39,10 @@ end
 function Layer1:mousereleased(mx,my,btn)
 end
 
-function Layer1:updateScaling()
+function Layer1:updateScaling() --dumb idiot, dont call me again inside those classes, im already called
+				--automatically together with others and is compartmentalize.
+		--- DO NOT update MOVEMENT inside this function, only scaling for zoom function.
 end
 
-function Layer1:drawOutlines()
+function Layer1:drawOutlines() --Note: regardless of drawing order from tables of LevelLoader.objects or ui
 end

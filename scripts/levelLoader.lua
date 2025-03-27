@@ -15,18 +15,18 @@ function LevelLoader.load(level,lvlBool)
 end
 
 function LevelLoader.update(dt)
+	-- we are in the update, gotta be careful what i set my variables here,
 	if LevelLoader.level == 0 and LevelLoader.bool == true then -- The MainMenu
 		table.insert(LevelLoader.ui,Layer0()) 
-		-- Always remove your LevelLoader.ui or objects tables
+		-- Always empty out your LevelLoader.ui or objects tables
 		-- first on the interacted txtbox for example within their if-statement before inserting a
 		-- new layers from this LevelLoader's table, then
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
-		table.insert(LevelLoader.objects,Layer1(-500,-500,1))
---		table.insert(LevelLoader.ui,Camera(0,0,200))
-		table.insert(LevelLoader.objects,Camera(0,0,200))
+		table.insert(LevelLoader.objects,Layer1(-1024,-713.5,1))
+	--	table.insert(LevelLoader.objects,Camera(0,0,500))
 		--test:
---		table.insert(LevelLoader.objects,Rectangle(0,0,200,nil,nil,nil,1,200))
+		table.insert(LevelLoader.objects,Rectangle(0,0,0,200,200,1,true,0,500,true))
 		LevelLoader.bool = false
 	end
 
@@ -48,7 +48,7 @@ function LevelLoader.draw()
 	love.graphics.push()
 --	love.graphics.scale(forZoomingIn) -- test phase --iremember now why i stopped using this
 --		it only works on drawings :(
-	love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
+	love.graphics.translate(Player.Viewport.base_x,Player.Viewport.base_y)
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects)do
 --			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then
@@ -69,6 +69,9 @@ function LevelLoader.draw()
 		end
 	end
 end
+
+-- Double check drawing order, March 2025, because of the new changes and understanding
+-- with love.graphics.translate, simpleMovements.lua, shit forZoomingIn function may have an affect on it.
 
 function LevelLoader.SortObjects(a,b)
         if a:is(Isometric) and b:is(Isometric) then -- Just objectShapes below
@@ -190,27 +193,28 @@ function LevelLoader.drawOutlines()
 	love.graphics.push()
 --	love.graphics.scale(forZoomingIn) -- test phase
 	if #LevelLoader.objects > 0 then
-	love.graphics.translate(Player.Camera.base_x,Player.Camera.base_y)
+	love.graphics.translate(Player.Viewport.base_x,Player.Viewport.base_y)
 		for i,v in ipairs(LevelLoader.objects)do
-			if not(v:is(Camera)) then
-				v:drawOutlines()
-			end
+--			if not(v:is(Camera)) then
+--				v:drawOutlines()
+--			end
+			v:drawOutlines()
 		end
 	end
 	love.graphics.circle("fill",origin.x,origin.y,15*gsr)
 	love.graphics.pop()
 
-	if #LevelLoader.objects >0 then -- i just made an exception to this Camera, Im testing out
-			-- if it could collides with the rectangles regardless of wierd translation.
-			-- for now im deciding wether i should extend objectShapes rectangle from Objects classic
-			-- I should save first before trying that
-			-- now that im atleast a bit confident that zoom functionality wouldnt affect npc movement
-		for i,v in ipairs(LevelLoader.objects)do
-			if v:is(Camera) then
-				v:drawOutlines()
-			end
-		end
-	end
+--	if #LevelLoader.objects >0 then -- i just made an exception to this Camera, Im testing out
+--			-- if it could collides with the rectangles regardless of wierd translation.
+--			-- for now im deciding wether i should extend objectShapes rectangle from Objects classic
+--			-- I should save first before trying that
+--			-- now that im atleast a bit confident that zoom functionality wouldnt affect npc movement
+--		for i,v in ipairs(LevelLoader.objects)do
+--			if v:is(Camera) then
+--				v:drawOutlines()
+--			end
+--		end
+--	end
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			v:drawOutlines()

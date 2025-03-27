@@ -1,3 +1,7 @@
+--// March 2025, need refactoring
+
+
+
 --[[			Character's Sprites
 	1.	"fileName.0001.png" Using opentoonz format.
 	2.	Variations are: North, North-East, East, East-South, South.

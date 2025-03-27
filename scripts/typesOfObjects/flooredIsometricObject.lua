@@ -1,3 +1,7 @@
+--// March 2025, need refactoring
+-- not sure what im planning on this, but dont get distracted and just ignore this for now.
+
+
 --[[       Created to help to identify objects that can be walk-through it,
         and 2nd to the first drawn image (the floor/explorableArea.lua)
   
