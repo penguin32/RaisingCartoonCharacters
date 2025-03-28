@@ -1,7 +1,8 @@
 Rectangle = Object:extend()
 Rectangle:implement(RectangleCollider)
 --not tested for moving rectangles during zoom function.
-function Rectangle:new(x,y,init_w,init_h,init_scale,set_collider,group,velocity,gameDev)
+function Rectangle:new(x,y,init_w,init_h,init_scale,set_collider,group,npc,velocity,gameDev)
+	self.npc = npc or false		--true for none playable characters, false for walls
 --	self.id = id	--necessary, didnt put 'or' so that it may throw an error, dont need shit,
 --			delete line after git push
 	self.gameDev = gameDev or false --temporary variable,

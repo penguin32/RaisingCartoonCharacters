@@ -9,8 +9,38 @@ function RectangleCollider:Colliders()
 			--fuck fuck my iq probably 30 below average
 		if v:is(Rectangle) and v.group == self.group and v.set_collider and self ~= v then
 			self:CollideToRectangle(v)--this collision works with each other rectangles
+			self:Walls(v)
 		end
 
+		end
+	end
+end
+
+function RectangleCollider:Walls(obj)
+	if obj.npc == false then
+		local sLeft = self.dx < obj.dx+obj.init_w --self left
+		local sRight = self.dx+self.init_w > obj.dx
+		local sTop = self.dy-self.init_h < obj.dy
+		local sBot = self.dy>obj.dy-obj.init_h
+		if sLeft and sRight and sTop and sBot then
+			--contain sLeft from top and bottom, then
+		local ifrsoor = self.dx+self.init_w > obj.dx+obj.init_w
+				-- if self's right side is on obj's right side.
+		local iflsool =	self.dx < obj.dx --if self's left on object's left side.
+		local iftsoot = self.dy-self.init_h < obj.dy-obj.init_h	--if top self on object's top
+		local ifbsoob = self.dy > obj.dy --if bottom self on object's bottom
+		--okay i give up, im going to right this uglier code, so...
+		--self middle part compare to object's vertices in abscissa.
+		local smiddle = self.dy-self.init_h/2
+			if sTop and ifbsoob and smiddle > obj.dy then
+				self.dy = obj.dy+self.init_h
+			elseif sBot and iftsoot and smiddle < obj.dy-obj.init_h then
+				self.dy = obj.dy-obj.init_h
+			elseif sLeft and (sTop or sBot) and ifrsoor then
+				self.dx = obj.dx+obj.init_w
+			elseif sRight and (sTop or sBot) and iflsool then
+				self.dx = obj.dx-self.init_w
+			end
 		end
 	end
 end

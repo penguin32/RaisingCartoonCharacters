@@ -29,24 +29,24 @@ function Layer1:new(x,y,init_scale)
 		1,			--init_scale
 		true			--set_collider
 	))--right side
-	table.insert(LevelLoader.objects,Rectangle(
-		x-100,
-		y,
-		self.waf:getWidth()+200,
-		100,
-		1,
-		true
-	)) --top side
-	--temporarily removed this so player can go outside.
-	table.insert(LevelLoader.objects,Rectangle(
-		x-100,
-		y+self.waf:getHeight()+100,
-		self.waf:getWidth()+200,
-		100,
-		1,
-		true
-	)) --bottom side
-
+--	table.insert(LevelLoader.objects,Rectangle(
+--		x-100,
+--		y,
+--		self.waf:getWidth()+200,
+--		100,
+--		1,
+--		true
+--	)) --top side
+--	--temporarily removed this so player can go outside.
+--	table.insert(LevelLoader.objects,Rectangle(
+--		x-100,
+--		y+self.waf:getHeight()+100,
+--		self.waf:getWidth()+200,
+--		100,
+--		1,
+--		true
+--	)) --bottom side
+--
 	self.updateScaling(self)
 end
 
