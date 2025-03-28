@@ -16,10 +16,10 @@ function Layer1:new(x,y,init_scale)
 		100,--init_w
 		self.waf:getHeight(),--init_h
 		1,--init_scale
-		true--set_collider
+		false--set_collider
 			--group,
 			--velocity,
-			--gameDev
+			--gameDev , set true for control.lua
 	))--left side
 	table.insert(LevelLoader.objects,Rectangle(
 		x+self.waf:getWidth(),	--x
@@ -27,26 +27,26 @@ function Layer1:new(x,y,init_scale)
 		100,			--init_w
 		self.waf:getHeight(),	--init_h
 		1,			--init_scale
-		true			--set_collider
+		false			--set_collider
 	))--right side
---	table.insert(LevelLoader.objects,Rectangle(
---		x-100,
---		y,
---		self.waf:getWidth()+200,
---		100,
---		1,
---		true
---	)) --top side
---	--temporarily removed this so player can go outside.
---	table.insert(LevelLoader.objects,Rectangle(
---		x-100,
---		y+self.waf:getHeight()+100,
---		self.waf:getWidth()+200,
---		100,
---		1,
---		true
---	)) --bottom side
---
+	table.insert(LevelLoader.objects,Rectangle(
+		x-100,
+		y,
+		self.waf:getWidth()+200,
+		100,
+		1,
+		false
+	)) --top side
+	--temporarily removed this so player can go outside.
+	table.insert(LevelLoader.objects,Rectangle(
+		x-100,
+		y+self.waf:getHeight()+100,
+		self.waf:getWidth()+200,
+		100,
+		1,
+		false
+	)) --bottom side
+
 	self.updateScaling(self)
 end
 
@@ -55,7 +55,7 @@ function Layer1:update(dt)
 end
 
 function Layer1:draw()
---	love.graphics.draw(self.waf,self.x,self.y,nil,self.scale)
+	love.graphics.draw(self.waf,self.x,self.y,nil,self.scale)
 end
 
 -- Unique functions:

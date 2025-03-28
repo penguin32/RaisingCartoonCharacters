@@ -7,39 +7,45 @@ function RectangleCollider:Colliders()
 		for i, v in ipairs(LevelLoader.objects) do
 			-- shit loops throught itself, (costed my 13 fucking hours fuck
 			--fuck fuck my iq probably 30 below average
-		if v:is(Rectangle) and v.group == self.group and v.set_collider and self ~= v then
-			self:CollideToRectangle(v)--this collision works with each other rectangles
-			self:Walls(v)
-		end
+--		if v:is(Rectangle) and v.group == self.group and v.set_collider and self ~= v then
+--			self:CollideToRectangle(v)--this collision works with each other rectangles
+--			self:Walls(v)
+--		end
 
 		end
 	end
+	--usually this function is specifically for testing, 
+	-- because everything that happens here, affects other classes that extends from rectangle class whom
+	-- inherited this class.
+	-- set_collided = true, would have start this function running, see objectShapes/rectangle.lua
+	--if i want a specific thing to happen, i just
+	--have to call the function below at here at other file inheriting this.
 end
 
-function RectangleCollider:Walls(obj)
+function RectangleCollider:Walls(obj,ox,oy) --ox, offset x
 	if obj.npc == false then
-		local sLeft = self.dx < obj.dx+obj.init_w --self left
-		local sRight = self.dx+self.init_w > obj.dx
-		local sTop = self.dy-self.init_h < obj.dy
-		local sBot = self.dy>obj.dy-obj.init_h
+		local sLeft = self.dx+ox < obj.dx+obj.init_w --self left
+		local sRight = self.dx+ox+self.init_w > obj.dx
+		local sTop = self.dy+oy-self.init_h < obj.dy
+		local sBot = self.dy+oy>obj.dy-obj.init_h
 		if sLeft and sRight and sTop and sBot then
 			--contain sLeft from top and bottom, then
-		local ifrsoor = self.dx+self.init_w > obj.dx+obj.init_w
+		local ifrsoor = self.dx+ox+self.init_w > obj.dx+obj.init_w
 				-- if self's right side is on obj's right side.
-		local iflsool =	self.dx < obj.dx --if self's left on object's left side.
-		local iftsoot = self.dy-self.init_h < obj.dy-obj.init_h	--if top self on object's top
-		local ifbsoob = self.dy > obj.dy --if bottom self on object's bottom
+		local iflsool =	self.dx+ox < obj.dx --if self's left on object's left side.
+		local iftsoot = self.dy+oy-self.init_h < obj.dy-obj.init_h	--if top self on object's top
+		local ifbsoob = self.dy+oy > obj.dy --if bottom self on object's bottom
 		--okay i give up, im going to right this uglier code, so...
 		--self middle part compare to object's vertices in abscissa.
-		local smiddle = self.dy-self.init_h/2
+		local smiddle = self.dy+oy-self.init_h/2
 			if sTop and ifbsoob and smiddle > obj.dy then
-				self.dy = obj.dy+self.init_h
+				self.dy = obj.dy+self.init_h - oy
 			elseif sBot and iftsoot and smiddle < obj.dy-obj.init_h then
-				self.dy = obj.dy-obj.init_h
+				self.dy = obj.dy-obj.init_h - oy
 			elseif sLeft and (sTop or sBot) and ifrsoor then
-				self.dx = obj.dx+obj.init_w
+				self.dx = obj.dx+obj.init_w - ox
 			elseif sRight and (sTop or sBot) and iflsool then
-				self.dx = obj.dx-self.init_w
+				self.dx = obj.dx-self.init_w - ox
 			end
 		end
 	end

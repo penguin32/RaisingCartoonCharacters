@@ -54,13 +54,13 @@ function Player.update(dt)
 	Player.Keyboard.updatePresses(dt)
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects)do
-			if v:is(Rectangle) and v.gameDev == true then
-				Player.Viewport.ArrowKeys(dt,v)
-				Player.Viewport.base_x = -v.x + game.middleX
-				Player.Viewport.base_y = -v.y + game.middleY
---			if v:is(Camera) then
+--			if v:is(Rectangle) and v.gameDev == true then
+--				Player.Viewport.ArrowKeys(dt,v)
 --				Player.Viewport.base_x = -v.x + game.middleX
 --				Player.Viewport.base_y = -v.y + game.middleY
+			if v:is(Camera) then
+				Player.Viewport.base_x = -v.x + game.middleX
+				Player.Viewport.base_y = -v.y + game.middleY
 
 
 
@@ -118,8 +118,8 @@ Player.Keyboard.updatePresses = function(dt)
 	local rate = 0.5*2
 	if Player.Keyboard.lctrl == true and Player.Keyboard.one == true then
 		newForZoomingIn = newForZoomingIn + rate*dt
-		if newForZoomingIn > 10 then
-			newForZoomingIn = 10
+		if newForZoomingIn > 1 then
+			newForZoomingIn = 1
 		end
 	end
 	if Player.Keyboard.lctrl == true and Player.Keyboard.two == true then
