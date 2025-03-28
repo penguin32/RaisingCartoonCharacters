@@ -41,8 +41,11 @@ function RectangleCollider:CollideToRectangle(obj)
 --		because the last self.h variable last commit is multiplied by a negative because 
 --		it was put there to accomodate with the love.graphics.drawing()
 --		and since init_h (initial height) therefore it has not been tampered, normally in this code.
+--
+--		Another PROBLEM arise, "if theres one 1 to 1 object exist on that table" I have to give it some
+--		conditions
 		for i,v in ipairs(self.loco) do
-			if v == obj then
+			if v == obj and #self.loco ~= 1 then
 				ioost = false
 			else
 				local isLeft = self.dx < v.dx+v.init_w --inner self left
@@ -67,7 +70,7 @@ function RectangleCollider:CollideToRectangle(obj)
 	else
 		self.collided = false
 	end
-	if sBot and sTop and sLeft and sRight and ioost then
+	if sBot and sTop and sLeft and sRight and ioost and #self.loco ~= 1 then
 		obj.collided = true
 		table.insert(self.loco,obj)
 	end
@@ -110,6 +113,7 @@ function RectangleCollider:idrawOutlines() --inherited drawOutlines() -- remembe
 	love.graphics.print("self.y: "..self.y,self.x,self.y+80*gsr)
 
 	love.graphics.print("top side: "..self.y+self.h,self.x,self.y+self.h+80*gsr)
+	love.graphics.print("loco table: "..#self.loco,self.x,self.y+self.h+120*gsr)
 
 	love.graphics.setColor(0.5,0,0)
 end
