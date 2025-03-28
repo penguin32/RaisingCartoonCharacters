@@ -47,6 +47,18 @@ function Layer1:new(x,y,init_scale)
 		false
 	)) --bottom side
 
+	table.insert(LevelLoader.objects,Rectangle(
+		x-100,				--x
+		y+self.waf:getHeight()-200,     --y
+		self.waf:getWidth()+200,        --init_w
+		100,                            --init_h
+		1,                              --init_scale
+		false,                          --set_collider
+		1
+	)) --before bottom side
+
+	table.insert(LevelLoader.objects,Camera(0,0,500))
+
 	self.updateScaling(self)
 end
 

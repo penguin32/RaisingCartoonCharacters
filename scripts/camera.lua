@@ -34,7 +34,9 @@ function Camera:uviewport() -- unscaled coordinates, renamed for RectangleCollid
 end
 
 function Camera:viewport()--updates scaling viewport's window view affected by layer's wall.
-	local adjust = 4	--test: for drawOutlines()
+	local adjust = 4	--test: for drawOutlines(),
+			--nvm, this part is actually handful in showing scaled drawing for collision,
+			--	(dont remove this)
 	self.screen.x = self.x-forZoomingIn*(game.width-game.width/2)/adjust
 	self.screen.y = self.y-forZoomingIn*(game.height-game.height/2)/adjust
 	self.screen.w = game.width*forZoomingIn/adjust
@@ -54,7 +56,7 @@ function Camera:updateScaling()
 end
 
 function Camera:drawOutlines() 
---	Camera.super.drawOutlines(self)
+	Camera.super.drawOutlines(self)
 --	love.graphics.circle("line",self.base_x,self.base_y,20)
 
 --	I need a rectangled that follows game.middleX&Y, it'll be the camera's viewport

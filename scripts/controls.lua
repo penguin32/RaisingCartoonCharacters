@@ -118,8 +118,8 @@ Player.Keyboard.updatePresses = function(dt)
 	local rate = 0.5*2
 	if Player.Keyboard.lctrl == true and Player.Keyboard.one == true then
 		newForZoomingIn = newForZoomingIn + rate*dt
-		if newForZoomingIn > 1 then
-			newForZoomingIn = 1
+		if newForZoomingIn > 1.5 then --at start of the game, this should be maxed zoom value :)
+			newForZoomingIn = 1.5
 		end
 	end
 	if Player.Keyboard.lctrl == true and Player.Keyboard.two == true then

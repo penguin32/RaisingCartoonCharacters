@@ -24,7 +24,6 @@ function LevelLoader.update(dt)
 		LevelLoader.bool = false -- remember to always set this back to false, after if-statements here.
 	elseif LevelLoader.level == 1 and LevelLoader.bool == true then -- The Home
 		table.insert(LevelLoader.objects,Layer1(-1024,-713.5,1))
-		table.insert(LevelLoader.objects,Camera(0,0,500))
 		--test (rectangle collisions, collided variable, bugs):
 --		table.insert(LevelLoader.objects,Rectangle(0,0,200,200,1,false,0,true,500,true))
 		LevelLoader.bool = false

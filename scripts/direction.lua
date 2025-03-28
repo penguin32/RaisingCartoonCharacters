@@ -3,15 +3,15 @@ Direction = {}
 Direction.east = 0 -- Not used by lua files on breadAndButter Directory, just added so that
 		   -- they're all completed, but may be used on other stuff as well :)
 		   -- I don't know yet... November 14 2022 see character.lua
-Direction.west = math.pi
-Direction.south_west = 3/4*math.pi
-Direction.south = math.pi/2
-Direction.south_east = math.pi/4
-Direction.north_west = -Direction.south_west
-Direction.north = -Direction.south
-Direction.north_east = -Direction.south_east
-Direction.deg15 = 0.261799 					   -- Just an offset for east
-Direction.deg15Neg = -Direction.deg15
+Direction.west = math.pi	--1
+Direction.south_west = 3/4*math.pi	--2
+Direction.south = math.pi/2	--3
+Direction.south_east = math.pi/4	--4
+Direction.north_west = -Direction.south_west	--5
+Direction.north = -Direction.south	--6
+Direction.north_east = -Direction.south_east	--7
+Direction.deg15 = 0.261799	--8			   -- Just an offset for east	
+Direction.deg15Neg = -Direction.deg15	--9
 Direction.adjustedWestNegative = -Direction.west + Direction.deg15 -- Just an offset for west
 Direction.adjustedWestPositive = -Direction.adjustedWestNegative
 
@@ -61,8 +61,10 @@ function Direction.DiscreteString(radian) -- Returns direction in discrete value
 	end
 end
 
-function Direction.DiscreteNumber(radian) -- Returns direction in discrete
-					  -- value(number type, a vector)
+function Direction.DiscreteNumber(radian) -- Returns direction in discrete,
+					-- it return real number between 0 and 2pi radians
+					-- but discrete in terms of direction
+					  -- it actually return radians
 	local string = Direction.DiscreteString(radian)
 	if string == "North slightly west" then
 		return Direction.north

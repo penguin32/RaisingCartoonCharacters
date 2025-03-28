@@ -4,7 +4,7 @@
 
 SimpleMovement = Object:extend()
 
-function SimpleMovement:new(x,y,velocity)
+function SimpleMovement:new(x,y,velocity,npc)
 	self.x = x or 0  --see layer 1 for explanations, and control.lua near Player.Viewport
 	self.y = y or 0
 	self.dx = x or 0
@@ -19,7 +19,25 @@ function SimpleMovement:new(x,y,velocity)
 	self:updateScaling() --Okay, they need to be called,
 			-- because updateScaling, generally runs only
 			-- during a change in a variable named "newForZoomingIn"
+			-- by doing so it "declared the variables first"
+			-- and for that, doesn't break.
 	self:updateCoordinates()
+
+--	npc = npc or false
+	npc = npc or true --for the sake of testing
+	if npc then
+		self.rwalk = false -- random walk
+		self.walkTime = 2	--time amount of stopping
+		self.rstop = 2		--time amount walking
+			--yes, variable name is unconventional, but
+			--	it helped me write that function, and because of that,
+			--	i rather not have change it, because its more understandable when
+			--	trying to read the conditional statements,
+			--	very bad excuse, but im in a time contrainst, deadline ya see...
+		self.rradian = 0 --random radians
+		self.rux = 0 --random unit vector x
+		self.ruy = 0 --random unit vector y
+	end
 end
 
 function SimpleMovement:update(dt,animal_x,animal_y,food_x,food_y)
@@ -42,7 +60,26 @@ function SimpleMovement:updateCoordinates()
 	self.y = self.wo_to_dy*forZoomingIn
 end
 
---Special Functions:
+--Unique functions:
+function SimpleMovement:RandomWalks(dt)
+	self.walkTime = self.walkTime - dt
+	if self.walkTime > 0 and self.walkTime < self.rstop then
+		self.rwalk = true
+	elseif self.walkTime > self.rstop then
+		self.rwalk = false
+	elseif self.walkTime < 0 then
+		self.walkTime = math.random(10,20)   --extend if i want a long stop time, yup name unconventional
+		self.rstop = math.random(2,5)
+		self.rradian = math.random()*math.pi*2
+		self.rux,self.ruy = math.cos(self.rradian),math.sin(self.rradian)
+	end
+	if self.rwalk then
+		self.dx = self.dx + self.rux*self.v*dt
+		self.dy = self.dy + self.ruy*self.v*dt
+	end
+end
+
+--Special functions:
 function SimpleMovement:updateScaling()
 	self.base_dai = 200*gsr --idle area
 	self.base_damv = 480*gsr --max distance allowed to limit character's velocity.
@@ -53,4 +90,10 @@ function SimpleMovement:drawOutlines()
 	love.graphics.circle("line",self.x,self.y,self.base_dai)
 	love.graphics.circle("line",self.x,self.y,self.base_damv)
 	love.graphics.print("camera x,y :"..self.x.." , "..self.y,self.x,self.y)
+--	if self.rwalk then
+--		love.graphics.setColor(1,1,0)
+--		love.graphics.rectangle("fill",self.x-50*forZoomingIn,self.y+50*forZoomingIn,100*forZoomingIn,100*forZoomingIn)
+--	else
+--		love.graphics.rectangle("fill",self.x-50*forZoomingIn,self.y+50*forZoomingIn,100*forZoomingIn,100*forZoomingIn)
+--	end
 end
