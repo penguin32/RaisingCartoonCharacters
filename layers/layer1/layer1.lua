@@ -54,10 +54,11 @@ function Layer1:new(x,y,init_scale)
 		100,                            --init_h
 		1,                              --init_scale
 		false,                          --set_collider
-		1
+		1				--group
 	)) --before bottom side
 
 	table.insert(LevelLoader.objects,Camera(0,0,500))
+	table.insert(LevelLoader.objects,Mymy(-200,600,100,true))
 
 	self.updateScaling(self)
 end

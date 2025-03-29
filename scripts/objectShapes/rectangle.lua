@@ -85,7 +85,7 @@ function Rectangle:drawOutlines()
 	-- Just for testing... see collision shape.
 	love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
 	love.graphics.circle("fill",self.x,self.y,10*forZoomingIn)
-	love.graphics.print("x,y: "..self.x.." , "..self.y ,self.x,self.y)
+	love.graphics.print("dx,dy: "..self.dx.." , "..self.dy ,self.x,self.y)
 	--colliders
 	if self.set_collider then
 		if self.collided then

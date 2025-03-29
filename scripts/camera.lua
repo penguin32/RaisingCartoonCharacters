@@ -3,11 +3,13 @@ Camera:implement(RectangleCollider)
 
 function Camera:new(x,y,velocity)
 	Camera.super.new(self,x,y,velocity)
-	Camera.screen = {}
+	Camera.screen = {} --viewport's scaled variable for drawOutlines, testing
+				--I don't need this, remove later
 end
 
 function Camera:update(dt)
-	Camera.super.update(self,dt,game.middleX,game.middleY,cursor.x,cursor.y)
+	Camera.super.update(self,dt)
+	self:Follow(dt,game.middleX,game.middleY,cursor.x,cursor.y)
 	self:viewport()
 	self:uviewport()
 end
@@ -18,11 +20,12 @@ end
 --Unique Functions:
 function Camera:uviewport() -- unscaled coordinates, renamed for RectangleCollider inherits.
 			--its unscaled, because we'd want our collisions functions to have an easier time.
+			--talk about collisions, this is what we want.
 	local adjust = 4
 	--dx,dy, (checked) SimpleMovement already has it
 	self.ox = -1*(game.width-game.width/2)/adjust
-	self.oy = 1*(game.height-game.height/2)/adjust
-	self.init_w = game.width/adjust
+	self.oy = (game.height-game.height/2)/adjust	-- i gotta rename variables 
+	self.init_w = game.width/adjust			--follow mymy.lua
 	self.init_h = game.height/adjust
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects) do
@@ -37,10 +40,14 @@ function Camera:viewport()--updates scaling viewport's window view affected by l
 	local adjust = 4	--test: for drawOutlines(),
 			--nvm, this part is actually handful in showing scaled drawing for collision,
 			--	(dont remove this)
-	self.screen.x = self.x-forZoomingIn*(game.width-game.width/2)/adjust
-	self.screen.y = self.y-forZoomingIn*(game.height-game.height/2)/adjust
-	self.screen.w = game.width*forZoomingIn/adjust
-	self.screen.h = game.height*forZoomingIn/adjust
+			--	nvm, i really dont need a specific table for this, fix this later too
+	self.screen.x = self.x-forZoomingIn*(game.width-game.width/2)/adjust -- i really gotta stay consitent
+		--what the hell, screen.x when multiplied by negative forZoomingIn, it works,
+		--but unlike mymylua, has opposite situation for that specific signage, 
+		--need check on this part!
+	self.screen.y = self.y-forZoomingIn*(game.height-game.height/2)/adjust -- change this later!
+	self.screen.w = game.width*forZoomingIn/adjust		---no,no i think this is important for
+	self.screen.h = game.height*forZoomingIn/adjust		--drawing with scaled offset
 end -- i dont know how to lock the camera inside a box and stop forZoomingIn scaling if collided returns true
 	--so ill just put wall() collision on that thing, to lock the player within the playground.
 

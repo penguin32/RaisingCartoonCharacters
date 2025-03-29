@@ -23,9 +23,8 @@ function SimpleMovement:new(x,y,velocity,npc)
 			-- and for that, doesn't break.
 	self:updateCoordinates()
 
---	npc = npc or false
-	npc = npc or true --for the sake of testing
-	if npc then
+	self.npc = npc or false
+	if self.npc then
 		self.rwalk = false -- random walk
 		self.walkTime = 2	--time amount of stopping
 		self.rstop = 2		--time amount walking
@@ -40,16 +39,14 @@ function SimpleMovement:new(x,y,velocity,npc)
 	end
 end
 
-function SimpleMovement:update(dt,animal_x,animal_y,food_x,food_y)
-	self.base_cfd = Direction.GetDistance(animal_x,animal_y,food_x,food_y)
-	self.base_cos,self.base_sin = Direction.GetVector(animal_x,animal_y,food_x,food_y)
-	if self.base_cfd > self.base_dai and self.base_cfd < self.base_damv then
-		self.dx = self.dx + (self.v*self.base_cos*(self.base_cfd/50*gsr)*dt)
-		self.dy = self.dy + (self.v*self.base_sin*(self.base_cfd/50*gsr)*dt)
-	elseif self.base_cfd >= self.base_damv then
-		self.dx = self.dx + (self.v*self.base_cos*(self.base_da/50*gsr)*dt)
-		self.dy = self.dy + (self.v*self.base_sin*(self.base_da/50*gsr)*dt)
-	end
+function SimpleMovement:update(dt)
+--	if not(self.npc) then-- because player's run this by default
+--				--but because this shit needs to run update() for it has
+--				--updateCoordinates() as theyre very important,
+--				--if i want to disable movement as gameplay mechanics,
+--				--i should probably group this part as a function itself.
+--		self:Follow(dt,game.middleX,game.middleY,cursor.x,cursor.y)
+--	end	--nvm, im calling Follow() function on the camera class instead.
 	self:updateCoordinates()
 end
 
@@ -61,7 +58,22 @@ function SimpleMovement:updateCoordinates()
 end
 
 --Unique functions:
-function SimpleMovement:RandomWalks(dt)
+function SimpleMovement:Follow(dt,animal_x,animal_y,food_x,food_y) -- i could reuse this to follow other else.
+				--when called, this object will follow the targetted object,
+				-- up to a certain point.--that would be base_dai "idle area"
+	self.base_cfd = Direction.GetDistance(animal_x,animal_y,food_x,food_y)
+	self.base_cos,self.base_sin = Direction.GetVector(animal_x,animal_y,food_x,food_y)
+	if self.base_cfd > self.base_dai and self.base_cfd < self.base_damv then
+		self.dx = self.dx + (self.v*self.base_cos*(self.base_cfd/50*gsr)*dt)
+		self.dy = self.dy + (self.v*self.base_sin*(self.base_cfd/50*gsr)*dt)
+	elseif self.base_cfd >= self.base_damv then
+		self.dx = self.dx + (self.v*self.base_cos*(self.base_da/50*gsr)*dt)
+		self.dy = self.dy + (self.v*self.base_sin*(self.base_da/50*gsr)*dt)
+	end
+end
+
+
+function SimpleMovement:RandomWalks(dt)	--just call me within npc update()
 	self.walkTime = self.walkTime - dt
 	if self.walkTime > 0 and self.walkTime < self.rstop then
 		self.rwalk = true
