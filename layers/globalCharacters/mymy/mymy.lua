@@ -1,4 +1,13 @@
-Mymy = SimpleMovement:extend()
+--// in LevelLoader.lua
+--SortObject()
+--	Character classes are treated as Circle classes by default
+--	now that i have a kind of Character that is a rectangle, should have treated it
+--	as rectangle for now in that sorting function.,
+--	nope, ill just extend any character like a circle class for no....
+--	no again, extend it as Character class, then give it circle attributes for SortObj
+--	treating it like a circle, but we know for now this Mymy inherits RectangleCollider for now.
+
+Mymy = Character:extend()
 Mymy:implement(RectangleCollider)
 
 function Mymy:new(x,y,velocity,npc)

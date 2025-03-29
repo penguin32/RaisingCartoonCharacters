@@ -75,7 +75,6 @@ function love.load()
 	require "scripts.typesOfObjects.explorableArea"
 	require "scripts.typesOfObjects.flooredIsometricObject"
 	require "scripts.typesOfObjects.explorableAreaRectangle"
-	require "scripts.typesOfObjects.characterSprite"
 	require "scripts.typesOfObjects.character"
 --globalCharacters:
 	require "layers.globalCharacters.mymy.mymy"
