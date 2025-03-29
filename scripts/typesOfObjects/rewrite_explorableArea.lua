@@ -1,4 +1,8 @@
---// March 2025, need refactoring
+--// March 2025, need refactoring, not using this for the game im trying to make for now
+---if i remember correctory, this area has prebuilt variables of the coordinates for the 4 walls in
+---	isometric shape that is explorable,
+---	for now im only depending on exlorableAreaRectangle
+---	just re-plan everything important.
 
 
 

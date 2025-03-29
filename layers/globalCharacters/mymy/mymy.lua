@@ -9,19 +9,24 @@
 
 Mymy = Character:extend()
 Mymy:implement(RectangleCollider)
+Mymy:implement(BabyMymy)
 
-function Mymy:new(x,y,velocity,npc)
+function Mymy:new(x,y,velocity,init_scale,npc)
 	Mymy.super.new(self,x,y,velocity,npc)
+	self:loadImgSprite(init_scale)
 end
 
 function Mymy:update(dt)
 	Mymy.super.update(self,dt)
 	self:ugCollider()
 	self:gCollider()
-	self:RandomWalks(dt)
+	if self.npc then	-- it disables this when im controlling this character for testing
+		self:RandomWalks(dt)
+	end
 end
 
 function Mymy:draw()
+	self:drawSprite()
 end
 
 --Unique functions:
@@ -55,6 +60,7 @@ end
 
 function Mymy:updateScaling()
 	Mymy.super.updateScaling(self) -- i should probably edit that simpleMovement.lua
+	self:updateScalingSprite()
 end
 
 function Mymy:drawOutlines()

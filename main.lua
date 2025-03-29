@@ -1,7 +1,7 @@
 function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
-	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
-	toggleMute = true		-- I can adjust these 2 statements here
+	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
+	toggleMute = false		-- I can adjust these 2 statements here
 	newForZoomingIn = 0.40
 --	newForZoomingIn = 1		-- for testings,during developing.
 	forZoomingIn = 1	--Is used for attribs in game objects' like scaling/distances.
@@ -58,6 +58,8 @@ function love.load()
 	require "modules.modulesOutsideLove2d.strict"
 --collidersInherit:
 	require "scripts.collidersInherit.rectangleCollider"
+--spritesInherit:
+	require "scripts.spritesInherit.babyMymy"
 --scripts:
 	require "scripts.someSimpleTools"
 	require "scripts.direction"
@@ -72,7 +74,6 @@ function love.load()
 	require "scripts.objectShapes.isometricInteract"
 	require "scripts.objectShapes.rectangle"
 --typesOfObjects:
-	require "scripts.typesOfObjects.explorableArea"
 	require "scripts.typesOfObjects.flooredIsometricObject"
 	require "scripts.typesOfObjects.explorableAreaRectangle"
 	require "scripts.typesOfObjects.character"

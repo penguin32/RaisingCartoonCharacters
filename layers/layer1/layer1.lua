@@ -58,7 +58,8 @@ function Layer1:new(x,y,init_scale)
 	)) --before bottom side
 
 	table.insert(LevelLoader.objects,Camera(0,0,500))
-	table.insert(LevelLoader.objects,Mymy(-200,600,100,true))
+	table.insert(LevelLoader.objects,Mymy(-200,600,100,1,true))
+--	table.insert(LevelLoader.objects,Mymy(-200,600,100,1,false))	--gamedev test
 
 	self.updateScaling(self)
 end

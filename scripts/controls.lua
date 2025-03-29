@@ -134,7 +134,17 @@ Player.Keyboard.updatePresses = function(dt)
 	toggleMute, Player.Keyboard.mlatch, Player.Keyboard.mlatch2 = latch( Player.Keyboard.m, Player.Keyboard.mlatch, Player.Keyboard.mlatch2, toggleMute)
 end
 
+local fullscreen = false
 function love.keypressed(key)
+	if key == "f11" then  --HEHE I don't need toggle "latch() function" for keyboard!
+				--but it doesn't works on combine presses because the moment
+				--love.keyboard.isDown() is run on update(), it will switch so fast like
+				--light flickering when a keys is held down.
+				--but i didn't use isDown, i went with just check each individuals keys long
+				--story short, at updatePresses()
+		fullscreen = not fullscreen
+		love.window.setFullscreen(fullscreen,"exclusive")
+	end
 	if key == 'm' then
 		Player.Keyboard.m = true
 	end

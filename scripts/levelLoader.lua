@@ -50,14 +50,7 @@ function LevelLoader.draw()
 	love.graphics.translate(Player.Viewport.base_x,Player.Viewport.base_y)
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects)do
---			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then
---				--To see the collider as black outline.
---				love.graphics.setColor(0,0,0)
---				v:draw()--im planning to replace thems as drawOutlines, in the future
---				love.graphics.setColor(1,1,1)
---			else
-				v:draw()
---			end
+			v:draw()
 		end
 	end
 	love.graphics.pop()
@@ -140,28 +133,28 @@ function LevelLoader.SortObjects(a,b)
         elseif a:is(Character) and b:is(FlooredIsometricObject) then
                 return false
 
-        elseif a:is(ExplorableArea) and b:is(FlooredIsometricObject)  then
-                        --For the floor to drawn first on the canvas   ExplorableArea (HEREE)
+        elseif a:is(ExplorableAreaRectangle) and b:is(FlooredIsometricObject)  then
+                        --For the floor to drawn first on the canvas   ExplorableAreaRectangle (HEREE)
                 return true
-        elseif a:is(FlooredIsometricObject) and b:is(ExplorableArea)  then
+        elseif a:is(FlooredIsometricObject) and b:is(ExplorableAreaRectangle)  then
                 return false
-        elseif a:is(ExplorableArea) and b:is(Isometric) then
+        elseif a:is(ExplorableAreaRectangle) and b:is(Isometric) then
                 return true
-        elseif a:is(Isometric) and b:is(ExplorableArea) then
+        elseif a:is(Isometric) and b:is(ExplorableAreaRectangle) then
                 return false
-        elseif a:is(ExplorableArea) and b:is(Rectangle) then
+        elseif a:is(ExplorableAreaRectangle) and b:is(Rectangle) then
                 return true
-        elseif a:is(Rectangle) and b:is(ExplorableArea) then
+        elseif a:is(Rectangle) and b:is(ExplorableAreaRectangle) then
                 return false
-        elseif a:is(ExplorableArea) and b:is(Circle) then
+        elseif a:is(ExplorableAreaRectangle) and b:is(Circle) then
                 return true
-        elseif a:is(Circle) and b:is(ExplorableArea) then
+        elseif a:is(Circle) and b:is(ExplorableAreaRectangle) then
                 return false
-        elseif a:is(ExplorableArea) and b:is(Character) then
+        elseif a:is(ExplorableAreaRectangle) and b:is(Character) then
                 return true
-        elseif a:is(Character) and b:is(ExplorableArea) then
+        elseif a:is(Character) and b:is(ExplorableAreaRectangle) then
                 return false
-        elseif a:is(ExplorableArea) and b:is(ExplorableArea) then
+        elseif a:is(ExplorableAreaRectangle) and b:is(ExplorableAreaRectangle) then
                 return b.y > a.y
 	else
 		--do nothing, it maybe the camera, when ui to objects now
@@ -194,9 +187,6 @@ function LevelLoader.drawOutlines()
 	if #LevelLoader.objects > 0 then
 	love.graphics.translate(Player.Viewport.base_x,Player.Viewport.base_y)
 		for i,v in ipairs(LevelLoader.objects)do
---			if not(v:is(Camera)) then
---				v:drawOutlines()
---			end
 			v:drawOutlines()
 		end
 	end
