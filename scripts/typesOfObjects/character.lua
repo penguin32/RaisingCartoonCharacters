@@ -4,7 +4,8 @@ Character = SimpleMovement:extend()
 --all kind of things that needed simplemovemnt would do well
 --if they wanted to be sorted out like a circle (see SortObject() )
 --
---nvm, it may not be true at all since it also has an affect of collisions, be wary of that.
+-- --It just drawing order, f my naming convention,
+-- ill use this for any other movable objects,
 function Character:new(x,y,velocity,npc)
 	Character.super.new(self,x,y,velocity,npc)
 end
@@ -15,4 +16,11 @@ end
 
 function Character:updateScaling()
 	Character.super.updateScaling(self)
+end
+
+function Character:selectAction(dt,action)
+	action = action or 0
+	if action == 1 then
+		Character.super.RandomWalks(self,dt)
+	end
 end

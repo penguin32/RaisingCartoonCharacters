@@ -11,8 +11,8 @@ Mymy = Character:extend()
 Mymy:implement(RectangleCollider)
 Mymy:implement(BabyMymy)
 
-function Mymy:new(x,y,velocity,init_scale,npc)
-	Mymy.super.new(self,x,y,velocity,npc)
+function Mymy:new(x,y,velocity,init_scale)
+	Mymy.super.new(self,x,y,velocity)
 	self:loadImgSprite(init_scale)
 end
 
@@ -20,9 +20,7 @@ function Mymy:update(dt)
 	Mymy.super.update(self,dt)
 	self:ugCollider()
 	self:gCollider()
-	if self.npc then	-- it disables this when im controlling this character for testing
-		self:RandomWalks(dt)
-	end
+	Mymy.super.selectAction(self,dt,0)--for now
 end
 
 function Mymy:draw()

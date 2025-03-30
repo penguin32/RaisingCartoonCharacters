@@ -4,7 +4,7 @@
 
 SimpleMovement = Object:extend()
 
-function SimpleMovement:new(x,y,velocity,npc)
+function SimpleMovement:new(x,y,velocity)
 	self.x = x or 0  --see layer 1 for explanations, and control.lua near Player.Viewport
 	self.y = y or 0
 	self.dx = x or 0
@@ -22,9 +22,7 @@ function SimpleMovement:new(x,y,velocity,npc)
 			-- by doing so it "declared the variables first"
 			-- and for that, doesn't break.
 	self:updateCoordinates()
-
-	self.npc = npc or false
-	if self.npc then
+---random walk attributes:
 		self.rwalk = false -- random walk
 		self.walkTime = 2	--time amount of stopping
 		self.rstop = 2		--time amount walking
@@ -36,17 +34,9 @@ function SimpleMovement:new(x,y,velocity,npc)
 		self.rradian = 0 --random radians
 		self.rux = 0 --random unit vector x
 		self.ruy = 0 --random unit vector y
-	end
 end
 
 function SimpleMovement:update(dt)
---	if not(self.npc) then-- because player's run this by default
---				--but because this shit needs to run update() for it has
---				--updateCoordinates() as theyre very important,
---				--if i want to disable movement as gameplay mechanics,
---				--i should probably group this part as a function itself.
---		self:Follow(dt,game.middleX,game.middleY,cursor.x,cursor.y)
---	end	--nvm, im calling Follow() function on the camera class instead.
 	self:updateCoordinates()
 end
 
@@ -73,7 +63,7 @@ function SimpleMovement:Follow(dt,animal_x,animal_y,food_x,food_y) -- i could re
 end
 
 
-function SimpleMovement:RandomWalks(dt)	--just call me within npc update()
+function SimpleMovement:RandomWalks(dt)
 	self.walkTime = self.walkTime - dt
 	if self.walkTime > 0 and self.walkTime < self.rstop then
 		self.rwalk = true
