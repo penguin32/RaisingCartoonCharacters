@@ -26,18 +26,22 @@ function Mymy:update(dt)
 end
 
 function Mymy:draw()
-	self:drawSprite()
+	self:drawSprite()	--you can implement only 1 character(babyMymy.lua) from  spritesInherit
+				--and it will call this function, assuming their names for drawing sprites
+				--are the same.
 end
 
 --Unique functions:
 function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so rectangle for that
-	self.init_w = 150
-	self.init_h = 80
+	self.init_w = 130
+	self.init_h = 40
 	self.odx = -1*(self.init_w-self.init_w/2)--offset dx , (not a coordinate, thats length)
 	self.ody = (self.init_h-self.init_h/2)
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects) do
 			if v:is(Rectangle) and (v.group == 0 or v.group == 1) then
+				--group 0, usually walls for camera,
+				--group 1 walls for objects like this
 				self:Walls(v,self.odx,self.ody)
 			end
 		end
@@ -60,12 +64,12 @@ end
 
 function Mymy:updateScaling()
 	Mymy.super.updateScaling(self) -- i should probably edit that simpleMovement.lua
-	self:updateScalingSprite()
+	self:updateScalingSprite() --similar to Mymy:draw()
 end
 
 function Mymy:drawOutlines()
 	love.graphics.setColor(0,100,1)
-	love.graphics.rectangle("fill",self.ox,self.oy,self.w,self.h)
+	love.graphics.rectangle("line",self.ox,self.oy,self.w,self.h)
 	love.graphics.setColor(0,0,0)
 	love.graphics.print("dx,dy :"..self.dx.." , "..self.dy,self.ox,self.oy)
 end

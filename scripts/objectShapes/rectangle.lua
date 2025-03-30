@@ -60,7 +60,7 @@ end
 
 --Unique functions:
 
---Special Functions
+--Special functions
 function Rectangle:updateScaling()
 --updating scaling here: (reminder, use for zoom functionality only)
 --if I plant to update its width and height not because of zoom function,

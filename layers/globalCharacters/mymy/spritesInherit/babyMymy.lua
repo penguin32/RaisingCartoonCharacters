@@ -10,14 +10,16 @@
 --and i could just call off this function if i wanted to, and its group together so neatly 
 --	simpleMovement(for moving) --> character(for drawing order, for now) --> mymy --> (now here) which
 --		skins to wear and what functions it can call upon at mymy.lua
+--
+--mymy.lua is not gonna be a baby forever
 BabyMymy = Object:extend()
 
 function BabyMymy:loadImgSprite(init_scale)
 	self.init_scale = init_scale or 1
 	self.scale = init_scale or 1
 	self.skin = love.graphics.newImage("layers/globalCharacters/mymy/sprites_babyMymy/idle_1.png")
-	self.ofdx = self.skin:getWidth()*forZoomingIn/2	--offset for draw, self.x
-	self.ofdy = self.skin:getHeight()*forZoomingIn
+--	self.ofdx = self.skin:getWidth()*forZoomingIn/2	--offset for draw, self.x
+--	self.ofdy = self.skin:getHeight()*forZoomingIn
 	self:updateScalingSprite() -- need to be called once
 			--because of LevelLoader.updateLevelScaling() at main.lua
 			--it runs only when zoom function happens,
@@ -38,6 +40,6 @@ function BabyMymy:updateScalingSprite()
 	end
 	if self.skin ~= nil then
 		self.ofdx = self.skin:getWidth()*forZoomingIn/2
-		self.ofdy = self.skin:getHeight()*forZoomingIn
+		self.ofdy = (self.skin:getHeight()-20)*forZoomingIn
 	end
 end

@@ -139,8 +139,8 @@ end
 
 function RectangleCollider:idrawOutlines() --inherited drawOutlines() -- remember theres a difference between
 						-- dx,dy and self.x,y
-	love.graphics.rectangle("fill",self.x+5*forZoomingIn,self.y-5*forZoomingIn, self.w-10*forZoomingIn, self.h+10*forZoomingIn)
 	love.graphics.setColor(0,0,100)
+	love.graphics.rectangle("line",self.x+5*forZoomingIn,self.y-5*forZoomingIn, self.w-10*forZoomingIn, self.h+10*forZoomingIn)
 	love.graphics.circle("fill",self.x,self.y,10*forZoomingIn) 
 	love.graphics.circle("fill",self.x+self.w,self.y,10*forZoomingIn)
 	love.graphics.circle("line",self.x,self.y+self.h,10*forZoomingIn)
