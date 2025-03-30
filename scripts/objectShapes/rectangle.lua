@@ -1,8 +1,12 @@
 Rectangle = Object:extend()
 Rectangle:implement(RectangleCollider)
 --not tested for moving rectangles during zoom function.
-function Rectangle:new(x,y,init_w,init_h,init_scale,set_collider,group,npc,velocity,gameDev)
-	self.npc = npc or false		--true for none playable characters, false for walls
+function Rectangle:new(x,y,init_w,init_h,init_scale,group,velocity,gameDev)
+	self.collided = false
+	self.owner = 0
+	self.id = math.random()
+	self.ids = {} -- table of interacted objects
+
 --	self.id = id	--necessary, didnt put 'or' so that it may throw an error, dont need shit,
 --			delete line after git push
 	self.gameDev = gameDev or false --temporary variable,
@@ -13,10 +17,8 @@ function Rectangle:new(x,y,init_w,init_h,init_scale,set_collider,group,npc,veloc
 	self.v = velocity or 0
 	self.group = group or 0 --variable use in collidersInherit, objs the in same groups does not collide
 	self.loco = {} --list of colliding objects
-	self.collided = false	--boolean use by this class,
-	self.set_collider = set_collider or false ---decides wether to set colliders on or off
-	self.x = x or 0				-- variables use in implement(RectangleColliders)
-	self.y = y or 0				--
+	self.x = x or 0
+	self.y = y or 0
 	self.dx = x or 0
 	self.dy = y or 0
 	self.wo_to_dx = x - origin.x
@@ -44,9 +46,6 @@ end
 function Rectangle:update(dt)--Exist to stay consistent with Environment.update(dt) loops
 --updating movements here:
 	self:updateCoordinates()
-	if self.set_collider then
-		self:Colliders()
-	end
 end
 
 function Rectangle:updateCoordinates()
@@ -84,17 +83,18 @@ end
 function Rectangle:drawOutlines()
 	-- Just for testing... see collision shape.
 	love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
-	love.graphics.circle("fill",self.x,self.y,10*forZoomingIn)
-	love.graphics.print("dx,dy: "..self.dx.." , "..self.dy ,self.x,self.y)
+--	love.graphics.circle("fill",self.x,self.y,10*forZoomingIn)
+--	love.graphics.print("dx,dy: "..self.dx.." , "..self.dy ,self.x,self.y)
+	love.graphics.print("collided: "..tostring(self.collided),self.x,self.y)
+	love.graphics.print("collisions: "..#self.ids,self.x,self.y+30)
+--	love.graphics.print("seed: "..self.id,self.x,self.y+60)
 	--colliders
-	if self.set_collider then
-		if self.collided then
-			love.graphics.setColor(0,100,0)
-			self:idrawOutlines()
-			love.graphics.setColor(0.5,0,0)
-		else
-			self:idrawOutlines()
-		end
+	if self.collided then
+		love.graphics.setColor(0,100,0)
+		self:idrawOutlines()
+		love.graphics.setColor(0.5,0,0)
+	else
+		self:idrawOutlines()
 	end
-			love.graphics.setColor(0.5,0,0)
+	love.graphics.setColor(0.5,0,0)
 end

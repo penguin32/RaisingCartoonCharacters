@@ -61,7 +61,7 @@ function Player.update(dt)
 --			if v:is(Camera) then
 --				Player.Viewport.base_x = -v.x + game.middleX
 --				Player.Viewport.base_y = -v.y + game.middleY
-			if v:is(Mymy) then
+			if v:is(Mymy) and v.gameDev == true then
 				Player.Viewport.ArrowKeys(dt,v)
 				Player.Viewport.base_x = -v.x + game.middleX
 				Player.Viewport.base_y = -v.y + game.middleY

@@ -1,52 +1,127 @@
 RectangleCollider = Object:extend()
 
 function RectangleCollider:Colliders()
-	--when calling me, since we're checking the object's position when colliding, you have to call me on
-	--the update() function of those classes inheriting me.
-	if #LevelLoader.objects > 0 then
-		for i, v in ipairs(LevelLoader.objects) do
-			-- shit loops throught itself, (costed my 13 fucking hours fuck
-			--fuck fuck my iq probably 30 below average
+--	--when calling me, since we're checking the object's position when colliding, you have to call me on
+--	--the update() function of those classes inheriting me.
+--	if #LevelLoader.objects > 0 then
+--		for i, v in ipairs(LevelLoader.objects) do
+--			-- shit loops throught itself, (costed my 13 fucking hours fuck
+--			--fuck fuck my iq probably 30 below average
 --		if v:is(Rectangle) and v.group == self.group and v.set_collider and self ~= v then
 --			self:CollideToRectangle(v)--this collision works with each other rectangles
---			self:Walls(v)
 --		end
+--
+--		end
+--	end
+--	--usually this function is specifically for testing, 
+--	-- because everything that happens here, affects other classes that extends from rectangle class whom
+--	-- inherited this class.
+--	-- set_collided = true, would have start this function running, see objectShapes/rectangle.lua
+--	--if i want a specific thing to happen, i just
+--	--have to call the function below at here at other file inheriting this.
+--
+--dont need this anymore, just leaving this here for reference
+end
 
+function RectangleCollider:setCollided(obj,ox,oy) --//The perfect collider, but im worried with resources
+				--because of many for loops as it checkes each 
+				--self's table and that obj's table
+				--self.ids
+				--obj.ids
+				--how it works?
+				--objects have id and ids,
+				--id are their unique seeds used to uniquely identify themselves.
+				--ids are table/list of id's they interacted with each other.
+				--if #ids count drop to zero, i set their "collided" to false
+				--if #ids is more than one, then their var "collided" is set to true
+				--#ids count are named "collisions" that you'd see printed on drawOutline()
+				--
+				--This way, in my first example for this git commit im gonna make,
+				--is that npc(mymy) calling this function under theirs(update function)
+				-- causes it to add values to attributes that is being looped at
+				-- that is Mymy --> Shit, which means
+				-- 	"check if mymy class" interacts with an object "shits"
+				-- hence only mymy can do that,
+				-- 	if shit interact with other shits, nothing gonna change.
+				-- and if there's two mymy in the game, it 
+				-- 			just add to their objs list of ids
+				-- and that mymys doesnt interact with one another as i made sure of that in
+				-- their update()
+	local sLeft = self.dx+ox < obj.dx+obj.init_w
+	local sRight = self.dx+ox+self.init_w > obj.dx
+	local sTop = self.dy+oy-self.init_h < obj.dy
+	local sBot = self.dy+oy>obj.dy-obj.init_h
+	if not(sLeft and sRight and sTop and sBot)then
+		for i,v in ipairs(obj.ids) do
+			if v == self.id then
+				table.remove(obj.ids,i)
+			end
+		end
+		if #obj.ids == 0 then
+			obj.collided = false
+		end
+		for i,v in ipairs(self.ids) do
+			if v == obj.id then
+				table.remove(self.ids,i)
+			end
+		end
+		if #self.ids == 0 then
+			self.collided = false
+		end
+	end 
+	if sLeft and sRight and sTop and sBot then
+			local doesExist = false
+			for i,v in ipairs(self.ids) do
+				if v == obj.id then
+					doesExist = true
+					break
+				end
+			end
+			if not(doesExist) then
+				table.insert(self.ids,obj.id)
+			end
+		if #self.ids > 0 then
+			self.collided = true
+		end
+			local doesExist = false
+			for i,v in ipairs(obj.ids) do
+				if v == self.id then
+					doesExist = true
+					break
+				end
+			end
+			if not(doesExist) then
+				table.insert(obj.ids,self.id)
+			end
+		if #obj.ids > 0 then
+			obj.collided = true
 		end
 	end
-	--usually this function is specifically for testing, 
-	-- because everything that happens here, affects other classes that extends from rectangle class whom
-	-- inherited this class.
-	-- set_collided = true, would have start this function running, see objectShapes/rectangle.lua
-	--if i want a specific thing to happen, i just
-	--have to call the function below at here at other file inheriting this.
 end
 
 function RectangleCollider:Walls(obj,ox,oy) --ox, offset x
-	if obj.npc == false then
-		local sLeft = self.dx+ox < obj.dx+obj.init_w --self left
-		local sRight = self.dx+ox+self.init_w > obj.dx
-		local sTop = self.dy+oy-self.init_h < obj.dy
-		local sBot = self.dy+oy>obj.dy-obj.init_h
-		if sLeft and sRight and sTop and sBot then
-			--contain sLeft from top and bottom, then
-		local ifrsoor = self.dx+ox+self.init_w > obj.dx+obj.init_w
-				-- if self's right side is on obj's right side.
-		local iflsool =	self.dx+ox < obj.dx --if self's left on object's left side.
-		local iftsoot = self.dy+oy-self.init_h < obj.dy-obj.init_h	--if top self on object's top
-		local ifbsoob = self.dy+oy > obj.dy --if bottom self on object's bottom
-		--okay i give up, im going to right this uglier code, so...
-		--self middle part compare to object's vertices in abscissa.
-		local smiddle = self.dy+oy-self.init_h/2
-			if sTop and ifbsoob and smiddle > obj.dy then
-				self.dy = obj.dy+self.init_h - oy
-			elseif sBot and iftsoot and smiddle < obj.dy-obj.init_h then
-				self.dy = obj.dy-obj.init_h - oy
-			elseif sLeft and (sTop or sBot) and ifrsoor then
-				self.dx = obj.dx+obj.init_w - ox
-			elseif sRight and (sTop or sBot) and iflsool then
-				self.dx = obj.dx-self.init_w - ox
-			end
+	local sLeft = self.dx+ox < obj.dx+obj.init_w --self left
+	local sRight = self.dx+ox+self.init_w > obj.dx
+	local sTop = self.dy+oy-self.init_h < obj.dy
+	local sBot = self.dy+oy>obj.dy-obj.init_h
+	if sLeft and sRight and sTop and sBot then
+		--contain sLeft from top and bottom, then
+	local ifrsoor = self.dx+ox+self.init_w > obj.dx+obj.init_w
+			-- if self's right side is on obj's right side.
+	local iflsool =	self.dx+ox < obj.dx --if self's left on object's left side.
+	local iftsoot = self.dy+oy-self.init_h < obj.dy-obj.init_h	--if top self on object's top
+	local ifbsoob = self.dy+oy > obj.dy --if bottom self on object's bottom
+	--okay i give up, im going to right this uglier code, so...
+	--self middle part compare to object's vertices in abscissa.
+	local smiddle = self.dy+oy-self.init_h/2
+		if sTop and ifbsoob and smiddle > obj.dy then
+			self.dy = obj.dy+self.init_h - oy
+		elseif sBot and iftsoot and smiddle < obj.dy-obj.init_h then
+			self.dy = obj.dy-obj.init_h - oy
+		elseif sLeft and (sTop or sBot) and ifrsoor then
+			self.dx = obj.dx+obj.init_w - ox
+		elseif sRight and (sTop or sBot) and iflsool then
+			self.dx = obj.dx-self.init_w - ox
 		end
 	end
 end
@@ -141,15 +216,10 @@ function RectangleCollider:idrawOutlines() --inherited drawOutlines() -- remembe
 						-- dx,dy and self.x,y
 	love.graphics.setColor(0,0,100)
 	love.graphics.rectangle("line",self.x+5*forZoomingIn,self.y-5*forZoomingIn, self.w-10*forZoomingIn, self.h+10*forZoomingIn)
-	love.graphics.circle("fill",self.x,self.y,10*forZoomingIn) 
-	love.graphics.circle("fill",self.x+self.w,self.y,10*forZoomingIn)
-	love.graphics.circle("line",self.x,self.y+self.h,10*forZoomingIn)
-	love.graphics.circle("fill",self.x+self.w,self.y+self.h,10*forZoomingIn)
-	love.graphics.print("self.y-h: "..self.y-self.h,self.x,self.y+60*gsr)
-	love.graphics.print("self.y: "..self.y,self.x,self.y+80*gsr)
+--	love.graphics.print("self.collided: "..tostring(self.collided),self.x,self.y+80*gsr)
 
-	love.graphics.print("top side: "..self.y+self.h,self.x,self.y+self.h+80*gsr)
-	love.graphics.print("loco table: "..#self.loco,self.x,self.y+self.h+120*gsr)
+--	love.graphics.print("top side: "..self.y+self.h,self.x,self.y+self.h+80*gsr)
+--	love.graphics.print("loco table: "..#self.loco,self.x,self.y+self.h+120*gsr)
 
 	love.graphics.setColor(0.5,0,0)
 end
