@@ -3,12 +3,9 @@ Rectangle:implement(RectangleCollider)
 --not tested for moving rectangles during zoom function.
 function Rectangle:new(x,y,init_w,init_h,init_scale,group,velocity,gameDev)
 	self.collided = false
-	self.owner = 0
 	self.id = math.random()
 	self.ids = {} -- table of interacted objects
 
---	self.id = id	--necessary, didnt put 'or' so that it may throw an error, dont need shit,
---			delete line after git push
 	self.gameDev = gameDev or false --temporary variable,
 					--for testing out collission so that i could control them,
 					--to differentiate among the tables of objects when being loop by

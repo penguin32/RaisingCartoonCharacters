@@ -126,7 +126,37 @@ function RectangleCollider:Walls(obj,ox,oy) --ox, offset x
 	end
 end
 
-function RectangleCollider:CollideToRectangle(obj)
+function RectangleCollider:knowWhatSide(obj,ox,oy)--know what side of the object you're bouncing from
+			--if the self collided with a wall, only call this function to check what side
+			--,it does't have to be a wall, just an example
+			--check if collided
+			--check if both object has the same id
+			--	tells which side of the object by using this function
+			--	end
+			--	--for bouncing sliding shit.lua
+			--	This function only works if self objects has svx and svy, see shit.lua
+			--	must run only once
+	local yourMiddleX = self.dx+ox + self.init_w/2
+	local yourMiddleY = self.dy+oy - self.init_h/2
+	--corners is bugging shit out, i cant use yourmiddleX/y anymore
+	--change later
+	local oRight = yourMiddleX > obj.dx+obj.init_w --"self" is at the left side of that obj
+	local oLeft = yourMiddleX < obj.dx	--right side of that obj
+	local oBot = yourMiddleY > obj.dy --bottom of that obj
+	local oTop = yourMiddleY<obj.dy-obj.init_h --youre on top of that obj
+	if not(oTop) and not(oBot) then
+		if oLeft or oRight then
+			self.svx = -1*self.svx
+		end
+	elseif not(oRight) and not(oLeft) then
+		if oTop or oBot then
+			self.svy = -1*self.svy
+		end
+	end
+end
+
+function RectangleCollider:CollideToRectangle(obj)--i think this is redundant, but may i'd use this in future.
+						-- or just reference
 	local sLeft = self.dx < obj.dx+obj.init_w --self left
 	local sRight = self.dx+self.init_w > obj.dx
 	local sTop = self.dy-self.init_h < obj.dy

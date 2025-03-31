@@ -38,7 +38,7 @@ function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so r
 	self.init_w = 130
 	self.init_h = 40
 	self.odx = -1*(self.init_w-self.init_w/2)--offset dx , (not a coordinate, thats length)
-	self.ody = (self.init_h-self.init_h/2)
+	self.ody = (self.init_h-self.init_h/2) -- rewrite later this thing, some of odx is redundant
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects) do
 			if v:is(Shit) then--simple collision check, unsure, what
