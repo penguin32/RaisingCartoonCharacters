@@ -1,0 +1,1 @@
+FlooredRectangularObject = Rectangle:extend()

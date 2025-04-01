@@ -1,6 +1,6 @@
 function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
-	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
+	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
 	toggleMute = true		-- I can adjust these 2 statements here
 	newForZoomingIn = 0.40
 --	newForZoomingIn = 1		-- for testings,during developing.
@@ -68,11 +68,10 @@ function love.load()
 --objectShapes:
 	require "scripts.objectShapes.circle"
 	require "scripts.objectShapes.isometric"
-	require "scripts.objectShapes.isometricBeta"
 	require "scripts.objectShapes.isometricInteract"
 	require "scripts.objectShapes.rectangle"
 --typesOfObjects:
-	require "scripts.typesOfObjects.flooredIsometricObject"
+	require "scripts.typesOfObjects.flooredRectangularObject"
 	require "scripts.typesOfObjects.explorableAreaRectangle"
 	require "scripts.typesOfObjects.character"
 --spritesInherit:
@@ -81,6 +80,7 @@ function love.load()
 	require "layers.globalCharacters.mymy.mymy"
 --globalObjects:
 	require "layers.globalObjects.shits.shit"
+	require "layers.globalObjects.shits.shitTrails"
 --levels, all layers use for a specific levels:
 	require "layers.layer0.layer0"
 	require "layers.layer1.layer1"

@@ -109,34 +109,34 @@ function LevelLoader.SortObjects(a,b)
                 return b.y > a.y
         elseif (a:is(Circle) or a:is(Character)) and (b:is(Circle) or b:is(Character)) then
                 return b.y > a.y
-        elseif a:is(FlooredIsometricObject) and b:is(FlooredIsometricObject) then
-                                        --For the FlooredIsometricObject (HEREE)
+        elseif a:is(FlooredRectangularObject) and b:is(FlooredRectangularObject) then
+                                        --For the FlooredRectangularObject (HEREE)
                 return b.y > a.y
 
-        elseif a:is(FlooredIsometricObject) and b:is(Rectangle) then
+        elseif a:is(FlooredRectangularObject) and b:is(Rectangle) then
                 return true
-        elseif a:is(Rectangle) and b:is(FlooredIsometricObject) then
+        elseif a:is(Rectangle) and b:is(FlooredRectangularObject) then
                 return false
 
-        elseif a:is(FlooredIsometricObject) and b:is(Circle) then
+        elseif a:is(FlooredRectangularObject) and b:is(Circle) then
                 return true
-        elseif a:is(Circle) and b:is(FlooredIsometricObject) then
+        elseif a:is(Circle) and b:is(FlooredRectangularObject) then
                 return false
 
-        elseif a:is(FlooredIsometricObject) and b:is(Isometric) then
+        elseif a:is(FlooredRectangularObject) and b:is(Isometric) then
                 return true
-        elseif a:is(Isometric) and b:is(FlooredIsometricObject) then
+        elseif a:is(Isometric) and b:is(FlooredRectangularObject) then
                 return false
 
-        elseif a:is(FlooredIsometricObject) and b:is(Character) then
+        elseif a:is(FlooredRectangularObject) and b:is(Character) then
                 return true
-        elseif a:is(Character) and b:is(FlooredIsometricObject) then
+        elseif a:is(Character) and b:is(FlooredRectangularObject) then
                 return false
 
-        elseif a:is(ExplorableAreaRectangle) and b:is(FlooredIsometricObject)  then
+        elseif a:is(ExplorableAreaRectangle) and b:is(FlooredRectangularObject)  then
                         --For the floor to drawn first on the canvas   ExplorableAreaRectangle (HEREE)
                 return true
-        elseif a:is(FlooredIsometricObject) and b:is(ExplorableAreaRectangle)  then
+        elseif a:is(FlooredRectangularObject) and b:is(ExplorableAreaRectangle)  then
                 return false
         elseif a:is(ExplorableAreaRectangle) and b:is(Isometric) then
                 return true

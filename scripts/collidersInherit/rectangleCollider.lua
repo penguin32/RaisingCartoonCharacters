@@ -156,7 +156,8 @@ function RectangleCollider:knowWhatSide(obj,ox,oy)--know what side of the object
 	end
 end
 
-function RectangleCollider:slide(dt,gh,gl,f)
+function RectangleCollider:slide(dt,gh,gl,f,doStuff)
+	doStuff = doStuff or nil
 	--a function thats not accurate mimic of sliding object irl(real life)
 			--affect by npc/character to an object "rectangle" kind
 			--and bouncing off walls and themselves, walls being "rectangle" also
@@ -243,6 +244,9 @@ function RectangleCollider:slide(dt,gh,gl,f)
 		self.dx = self.dx + self.v*self.svx*dt
 		self.dy = self.dy + self.v*self.svy*dt
 		self.v = self.v - f*dt --friction like :D
+		if doStuff ~= nil then
+			doStuff()
+		end
 	end
 end
 

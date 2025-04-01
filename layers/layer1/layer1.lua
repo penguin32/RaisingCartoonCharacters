@@ -55,9 +55,9 @@ function Layer1:new(x,y,init_scale)
 						--gameDev,8
 	)) --before bottom side
 
-	table.insert(LevelLoader.objects,Camera(0,0,500))	-- if you're gonna use me, see controls.lua after
+--	table.insert(LevelLoader.objects,Camera(0,0,500))	-- if you're gonna use me, see controls.lua after
 	table.insert(LevelLoader.objects,Mymy(60,650,100,1))
---	table.insert(LevelLoader.objects,Mymy(-200,600,100,1,true))	--gamedev test
+	table.insert(LevelLoader.objects,Mymy(-200,600,100,1,true))	--gamedev test
 	table.insert(LevelLoader.objects,Shit(-150,650,1/2))
 	table.insert(LevelLoader.objects,Shit(-50,650,1/2))
 
