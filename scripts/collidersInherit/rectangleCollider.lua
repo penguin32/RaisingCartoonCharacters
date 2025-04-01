@@ -136,6 +136,7 @@ function RectangleCollider:knowWhatSide(obj,ox,oy)--know what side of the object
 			--	--for bouncing sliding shit.lua
 			--	This function only works if self objects has svx and svy, see shit.lua
 			--	must run only once
+			--function written mostly for slide() here
 	local yourMiddleX = self.dx+ox + self.init_w/2
 	local yourMiddleY = self.dy+oy - self.init_h/2
 	--corners is bugging shit out, i cant use yourmiddleX/y anymore
@@ -179,18 +180,20 @@ function RectangleCollider:slide(dt,gh,gl,f)
 	--now im just adding what it can do about it, and that function is gonna be called here
 	--Important to know this for future me tryna revisit shit,
 	--self.group is very important as it affect conditions which rectangularCollider.lua is applied.
-	if #LevelLoader.objects > 0 then -- bounce off npc/players
-		for i,v in ipairs(LevelLoader.objects) do
-			if v:is(Character) then
-				for j,w in ipairs(self.ids) do
-					if w == v.id then
-						self.v = self.v + v.v*dt
-						self.svx,self.svy = Direction.GetVector(v.dx,v.dy,self.dx,self.dy)
-					end
-				end
-			end
-		end
-	end
+
+
+--	if #LevelLoader.objects > 0 then -- bounce off npc/players
+--		for i,v in ipairs(LevelLoader.objects) do
+--			if v:is(Character) then
+--				for j,w in ipairs(self.ids) do
+--					if w == v.id then
+--						self.v = self.v + v.v*dt
+--						self.svx,self.svy = Direction.GetVector(v.dx,v.dy,self.dx,self.dy)
+--					end
+--				end
+--			end
+--		end
+--	end	--moved this within a single loop of LevelLoader.objects instead
 	--instead of checking if object is collided == true,
 	--i'll just check the list of colliding objects self.ids, and compare their id's to their list of ids
 	--if its equal, then that means they're collided
@@ -201,21 +204,36 @@ function RectangleCollider:slide(dt,gh,gl,f)
 					if w == v.id then
 						self:Walls(v,0,0)
 						self:knowWhatSide(v,0,0)
-						--must run only once so,
+						--knowWhatSide() must run only once so, 
 						--table.remove(self.ids,j)
+						--no need, setCollided() took cares of it.
+				--maybe i can also bounce them from one another.
+						v.v = self.v
+						--best i could do,
+					end
+				end
+				self:setCollided(v,0,0) --just like mymy --> shit,
+				-- for this one, its shit --> walls.
+				-- 	because Shit:is(Rectangle) therefore, it also affects shit
+			end
+			if v:is(Character) then
+				for j,w in ipairs(self.ids) do
+					if w == v.id then
+						self.v = self.v + v.v*dt
+						self.svx,self.svy = Direction.GetVector(v.dx,v.dy,self.dx,self.dy)
 					end
 				end
 			end
 		end
 	end
-	if #LevelLoader.objects > 0 then
-		for i,v in ipairs(LevelLoader.objects) do
-			if v:is(Rectangle) and (v.group < gh and v.group > gl) then
-				self:setCollided(v,0,0) --just like mymy --> shit,
-				-- for this one, its shit --> walls.
-			end
-		end
-	end
+--	if #LevelLoader.objects > 0 then
+--		for i,v in ipairs(LevelLoader.objects) do
+--			if v:is(Rectangle) and (v.group < gh and v.group > gl) then
+--				self:setCollided(v,0,0) --just like mymy --> shit,
+--				-- for this one, its shit --> walls.
+--			end
+--		end
+--	end  --moved this within a single loop of LevelLoader.objects instead
 	if self.v > 0 then
 		self.dx = self.dx + self.v*self.svx*dt
 		self.dy = self.dy + self.v*self.svy*dt
