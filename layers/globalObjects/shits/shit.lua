@@ -1,4 +1,5 @@
 Shit = Rectangle:extend()
+---i want to implement rectangleCOllider here.
 
 function Shit:new(x,y,spriteScale)
 	self.shit_1 = love.graphics.newImage("layers/globalObjects/shits/sprites/shit_1.png")
@@ -19,7 +20,11 @@ end
 
 function Shit:update(dt)
 	Shit.super.update(self,dt)
-	self:slide(dt)
+	self:slide(dt,3,-1,10)
+			--(change in time,			dt
+			--group highest but not equal to,	gh
+			--group lowest but not equal to)	gl
+			--friction				f
 end
 
 function Shit:draw()
@@ -34,56 +39,6 @@ function Shit:offsetDraw() -- kinda like updateScalingSprite()
 end
 
 --Unique functions:
-function Shit:slide(dt)
-	--player/npc already interact with this class
-	--now im just adding what it can do about it, and that function is gonna be called here
-	--Important to know this for future me tryna revisit shit,
-	--self.group is very important as it affect conditions which rectangularCollider.lua is applied.
-	if #LevelLoader.objects > 0 then -- bounce off npc/players
-		for i,v in ipairs(LevelLoader.objects) do
-			if v:is(Character) then
-				for j,w in ipairs(self.ids) do
-					if w == v.id then
-						self.v = self.v + v.v*dt
-						self.svx,self.svy = Direction.GetVector(v.dx,v.dy,self.dx,self.dy)
-					end
-				end
-			end
-		end
-	end
-	--instead of checking if object is collided == true,
-	--i'll just check the list of colliding objects self.ids, and compare their id's to their list of ids
-	--if its equal, then that means they're collided
-	if #LevelLoader.objects > 0 then --bounce off walls
-		for i,v in ipairs(LevelLoader.objects) do
-			if v:is(Rectangle) and (v.group == 0 or v.group == 1) then
-				for j,w in ipairs(self.ids) do
-					if w == v.id then
-						self:Walls(v,0,0)
-						self:knowWhatSide(v,0,0)
-						--must run only once so,
-						--table.remove(self.ids,j)
-					end
-				end
-			end
-		end
-	end
-	if #LevelLoader.objects > 0 then
-		for i,v in ipairs(LevelLoader.objects) do
-			if v:is(Rectangle) and (v.group == 0 or v.group == 1) then
-				self:setCollided(v,0,0) --just like mymy --> shit,
-				-- for this one, its shit --> walls.
-			end
-		end
-	end
-	if self.v > 0 then
-		self.dx = self.dx + self.v*self.svx*dt
-		self.dy = self.dy + self.v*self.svy*dt
-		self.v = self.v - 5*dt --friction like :D
-	end
-end
-
-
 --Special functions:
 function Shit:updateScaling()
 	Shit.super.updateScaling(self)

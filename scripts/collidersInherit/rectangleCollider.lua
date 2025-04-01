@@ -155,6 +155,74 @@ function RectangleCollider:knowWhatSide(obj,ox,oy)--know what side of the object
 	end
 end
 
+function RectangleCollider:slide(dt,gh,gl,f)
+	--a function thats not accurate mimic of sliding object irl(real life)
+			--affect by npc/character to an object "rectangle" kind
+			--and bouncing off walls and themselves, walls being "rectangle" also
+			--reminder that those walls aka rectangles, should have their
+			--v.group assigned within the parameter gh > v.group > gl
+			--and that includes the object that is sliding.
+			--
+			--The object's class calling this must have self.svx,svy variables
+			--	we use that when we want to toggle directions(components) to their
+			--	opposite sides when they bounce off walls.
+			--
+			--	That is function within function that also uses it, named
+			--		knowWhatSide()
+			--
+			--maybe i'll just add them at rectangle class as default
+			--since we only call this functions slid(), knowWhatSide(), to those
+			--	objects that are only affected and is able to slide off, not
+			--	on those walls.
+
+	--player/npc already interact with this class
+	--now im just adding what it can do about it, and that function is gonna be called here
+	--Important to know this for future me tryna revisit shit,
+	--self.group is very important as it affect conditions which rectangularCollider.lua is applied.
+	if #LevelLoader.objects > 0 then -- bounce off npc/players
+		for i,v in ipairs(LevelLoader.objects) do
+			if v:is(Character) then
+				for j,w in ipairs(self.ids) do
+					if w == v.id then
+						self.v = self.v + v.v*dt
+						self.svx,self.svy = Direction.GetVector(v.dx,v.dy,self.dx,self.dy)
+					end
+				end
+			end
+		end
+	end
+	--instead of checking if object is collided == true,
+	--i'll just check the list of colliding objects self.ids, and compare their id's to their list of ids
+	--if its equal, then that means they're collided
+	if #LevelLoader.objects > 0 then --bounce off walls
+		for i,v in ipairs(LevelLoader.objects) do
+			if v:is(Rectangle) and (v.group < gh and v.group > gl) then
+				for j,w in ipairs(self.ids) do
+					if w == v.id then
+						self:Walls(v,0,0)
+						self:knowWhatSide(v,0,0)
+						--must run only once so,
+						--table.remove(self.ids,j)
+					end
+				end
+			end
+		end
+	end
+	if #LevelLoader.objects > 0 then
+		for i,v in ipairs(LevelLoader.objects) do
+			if v:is(Rectangle) and (v.group < gh and v.group > gl) then
+				self:setCollided(v,0,0) --just like mymy --> shit,
+				-- for this one, its shit --> walls.
+			end
+		end
+	end
+	if self.v > 0 then
+		self.dx = self.dx + self.v*self.svx*dt
+		self.dy = self.dy + self.v*self.svy*dt
+		self.v = self.v - f*dt --friction like :D
+	end
+end
+
 function RectangleCollider:CollideToRectangle(obj)--i think this is redundant, but may i'd use this in future.
 						-- or just reference
 	local sLeft = self.dx < obj.dx+obj.init_w --self left

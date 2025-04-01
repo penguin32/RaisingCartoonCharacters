@@ -38,6 +38,7 @@ function Rectangle:new(x,y,init_w,init_h,init_scale,group,velocity,gameDev)
 	-- 	assinged to self.v
 	-- 	--further explanation on how these movements, coordinates, scaling ties well together
 	-- 	can be read on controls.lua near Player.Viewport
+	self.svx,self.svy = 1,1
 end
 
 function Rectangle:update(dt)--Exist to stay consistent with Environment.update(dt) loops
