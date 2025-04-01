@@ -205,14 +205,19 @@ function RectangleCollider:slide(dt,gh,gl,f)
 						self:Walls(v,0,0)
 						self:knowWhatSide(v,0,0)
 						--knowWhatSide() must run only once so, 
-						--table.remove(self.ids,j)
+				--		table.remove(self.ids,w) --not working :(
 						--no need, setCollided() took cares of it.
+						--wrong, turns out thats not the case, see drawOutlines at runtime
 				--maybe i can also bounce them from one another.
 						v.v = self.v
 						--best i could do,
 					end
 				end
-				self:setCollided(v,0,0) --just like mymy --> shit,
+					if self.id ~= v.id then --this works :D
+						self:setCollided(v,0,0)
+					end
+
+--				self:setCollided(v,0,0) --just like mymy --> shit,
 				-- for this one, its shit --> walls.
 				-- 	because Shit:is(Rectangle) therefore, it also affects shit
 			end

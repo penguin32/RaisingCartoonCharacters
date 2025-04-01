@@ -3,8 +3,8 @@ Shit = Rectangle:extend()
 
 function Shit:new(x,y,spriteScale)
 	self.shit_1 = love.graphics.newImage("layers/globalObjects/shits/sprites/shit_1.png")
-	self:offsetDraw()
-	Shit.super.new(self,x,y,50,20,1,2,0,false)--init_scale are wierd
+	self:offsetDraw()	      --group, below letter g
+	Shit.super.new(self,x,y,50,20,1,1,0,false)--init_scale are wierd
 							--so its recommended to not change that for other obj
 							--I tried, however i update self:updateScaling
 							--move that function on update()
@@ -20,7 +20,7 @@ end
 
 function Shit:update(dt)
 	Shit.super.update(self,dt)
-	self:slide(dt,3,-1,10)
+	self:slide(dt,2,-1,10)
 			--(change in time,			dt
 			--group highest but not equal to,	gh
 			--group lowest but not equal to)	gl

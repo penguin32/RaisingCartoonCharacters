@@ -4,7 +4,9 @@
 
 SimpleMovement = Object:extend()
 
-function SimpleMovement:new(x,y,velocity)
+function SimpleMovement:new(x,y,velocity,group,gameDev)
+	self.gameDev = gameDev or false
+	self.group = group or 0
 	self.x = x or 0  --see layer 1 for explanations, and control.lua near Player.Viewport
 	self.y = y or 0
 	self.dx = x or 0

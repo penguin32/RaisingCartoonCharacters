@@ -6,8 +6,10 @@ Character = SimpleMovement:extend()
 --
 -- --It just drawing order, f my naming convention,
 -- ill use this for any other movable objects,
-function Character:new(x,y,velocity,npc)
-	Character.super.new(self,x,y,velocity,npc)
+function Character:new(x,y,velocity,group,gameDev)
+	Character.super.new(self,x,y,velocity,group,gameDev)
+--	self.group = group or 0				-- tells how it should collided with LoadLevel.objects
+--	self.gameDev = gameDev or false			--tells if its gonna be control by player
 	self.collided = false
 	self.id = math.random()
 	self.ids = {}	--table of interacted objects

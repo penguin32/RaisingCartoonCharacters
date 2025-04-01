@@ -2,7 +2,7 @@ Camera = SimpleMovement:extend() -- View game's environment, like not used in ma
 Camera:implement(RectangleCollider)
 
 function Camera:new(x,y,velocity)
-	Camera.super.new(self,x,y,velocity)
+	Camera.super.new(self,x,y,velocity,2,true)
 	Camera.screen = {} --viewport's scaled variable for drawOutlines, testing
 				--I don't need this, remove later
 end
@@ -29,7 +29,7 @@ function Camera:uviewport() -- unscaled coordinates, renamed for RectangleCollid
 	self.init_h = game.height/adjust
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects) do
-			if v:is(Rectangle) and v.group == 0 then
+			if v:is(Rectangle) and v.group<1 then
 				self:Walls(v,self.ox,self.oy)
 			end
 		end

@@ -1,6 +1,7 @@
 Rectangle = Object:extend()
 Rectangle:implement(RectangleCollider)
 --not tested for moving rectangles during zoom function.
+--			1,2,3,	  ,4    ,5         ,6     ,7      ,8
 function Rectangle:new(x,y,init_w,init_h,init_scale,group,velocity,gameDev)
 	self.collided = false
 	self.id = math.random()

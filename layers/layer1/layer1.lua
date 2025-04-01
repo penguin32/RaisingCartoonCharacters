@@ -11,13 +11,13 @@ function Layer1:new(x,y,init_scale)
 	Rectangle(
 --		1,--self.id	--//maybe i dont need this, i got reminded of memory object ~= object2
 --					yup i was fucking right
-		x-100,--self.x
-		y+self.waf:getHeight(),--self.y
-		100,--init_w
-		self.waf:getHeight(),--init_h
-		1,--init_scale
-		false--set_collider
-			--group,
+		x-100,			--self.x
+		y+self.waf:getHeight(),	--self.y
+		100,			--init_w
+		self.waf:getHeight(),	--init_h
+		1,			--init_scale
+--		false--set_collider,deprecated
+		0	--group,
 			--velocity,
 			--gameDev , set true for control.lua
 	))--left side
@@ -26,16 +26,14 @@ function Layer1:new(x,y,init_scale)
 		y+self.waf:getHeight(),	--y
 		100,			--init_w
 		self.waf:getHeight(),	--init_h
-		1,			--init_scale
-		false			--set_collider
+		1			--init_scale
 	))--right side
 	table.insert(LevelLoader.objects,Rectangle(
 		x-100,
 		y,
 		self.waf:getWidth()+200,
 		100,
-		1,
-		false
+		1
 	)) --top side
 	--temporarily removed this so player can go outside.
 	table.insert(LevelLoader.objects,Rectangle(
@@ -43,23 +41,23 @@ function Layer1:new(x,y,init_scale)
 		y+self.waf:getHeight()+100,
 		self.waf:getWidth()+200,
 		100,
-		1,
-		false
+		1
 	)) --bottom side
 
 	table.insert(LevelLoader.objects,Rectangle(
-		x-100,				--x
-		y+self.waf:getHeight()-200,     --y
-		self.waf:getWidth()+200,        --init_w
-		100,                            --init_h
-		1,                              --init_scale
-		false,                          --set_collider
-		1				--group
+		x-100,				--x,1
+		y+self.waf:getHeight()-200,     --y,2
+		self.waf:getWidth()+200,        --init_w,3
+		100,                            --init_h,4
+		1,                              --init_scale,5
+		1	                        --group,6
+						--velocity,7
+						--gameDev,8
 	)) --before bottom side
 
---	table.insert(LevelLoader.objects,Camera(0,0,500))
+	table.insert(LevelLoader.objects,Camera(0,0,500))	-- if you're gonna use me, see controls.lua after
 	table.insert(LevelLoader.objects,Mymy(60,650,100,1))
-	table.insert(LevelLoader.objects,Mymy(-200,600,100,1,true))	--gamedev test
+--	table.insert(LevelLoader.objects,Mymy(-200,600,100,1,true))	--gamedev test
 	table.insert(LevelLoader.objects,Shit(-150,650,1/2))
 	table.insert(LevelLoader.objects,Shit(-50,650,1/2))
 

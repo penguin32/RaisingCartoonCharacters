@@ -12,9 +12,9 @@ Mymy:implement(RectangleCollider)
 Mymy:implement(BabyMymy)
 
 function Mymy:new(x,y,velocity,init_scale,gameDev)
-	self.gameDev = gameDev or false--to differentiate with other npc when testing with multiple chars
+--	self.gameDev = gameDev or false--to differentiate with other npc when testing with multiple chars
 						--during colliders test
-	Mymy.super.new(self,x,y,velocity)
+	Mymy.super.new(self,x,y,velocity,1,gameDev)
 	self:loadImgSprite(init_scale)
 end
 
