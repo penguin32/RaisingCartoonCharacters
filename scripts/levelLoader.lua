@@ -101,11 +101,11 @@ function LevelLoader.SortObjects(a,b)
                 else
                         return true
                 end
-        elseif a:is(Rectangle) and b:is(Rectangle) then
+        elseif a:is(Rectangle) and not(a:is(FlooredRectangularObject)) and b:is(Rectangle) and not(b:is(FlooredRectangularObject)) then
                 return b.y > a.y
-        elseif a:is(Rectangle) and (b:is(Circle) or b:is(Character)) then
+        elseif a:is(Rectangle) and not(a:is(FlooredRectangularObject)) and (b:is(Circle) or b:is(Character)) then
                 return b.y > a.y
-        elseif (a:is(Circle) or a:is(Character)) and b:is(Rectangle) then
+        elseif (a:is(Circle) or a:is(Character)) and b:is(Rectangle) and not(b:is(FlooredRectangularObject)) then
                 return b.y > a.y
         elseif (a:is(Circle) or a:is(Character)) and (b:is(Circle) or b:is(Character)) then
                 return b.y > a.y
@@ -113,9 +113,9 @@ function LevelLoader.SortObjects(a,b)
                                         --For the FlooredRectangularObject (HEREE)
                 return b.y > a.y
 
-        elseif a:is(FlooredRectangularObject) and b:is(Rectangle) then
+        elseif a:is(FlooredRectangularObject) and b:is(Rectangle) and not(b:is(FlooredRectangularObject)) then
                 return true
-        elseif a:is(Rectangle) and b:is(FlooredRectangularObject) then
+        elseif a:is(Rectangle) and not(a:is(FlooredRectangularObject)) and b:is(FlooredRectangularObject) then
                 return false
 
         elseif a:is(FlooredRectangularObject) and b:is(Circle) then
