@@ -32,6 +32,10 @@ function BabyMymy:drawSprite()
 end
 
 --Unique functions:
+function BabyMymy:defacate()
+	table.insert(LevelLoader.objects,Shit(self.dx,self.dy,1/2)) --shit init_scale, 1/2 is a must,
+								--i must fix this to make this argument changable
+end
 
 --Special functions:
 function BabyMymy:updateScalingSprite()

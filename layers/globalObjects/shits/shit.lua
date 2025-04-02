@@ -12,7 +12,7 @@ function Shit:new(x,y,spriteScale)
 							--it still doesn't update self.w and h as in this
 							--iDrawOutlines()
 	self.iss = spriteScale--inital sprite scale
-	self.spriteScale = spriteScale
+	self.spriteScale = spriteScale*forZoomingIn
 	self:updateScaling()
 
 --	self.svx = 1 --scale vector x, becomes either negative or positive and it is used in bounce function
@@ -51,6 +51,7 @@ function Shit:trails(dt)
 	end
 	self.timer = self.timer + dt
 end
+
 --Special functions:
 function Shit:updateScaling()
 	Shit.super.updateScaling(self)

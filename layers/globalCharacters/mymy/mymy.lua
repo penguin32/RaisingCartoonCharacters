@@ -17,6 +17,22 @@ function Mymy:new(x,y,velocity,init_scale,action,gameDev)
 	Mymy.super.new(self,x,y,velocity,1,gameDev)
 	self:loadImgSprite(init_scale)
 	self.action = action or 0 --if 0, it means no action will be acted.
+	self.bbmm = {} --self table of BabyMymy attributes
+	self.bbmm.rdefacate = 1 --random defacate, planning on putting percent chance depends on how much
+				--the bb eats and overtime.
+	self.bbmm.bdefacate = false --boolean defacate
+	self.bbmm.tick = 5 --im going to use this cooldown between randomTrue()
+	self.bbmm.set_timer = 5	--roll dice every given second "tick","set_timer"
+	self.bbmm.brolldice = false -- roll dice ifs true
+	self.bbmm.countDown = function(dt) --run a function when countdown finishes
+		self.bbmm.tick = self.bbmm.tick - dt
+		if math.floor(self.bbmm.tick) == 0 then
+			self.bbmm.brolldice = true
+			self.bbmm.tick = self.bbmm.set_timer
+		else
+			self.bbmm.brolldice = false
+		end
+	end
 end
 
 function Mymy:update(dt)
@@ -26,6 +42,15 @@ function Mymy:update(dt)
 
 	--action belows are from inherited types:
 	--like babyMymy, they will be called here.
+	self.bbmm.countDown(dt) --1. counts down
+	if self.bbmm.brolldice then --2. before being allowed to rolldice
+		self.bbmm.bdefacate = randomTrue(self.bbmm.rdefacate)--3. trigger function base on chance
+		self.bbmm.brolldice = false --after that first roll, set it to false again.
+		--then countDown() will do its pattern again.
+	end
+	if self.bbmm.bdefacate then --3. do the deed.
+		self:poops()
+	end
 
 	--action belows are from Character/SimpleMovement:
 	--which are commonly use by other objects that are "character types"
@@ -43,6 +68,13 @@ function Mymy:draw()
 end
 
 --Unique functions:
+function Mymy:poops() --random chance of defacating
+	if self.bbmm.bdefacate then
+		self:defacate()
+		self.bbmm.bdefacate =  false
+	end
+end
+
 function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so rectangle for that
 	self.init_w = 130
 	self.init_h = 40
@@ -56,12 +88,18 @@ function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so r
 			elseif v:is(Rectangle) and (v.group == 0 or v.group == 1) then
 				self:setCollided(v,self.odx,self.ody) -- added because
 									--properties, use for RandomWalk()
+									--so that it doesn't drag itself across
+									--the wall
 				--group 0, usually walls for camera,
 				--group 1 walls for objects like this
 
 				for j,w in ipairs(self.ids) do
 					if w == v.id then
-						self:Walls(v,self.odx,self.ody)
+						self:Walls(v,self.odx,self.ody)--main func for this specific
+									--nested loop.
+									--note to myself
+									--incase i want to undo these other
+									--functions around Walls()
 						self:knowWhatSide(v,self.odx,self.ody)
 					end
 				end
@@ -88,8 +126,8 @@ function Mymy:mousereleased(mx,my,btn)
 end
 
 function Mymy:updateScaling()
-	Mymy.super.updateScaling(self) -- i should probably edit that simpleMovement.lua
-	self:updateScalingSprite() --similar to Mymy:draw()
+	Mymy.super.updateScaling(self)
+	self:updateScalingSprite() --use by babyMymy.lua
 end
 
 function Mymy:drawOutlines()

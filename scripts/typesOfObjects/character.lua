@@ -28,5 +28,6 @@ function Character:selectAction(dt,action)
 --	action = action or 0
 --	if action == 1 then
 --		Character.super.RandomWalks(self,dt)
---	end
+--	end --discarded because I could just called it straight from the SimpleMovement's functions using super.
+--	--not sure if i may group common function from SimpleMovement to here.
 end

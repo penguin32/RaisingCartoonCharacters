@@ -22,3 +22,13 @@ function latch(flip,vlatch,vlatch2,tcs) 	--tcs stands for toggle current states,
 end --because i doubt my future self if i have made this as clear as possible, flip arguement, means that
 	--when i have a variable that is set to true, it has to go back to false, before im able to toggle the variable that im trying to toggle
 	--or else it wont work as the name 'toggle' implies
+
+function randomTrue(chance)--return true, chance means probability when it'll set true
+	--chance, discrete value
+	--if chance is given 1, that means 1 to 1 == 1 , 100 percent
+	--if chance is given 6, that means 1 to 6 == 6 , means 1 out of 6 percent
+	--if chance is given 100, that means 1 to 100 == 100, meants 1 percent chance
+	if math.random(1,chance) == chance then
+		return true
+	end
+end
