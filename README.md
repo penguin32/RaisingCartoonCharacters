@@ -9,3 +9,6 @@ So grouping now is,
 group 0, walls,
 group 1, walls, but for characters and other types, excluding camera
 group 2, first object that I created I assigned that a value 2 (shit.lua)
+
+Note to self:
+    Ordering of the functions in each line of codes matters!
