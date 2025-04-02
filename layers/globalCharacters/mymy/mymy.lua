@@ -11,19 +11,28 @@ Mymy = Character:extend()
 Mymy:implement(RectangleCollider)
 Mymy:implement(BabyMymy)
 
-function Mymy:new(x,y,velocity,init_scale,gameDev)
+function Mymy:new(x,y,velocity,init_scale,action,gameDev)
 --	self.gameDev = gameDev or false--to differentiate with other npc when testing with multiple chars
 						--during colliders test
 	Mymy.super.new(self,x,y,velocity,1,gameDev)
 	self:loadImgSprite(init_scale)
+	self.action = action or 0 --if 0, it means no action will be acted.
 end
 
 function Mymy:update(dt)
 	Mymy.super.update(self,dt)
 	self:ugCollider()
 	self:gCollider()
-	if self.gameDev == false then
-		Mymy.super.selectAction(self,dt,1)--for now
+
+	--action belows are from inherited types:
+	--like babyMymy, they will be called here.
+
+	--action belows are from Character/SimpleMovement:
+	--which are commonly use by other objects that are "character types"
+--	Mymy.super.selectAction(self,dt,self.action) -- huh, just learn now that i can just call it straight from
+						--	the root (SimpleMovement)
+	if self.action == 1 then
+		Mymy.super.RandomWalks(self,dt,0.5)
 	end
 end
 
@@ -45,9 +54,20 @@ function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so r
 				--gonna happen if there's two npc
 				self:setCollided(v,self.odx,self.ody)
 			elseif v:is(Rectangle) and (v.group == 0 or v.group == 1) then
+				self:setCollided(v,self.odx,self.ody) -- added because
+									--properties, use for RandomWalk()
 				--group 0, usually walls for camera,
 				--group 1 walls for objects like this
-				self:Walls(v,self.odx,self.ody)
+
+				for j,w in ipairs(self.ids) do
+					if w == v.id then
+						self:Walls(v,self.odx,self.ody)
+						self:knowWhatSide(v,self.odx,self.ody)
+					end
+				end
+--				if self.collided == true then
+--					self:knowWhatSide(v,self.odx,self.ody)
+--				end
 			end
 		end
 	end

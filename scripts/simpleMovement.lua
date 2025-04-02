@@ -26,6 +26,7 @@ function SimpleMovement:new(x,y,velocity,group,gameDev)
 	self:updateCoordinates()
 ---random walk attributes:
 		self.rwalk = false -- random walk
+		self.frwalk = 0.5 --frequency random walk, higher == less frequent, lower value == more frequent
 		self.walkTime = 2	--time amount of stopping
 		self.rstop = 2		--time amount walking
 			--yes, variable name is unconventional, but
@@ -36,6 +37,7 @@ function SimpleMovement:new(x,y,velocity,group,gameDev)
 		self.rradian = 0 --random radians
 		self.rux = 0 --random unit vector x
 		self.ruy = 0 --random unit vector y
+		self.svx,self.svy = 1,1
 end
 
 function SimpleMovement:update(dt)
@@ -65,21 +67,29 @@ function SimpleMovement:Follow(dt,animal_x,animal_y,food_x,food_y) -- i could re
 end
 
 
-function SimpleMovement:RandomWalks(dt)
-	self.walkTime = self.walkTime - dt
+function SimpleMovement:RandomWalks(dt,freq)
+	--suv is a function, it switches vector components, but only from the character (mymy.lua) for example
+	--switch unit vector, that's because mostly characters inherit RectangularCollider that can call
+	--knowWhatSide() function,
+	--if suv is nil, then do nothing,
+	--nvm, i dont need suv() function, I called setCollided() along with knowWhatSide() on mymy character
+	--to change svx,svy, whenever i want.
+	self.frwalk = freq or self.frwalk --if no argument pass, just use the default value for frwalk.
+	self.walkTime = self.walkTime - dt/self.frwalk
 	if self.walkTime > 0 and self.walkTime < self.rstop then
 		self.rwalk = true
 	elseif self.walkTime > self.rstop then
 		self.rwalk = false
 	elseif self.walkTime < 0 then
-		self.walkTime = math.random(10,20)   --extend if i want a long stop time, yup name unconventional
-		self.rstop = math.random(2,5)
+		self.walkTime = math.random((self.frwalk+self.frwalk)*2,(self.frwalk+self.frwalk)*3)
+			--extend if i want a long stop time, yup name unconventional
+		self.rstop = math.random(self.frwalk*2,self.frwalk*3)
 		self.rradian = math.random()*math.pi*2
 		self.rux,self.ruy = math.cos(self.rradian),math.sin(self.rradian)
 	end
 	if self.rwalk then
-		self.dx = self.dx + self.rux*self.v*dt
-		self.dy = self.dy + self.ruy*self.v*dt
+		self.dx = self.dx + self.rux*self.v*dt*self.svx
+		self.dy = self.dy + self.ruy*self.v*dt*self.svy
 	end
 end
 

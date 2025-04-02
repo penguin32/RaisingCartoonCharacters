@@ -29,7 +29,7 @@ function Camera:uviewport() -- unscaled coordinates, renamed for RectangleCollid
 	self.init_h = game.height/adjust
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects) do
-			if v:is(Rectangle) and v.group<1 then
+			if v:is(Rectangle) and v.group == 0 then
 				self:Walls(v,self.ox,self.oy)
 			end
 		end

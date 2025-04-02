@@ -25,8 +25,8 @@ function Character:updateScaling()
 end
 
 function Character:selectAction(dt,action)
-	action = action or 0
-	if action == 1 then
-		Character.super.RandomWalks(self,dt)
-	end
+--	action = action or 0
+--	if action == 1 then
+--		Character.super.RandomWalks(self,dt)
+--	end
 end

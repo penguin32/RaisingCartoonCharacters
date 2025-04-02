@@ -3,7 +3,7 @@ ShitTrails = FlooredRectangularObject:extend()
 function ShitTrails:new(x,y,spriteScale)
 	self.shit_1 = love.graphics.newImage("layers/globalObjects/shits/sprites/shitTrails.png")
 	self:offsetDraw()
-	ShitTrails.super.new(self,x,y,50,20,1,2,0,false)
+	ShitTrails.super.new(self,x,y,50,20,1,-1,0,false)
 	self.iss = spriteScale
 	self.spriteScale = spriteScale
 	self:updateScaling()
