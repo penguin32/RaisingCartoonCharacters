@@ -10,7 +10,8 @@ end
 
 function ShitTrails:update(dt)
 	Shit.super.update(self,dt)
-	self:updateScaling()
+	self:offsetDraw()
+--	self:updateScaling()
 end
 
 function ShitTrails:draw()
@@ -28,7 +29,7 @@ end
 --Special functions:
 function ShitTrails:updateScaling()
 	ShitTrails.super.updateScaling(self)
-	self:offsetDraw()
+--	self:offsetDraw()
 	if self.iss ~= nil then
 		self.spriteScale = self.iss*forZoomingIn
 	end

@@ -3,7 +3,6 @@ Shit = Rectangle:extend()
 
 function Shit:new(x,y,spriteScale)
 	self.shit_1 = love.graphics.newImage("layers/globalObjects/shits/sprites/shit_1.png")
-	self:offsetDraw()
 				      			      --group, below letter g
 	Shit.super.new(self,x,y,70*spriteScale,30*spriteScale,1,2,0,false)--init_scale are wierd
 	--your collider					--so its recommended to not change that for other obj
@@ -14,6 +13,7 @@ function Shit:new(x,y,spriteScale)
 	self.iss = spriteScale--inital sprite scale
 	self.spriteScale = spriteScale*forZoomingIn
 	self:updateScaling()
+--	self:offsetDraw()
 
 --	self.svx = 1 --scale vector x, becomes either negative or positive and it is used in bounce function
 --	self.svy = 1 -- Shit:slide()
@@ -30,7 +30,8 @@ function Shit:update(dt)
 			--function				doStuff
 	--i made shitTrails.lua to be at group -1 so that it doesn't collide with anything else
 	--		so negative values for objects drawn on floors like blood or vomits or carpets.
-	self:updateScaling()
+--	self:updateScaling()
+	self:offsetDraw()
 end
 
 function Shit:draw()
@@ -57,7 +58,7 @@ end
 --Special functions:
 function Shit:updateScaling()
 	Shit.super.updateScaling(self)
-	self:offsetDraw()
+--	self:offsetDraw()
 	if self.iss ~= nil then
 		self.spriteScale = self.iss*forZoomingIn
 	end
