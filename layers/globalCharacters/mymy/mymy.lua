@@ -12,7 +12,7 @@ Mymy:implement(RectangleCollider)
 Mymy:implement(BabyMymy)
 
 function Mymy:new(x,y,velocity,init_scale,action,gameDev)
---	self.gameDev = gameDev or false--to differentiate with other npc when testing with multiple chars
+	self.gameDev = gameDev or false--to differentiate with other npc when testing with multiple chars
 						--during colliders test
 	Mymy.super.new(self,x,y,velocity,1,gameDev)
 	self:loadImgSprite(init_scale)
@@ -49,14 +49,14 @@ function Mymy:update(dt)
 		--then countDown() will do its pattern again.
 	end
 	if self.bbmm.bdefacate then --3. do the deed.
-		self:poops()
+	--	self:poops()
 	end
 
 	--action belows are from Character/SimpleMovement:
 	--which are commonly use by other objects that are "character types"
 --	Mymy.super.selectAction(self,dt,self.action) -- huh, just learn now that i can just call it straight from
 						--	the root (SimpleMovement)
-	if self.action == 1 then
+	if self.action == 1 and not(self.gameDev) then
 		Mymy.super.RandomWalks(self,dt,0.5)
 	end
 end
@@ -76,10 +76,10 @@ function Mymy:poops() --random chance of defacating
 end
 
 function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so rectangle for that
-	self.init_w = 130
-	self.init_h = 40
-	self.odx = -1*(self.init_w-self.init_w/2)--offset dx , (not a coordinate, thats length)
-	self.ody = (self.init_h-self.init_h/2) -- rewrite later this thing, some of odx is redundant
+	self.init_w = 120*self.init_scale
+	self.init_h = 40*self.init_scale
+	self.odx = -self.init_w/2--offset dx , (not a coordinate, thats length)
+	self.ody = self.init_h/2 -- rewrite later this thing, some of odx is redundant
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects) do
 			if v:is(Shit) then--simple collision check, unsure, what

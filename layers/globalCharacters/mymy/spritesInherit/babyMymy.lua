@@ -43,7 +43,7 @@ function BabyMymy:updateScalingSprite()
 		self.scale = self.init_scale*forZoomingIn
 	end
 	if self.skin ~= nil then
-		self.ofdx = self.skin:getWidth()*forZoomingIn/2
-		self.ofdy = (self.skin:getHeight()-20)*forZoomingIn
+		self.ofdx =self.skin:getWidth()*self.scale/2 --self.skin:getWidth()*forZoomingIn/2
+		self.ofdy =(self.skin:getHeight()-30)*self.scale --(self.skin:getHeight()-20)*forZoomingIn
 	end
 end
