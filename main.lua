@@ -1,6 +1,6 @@
 function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
-	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
+	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
 	toggleMute = true		-- I can adjust these 2 statements here
 	newForZoomingIn = 0.40
 --	newForZoomingIn = 1		-- for testings,during developing.

@@ -49,7 +49,7 @@ function Mymy:update(dt)
 		--then countDown() will do its pattern again.
 	end
 	if self.bbmm.bdefacate then --3. do the deed.
-	--	self:poops()
+		self:poops()
 	end
 
 	--action belows are from Character/SimpleMovement:

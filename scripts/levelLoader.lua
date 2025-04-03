@@ -158,6 +158,16 @@ function LevelLoader.SortObjects(a,b)
                 return b.y > a.y
 	else
 		--do nothing, it maybe the camera, when ui to objects now
+		--
+		--some exceptions can be run here, and are often differentiated by groupings
+		if b.group ~= nil then --why just b? 
+					--well, i don't need to compare with another given objects
+					--so, only to check if "group" value existed to return true here
+			if b.group < 0 then --objects being looped at that is group negative value
+					--- will be drawn first
+				return true
+			end
+		end
         end
 end
 
