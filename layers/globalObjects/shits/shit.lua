@@ -4,10 +4,10 @@ Shit = Rectangle:extend()
 function Shit:new(x,y,spriteScale)
 	self.shit_1 = love.graphics.newImage("layers/globalObjects/shits/sprites/shit_1.png")
 	self:offsetDraw()
-				      --group, below letter g
-	Shit.super.new(self,x,y,50,20,1,2,0,false)--init_scale are wierd
-							--so its recommended to not change that for other obj
-							--I tried, however i update self:updateScaling
+				      			      --group, below letter g
+	Shit.super.new(self,x,y,70*spriteScale,30*spriteScale,1,2,0,false)--init_scale are wierd
+	--your collider					--so its recommended to not change that for other obj
+	--which explains why init_scale is set to 1	--I tried, however i update self:updateScaling
 							--move that function on update()
 							--it still doesn't update self.w and h as in this
 							--iDrawOutlines()
@@ -30,6 +30,7 @@ function Shit:update(dt)
 			--function				doStuff
 	--i made shitTrails.lua to be at group -1 so that it doesn't collide with anything else
 	--		so negative values for objects drawn on floors like blood or vomits or carpets.
+	self:updateScaling()
 end
 
 function Shit:draw()
@@ -37,16 +38,17 @@ function Shit:draw()
 end
 
 function Shit:offsetDraw() -- kinda like updateScalingSprite()
-	if self.shit_1 ~= nil then
-		self.ofdx = self.shit_1:getWidth()*forZoomingIn/8
-		self.ofdy = (self.shit_1:getHeight()-100)*forZoomingIn
+	if self.shit_1 ~= nil and self.spriteScale~= nil then
+		self.ofdx = self.shit_1:getWidth()*self.spriteScale/3
+		self.ofdy = (self.shit_1:getHeight()-10)*self.spriteScale
+		--offset change in self.x
 	end
 end
 
 --Unique functions:
 function Shit:trails(dt)
 	if math.floor(self.v) > 25 and self.timer > 0.5 then
-		table.insert(LevelLoader.objects,ShitTrails(self.dx,self.dy,self.iss))
+		table.insert(LevelLoader.objects,ShitTrails(self.dx,self.dy,self.iss/2))
 		self.timer = 0
 	end
 	self.timer = self.timer + dt
@@ -63,5 +65,4 @@ end
 
 function Shit:drawOutlines()
 	Shit.super.drawOutlines(self)
-	love.graphics.rectangle("line",self.x,self.y,self.w,self.h)
 end

@@ -56,11 +56,11 @@ function Layer1:new(x,y,init_scale)
 	)) --before bottom side
 
 --	table.insert(LevelLoader.objects,Camera(0,0,500))	-- if you're gonna use me, see controls.lua after
-	table.insert(LevelLoader.objects,Mymy(60,650,100,0.5,1))
+--	table.insert(LevelLoader.objects,Mymy(60,650,100,0.5,1))
 					--   (x ,y  ,velocity,scale,action,gameDev)
-	table.insert(LevelLoader.objects,Mymy(-200,600,100,2,0,true))	--gamedev test
---	table.insert(LevelLoader.objects,Shit(-150,650,1/2))
---	table.insert(LevelLoader.objects,Shit(-50,650,1/2))
+	table.insert(LevelLoader.objects,Mymy(-200,600,100,0.4,0,true))	--gamedev test
+	table.insert(LevelLoader.objects,Shit(-150,650,0.3))
+--	table.insert(LevelLoader.objects,Shit(-50,650,1))
 
 	self.updateScaling(self)
 end

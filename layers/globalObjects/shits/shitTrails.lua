@@ -2,8 +2,7 @@ ShitTrails = FlooredRectangularObject:extend()
 
 function ShitTrails:new(x,y,spriteScale)
 	self.shit_1 = love.graphics.newImage("layers/globalObjects/shits/sprites/shitTrails.png")
-	self:offsetDraw()
-	ShitTrails.super.new(self,x,y,50,20,1,-1,0,false)
+	ShitTrails.super.new(self,x,y,100*spriteScale,100*spriteScale,1,-1,0,false) --collider
 	self.iss = spriteScale
 	self.spriteScale = spriteScale
 	self:updateScaling()
@@ -11,6 +10,7 @@ end
 
 function ShitTrails:update(dt)
 	Shit.super.update(self,dt)
+	self:updateScaling()
 end
 
 function ShitTrails:draw()
@@ -18,9 +18,9 @@ function ShitTrails:draw()
 end
 
 function ShitTrails:offsetDraw()
-	if self.shit_1 ~= nil then
-		self.ofdx = self.shit_1:getWidth()*forZoomingIn/8
-		self.ofdy = (self.shit_1:getHeight()-100)*forZoomingIn
+	if self.shit_1 ~= nil and self.spriteScale ~= nil then
+		self.ofdx = self.shit_1:getWidth()*self.spriteScale/3
+		self.ofdy = (self.shit_1:getHeight())*self.spriteScale
 	end
 end
 
@@ -36,5 +36,4 @@ end
 
 function ShitTrails:drawOutlines()
 	Shit.super.drawOutlines(self)
-	love.graphics.rectangle("line",self.x,self.y,self.w,self.h)
 end
