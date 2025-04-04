@@ -3,15 +3,23 @@ Camera:implement(RectangleCollider)
 
 function Camera:new(x,y,velocity)
 	Camera.super.new(self,x,y,velocity,2,true)
-	Camera.screen = {} --viewport's scaled variable for drawOutlines, testing
+	self.screen = {} --viewport's scaled variable for drawOutlines, testing
 				--I don't need this, remove later
+	self.tcv = {	--tc,tap count variables
+		Follow=false,-- that action Follow()
+		mlatch=true,
+		mlatch2=false
+	}
 end
 
 function Camera:update(dt)
 	Camera.super.update(self,dt)
-	self:Follow(dt,game.middleX,game.middleY,cursor.x,cursor.y)
 	self:viewport()
 	self:uviewport()
+	self.tcv.Follow,self.tcv.mlatch,self.tcv.mlatch2=latch(Player.Mouse.ptapCount==3 and Player.Mouse.timer<0,self.tcv.mlatch,self.tcv.mlatch2,self.tcv.Follow)
+	if self.tcv.Follow then
+		self:Follow(dt,game.middleX,game.middleY,cursor.x,cursor.y)
+	end
 end
 
 function Camera:draw()

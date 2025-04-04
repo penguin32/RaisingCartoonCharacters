@@ -1,6 +1,39 @@
 Player = {}
 
-Player.Mouse = {isPressed=false}
+Player.Mouse = {
+	isPressed=false,
+	timer=0,	--start countdown, after isPressed == true
+	ptapCount=0,    --previous tapcount
+	tapCount=0,	--at mouse released, add tapCount = im gonna need a function for that :(
+			--it'll add tapCount until timer = 0
+		--what if i make that each tap, sets timer to 1, to keep adding on tapCount,
+			--if player let go of tap(finishes), timer will runs out to zero,
+			--only then it'll check if-statement for tapCount,
+	ltapCount=false --limiter tap count.
+}
+
+Player.Mouse.update = function(dt)
+	if Player.Mouse.isPressed and not(Player.Mouse.ltapCount) then
+		Player.Mouse.timer = 0.2
+	end
+	if Player.Mouse.timer > 0 then
+		--add tapCount on keyrelease
+		if not(Player.Mouse.isPressed) and Player.Mouse.ltapCount then
+			Player.Mouse.tapCount = Player.Mouse.tapCount + 1
+			Player.Mouse.ptapCount = Player.Mouse.tapCount
+			Player.Mouse.ltapCount = false
+		end
+		if Player.Mouse.isPressed and not(Player.Mouse.ltapCount) then
+			Player.Mouse.ltapCount = true
+		end
+		Player.Mouse.timer = Player.Mouse.timer - dt
+	else
+		Player.Mouse.tapCount = 0
+		Player.Mouse.ltapCount = false
+		--then run code based on ptapCount, then set that back to zero aswell.
+		--note to remember, no need to do that because of the nature of latch()
+	end
+end
 
 Player.Keyboard = {
 	m=false, --toggleMute, Keyboard
@@ -52,6 +85,7 @@ end -- i may re use this, so don't delete
 
 function Player.update(dt)
 	Player.Keyboard.updatePresses(dt)
+	Player.Mouse.update(dt)
 	if #LevelLoader.objects > 0 then
 		for i,v in ipairs(LevelLoader.objects)do
 --			if v:is(Rectangle) and v.gameDev == true then
@@ -230,6 +264,8 @@ end
 function Player.drawOutlines() -- See player activity for testings.
 	-- Mouse activites:
 	love.graphics.circle("line",cursor.x,cursor.y,5)
+	love.graphics.print("ptapCount: "..Player.Mouse.ptapCount,cursor.x,cursor.y+15)
+	love.graphics.print("timer: "..Player.Mouse.timer,cursor.x,cursor.y+30)
 	if Player.Mouse.isPressed == true then
 		love.graphics.circle("fill",cursor.x,cursor.y,5)
 	end
