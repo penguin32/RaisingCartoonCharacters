@@ -97,13 +97,12 @@ function love.update(dt)
 end
 
 function love.draw()
-	LevelLoader.draw()
-
-	love.graphics.setBackgroundColor(255,255,255)
-	love.graphics.setColor(0,0,0)
-	drawOutlines()
-	drawBorders()
         love.graphics.setColor(1,1,1)
+	LevelLoader.draw()
+	love.graphics.setBackgroundColor(255,255,255)
+
+	drawOutlines() --love.graphics.setColor(0.5,0,0)
+	drawBorders() -- 	0,0,0
 
 	--Draw Player's controllers below here, if Im going to add android joystick etc,draw-orders matters...
 end
@@ -148,12 +147,14 @@ function drawOutlines()
 		Player.drawOutlines()
 	-- for Levels, hitbox, click area etc..
 		LevelLoader.drawOutlines()
-		love.graphics.setColor(0,0,0)
 		love.graphics.print("Origin: x "..origin.x.." and y "..origin.y, game.cartX+30*gsr,game.cartY+120*gsr)
 	end
 end
+			--Remember to always set back the color that I've started with, (0.5,0,0)
+			--if im changing other classes's drawOutlines()
 
 function drawBorders()
+	love.graphics.setColor(0,0,0)
 	-- Four rectangles below acts as borders.
         love.graphics.rectangle("fill",0,0,game.cartX,window.height) --left border
         love.graphics.rectangle("fill",window.width-game.cartX,0,game.cartX,window.width) --right border

@@ -6,7 +6,6 @@ Camera:implement(RectangleCollider)
 
 function Camera:new(x,y,velocity)
 	Camera.super.new(self,x,y,velocity,2,true)
-	table.insert(LevelLoader.ui,Options())
 	self.screen = {} --viewport's scaled variable for drawOutlines, testing
 				--I don't need this, remove later
 				--nah just leave that, it the scaled version of self.init_h,init_w for
@@ -16,6 +15,8 @@ function Camera:new(x,y,velocity)
 		mlatch=true,
 		mlatch2=false
 	}
+	--table.insert(LevelLoader.ui,Options())
+	self.options = 0 --to add only single of this object
 end
 
 function Camera:update(dt)
@@ -25,6 +26,19 @@ function Camera:update(dt)
 	self.tcv.Follow,self.tcv.mlatch,self.tcv.mlatch2=latch(Player.Mouse.ptapCount==3 and Player.Mouse.timer<0,self.tcv.mlatch,self.tcv.mlatch2,self.tcv.Follow)
 	if self.tcv.Follow then
 		self:Follow(dt,game.middleX,game.middleY,cursor.x,cursor.y)
+		if self.options == 1 then
+			for i,v in ipairs(LevelLoader.ui) do --to disable options
+				if v:is(Options) then
+					table.remove(LevelLoader.ui,i)
+					self.options = 0
+				end
+			end
+		end
+	else
+		if self.options == 0 then
+			table.insert(LevelLoader.ui,Options())
+			self.options = 1
+		end
 	end
 end
 

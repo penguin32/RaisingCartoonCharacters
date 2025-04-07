@@ -32,3 +32,37 @@ function randomTrue(chance)--return true, chance means probability when it'll se
 		return true
 	end
 end
+
+function tHover(button) --textBoxHover Highlight, I could have use this to other layers
+	-- guess its not so unique, I may have to create a new files, that I can call it whenever I want to.
+	-- I'm calling it from here at this file now "someSimpleTools.lua"
+	-- if I'm going to call this from other UI types, i better have their equivalent attributes that's going
+	-- to be use by this function.
+	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
+		if button.mcb == true then -- wondering what mcb is for? its basically for this...
+			love.graphics.setColor(0.5,1,0)		--changes color when clicked
+			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
+						--offset will be adjusted here because they arent
+							--supposed to have colliders for image(ib)
+							--but since I'm planning on using this with
+							--	LevelLoader.objects
+							--im not changing offset to this function.
+		else
+			--i can add a unique function, pass on the function parameter, to be called here
+			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
+			if button.mBrushOnce then
+				if not(toggleMute) then
+					button.mBrush:play()
+				end
+				button.mBrushOnce = false
+			end
+			if love.mouse.isDown(1) then --if mouse.isDown is being click
+				return true -- then so...
+			end
+		end
+	else
+		love.graphics.draw(button.i,button.x,button.y,0,button.s)--offset should be taken care
+		button.mBrushOnce = true			--at their own classes
+		return false -- changes mcb values if mouse.isDown is not clicked
+	end
+end
