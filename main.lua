@@ -83,7 +83,9 @@ function love.load()
 	require "layers.globalObjects.shits.shitTrails"
 --levels, all layers use for a specific levels:
 	require "layers.layer0.layer0"
+	require "layers.UIs.options"
 	require "layers.layer1.layer1"
+	
 	require "scripts.levelLoader" --require the levels first before the levelLoader.
 	LevelLoader.load(0,true)
 end

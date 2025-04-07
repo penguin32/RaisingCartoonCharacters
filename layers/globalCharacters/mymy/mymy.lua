@@ -18,7 +18,7 @@ function Mymy:new(x,y,velocity,init_scale,action,gameDev)
 	self:loadImgSprite(init_scale)
 	self.action = action or 0 --if 0, it means no action will be acted.
 	self.bbmm = {} --self table of BabyMymy attributes
-	self.bbmm.rdefacate = 1 --random defacate, planning on putting percent chance depends on how much
+	self.bbmm.rdefacate = 6 --random defacate, planning on putting percent chance depends on how much
 				--the bb eats and overtime.
 	self.bbmm.bdefacate = false --boolean defacate
 	self.bbmm.tick = 5 --im going to use this cooldown between randomTrue()

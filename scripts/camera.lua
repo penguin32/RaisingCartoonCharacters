@@ -1,10 +1,16 @@
 Camera = SimpleMovement:extend() -- View game's environment, like not used in mainmenu, see levelLoader.lua
+				--rememeber that this is added at LevelLoader.objects
+				--that means objects is getting translated respect to it.
+				--so making UI, should be outside that pop()
 Camera:implement(RectangleCollider)
 
 function Camera:new(x,y,velocity)
 	Camera.super.new(self,x,y,velocity,2,true)
+	table.insert(LevelLoader.ui,Options())
 	self.screen = {} --viewport's scaled variable for drawOutlines, testing
 				--I don't need this, remove later
+				--nah just leave that, it the scaled version of self.init_h,init_w for
+				--camera collisions, so that we may see them.
 	self.tcv = {	--tc,tap count variables
 		Follow=false,-- that action Follow()
 		mlatch=true,
