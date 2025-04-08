@@ -10,7 +10,7 @@ function Options:new()
 		y = game.middleY,
 		r = 300*gsr
 	}
-	self.mov = 300*gsr --move options velocity
+	self.mov = 800*gsr --move options velocity
 	self.directory = "layers/globalAssets/options/"
 	self.gA = "layers/globalAssets/"
 
