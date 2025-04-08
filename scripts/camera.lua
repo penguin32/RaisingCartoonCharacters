@@ -29,8 +29,16 @@ function Camera:update(dt)
 		if self.options == 1 then
 			for i,v in ipairs(LevelLoader.ui) do --to disable options
 				if v:is(Options) then
-					table.remove(LevelLoader.ui,i)
-					self.options = 0
+					for j,k in ipairs(v.list) do
+						if k.magnitude > 0 and k.ssm then
+							k.magnitude = k.magnitude - v.mov*dt
+						else
+							table.remove(LevelLoader.ui,i)
+							self.options = 0
+						end
+					end
+--					table.remove(LevelLoader.ui,i)
+--					self.options = 0
 				end
 			end
 		end
@@ -38,7 +46,9 @@ function Camera:update(dt)
 		if self.options == 0 then
 			table.insert(LevelLoader.ui,Options())
 			self.options = 1
-		end
+		end--if I want to change what pops out the UI when the players stop moving
+		--I just have to change self.options value here, and the ability to undo it same as above
+		--								the if-statements
 	end
 end
 

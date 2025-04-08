@@ -65,43 +65,17 @@ end
 
 function Layer0:draw()
 	love.graphics.draw(self.titleImage.i,self.titleImage.x,self.titleImage.y,0,gsr)
-	tHover(self.btn.newgame)
-	tHover(self.btn.options)
-	tHover(self.btn.album)
+	tHoverUI(self.btn.newgame)
+	tHoverUI(self.btn.options)
+	tHoverUI(self.btn.album)
 end
 
 -- Unique functions:
-function Layer0:tHover(button) --textBoxHover Highlight, I could have use this to other layers
-	-- guess its not so unique, I may have to create a new files, that I can call it whenever I want to.
-	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
-		if button.mcb == true then -- wondering what mcb is for? its basically for this...
-			love.graphics.setColor(0.5,1,0)		--changes color when clicked
-			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
-			love.graphics.setColor(1,1,1)
-		else
-			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
-			if button.mBrushOnce then
-				if not(toggleMute) then
-					button.mBrush:play()
-				end
-				button.mBrushOnce = false
-			end
-			if love.mouse.isDown(1) then --if mouse.isDown is being click
-				return true -- then so...
-			end
-		end
-	else
-		love.graphics.draw(button.i,button.x,button.y,0,button.s)
-		button.mBrushOnce = true
-		return false -- changes mcb values if mouse.isDown is not clicked
-	end
-end
-
 -- Special functions:
 function Layer0:mousepressed(mx,my)
-	self.btn.newgame.mcb = self:tHover(self.btn.newgame)
-	self.btn.options.mcb = self:tHover(self.btn.options)
-	self.btn.album.mcb = self:tHover(self.btn.album)
+	self.btn.newgame.mcb = tHoverUI(self.btn.newgame)
+	self.btn.options.mcb = tHoverUI(self.btn.options)
+	self.btn.album.mcb = tHoverUI(self.btn.album)
 end
 
 function Layer0:mousereleased(mx,my) -- btn == 1 is not working :(

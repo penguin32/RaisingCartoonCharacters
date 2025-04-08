@@ -33,7 +33,7 @@ function randomTrue(chance)--return true, chance means probability when it'll se
 	end
 end
 
-function tHover(button) --textBoxHover Highlight, I could have use this to other layers
+function tHoverUI(button) --textBoxHover Highlight, I could have use this to other layers
 	-- guess its not so unique, I may have to create a new files, that I can call it whenever I want to.
 	-- I'm calling it from here at this file now "someSimpleTools.lua"
 	-- if I'm going to call this from other UI types, i better have their equivalent attributes that's going
@@ -41,7 +41,7 @@ function tHover(button) --textBoxHover Highlight, I could have use this to other
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
 		if button.mcb == true then -- wondering what mcb is for? its basically for this...
 			love.graphics.setColor(0.5,1,0)		--changes color when clicked
-			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
+			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 						--offset will be adjusted here because they arent
 							--supposed to have colliders for image(ib)
 							--but since I'm planning on using this with
@@ -49,7 +49,7 @@ function tHover(button) --textBoxHover Highlight, I could have use this to other
 							--im not changing offset to this function.
 		else
 			--i can add a unique function, pass on the function parameter, to be called here
-			love.graphics.draw(button.ib,button.x,button.y,0,button.s)
+			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 			if button.mBrushOnce then
 				if not(toggleMute) then
 					button.mBrush:play()
