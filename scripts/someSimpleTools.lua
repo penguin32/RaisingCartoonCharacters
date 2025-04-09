@@ -41,6 +41,7 @@ function tHoverUI(button)
 			button.runOnce = true --set true if a function is run
 			love.graphics.setColor(0,0,100) -- just testing, it shows up for main menu
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
+			love.graphics.setColor(1,1,1) -- only for this drawing
 		else
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 			if button.mBrushOnce then
