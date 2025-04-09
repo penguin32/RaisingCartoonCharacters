@@ -112,6 +112,9 @@ function Options:update(dt)
 		v.ix,v.iy = self.circle.x-(v.w/2)*gsr,self.circle.y-(v.h/2)*gsr--initial
 		v.ir = v.ir +0.5*dt
 	end
+	for i,v in ipairs(self.list) do
+		tHoverUI(v)
+	end
 end
 
 function Options:draw()
@@ -122,12 +125,6 @@ end
 
 --Unique functions:
 --Special functions:
-function Options:mousepressed(mx,my)
-end
-
-function Options:mousereleased(mx,my)
-end
-
 function Options:updateScaling()
 	self.circle.x = game.middleX
 	self.circle.y = game.middleY

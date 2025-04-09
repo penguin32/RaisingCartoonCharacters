@@ -38,10 +38,10 @@ function tHoverUI(button)
 		if button.mcb == true and button.runOnce == false then
 			button.mcb_func_true()
 			button.mcb = false
-			button.runOnce = true --set true if a function is run
+			button.runOnce = true --set true if a function is ran
 			love.graphics.setColor(0,0,100) -- just testing, it shows up for main menu
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
-			love.graphics.setColor(1,1,1) -- only for this drawing
+			love.graphics.setColor(1,1,1) -- only for this drawing, setting it back
 		else
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 			if button.mBrushOnce then
@@ -52,6 +52,9 @@ function tHoverUI(button)
 			end
 			if love.mouse.isDown(1) and not(button.mcb) then
 				button.mcb = true
+			elseif not(love.mouse.isDown(1)) then
+				button.mcb = false
+				button.runOnce = false
 			end
 		end
 	else
