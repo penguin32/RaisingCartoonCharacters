@@ -17,6 +17,17 @@ function Camera:new(x,y,velocity)
 	}
 	--table.insert(LevelLoader.ui,Options())
 	self.options = 0 --to add only single of this object
+	--there should only be 1 running object like "Options()" when camera's SimpleMovement is stopped
+	--but i could also use this variable at selecting which UIs should I run aside from Options() kind
+	--
+	--example here is self.options = 0, that means no Options() has been added
+	--setting it 1 after it has been added
+	--if the camera is moving aka "self.tcv.Follow" then it will remove the Options()
+	--and set it to 0 zero,
+	--the reason behind this is the update() function tends to run unless it was told to stop
+	--so it need to be told that the object has been removed by this method so that it doesn't
+	--repeatedly keep on adding objects or keep on running extra loops looking for Options() objects
+	--that has already been removed.
 end
 
 function Camera:update(dt)

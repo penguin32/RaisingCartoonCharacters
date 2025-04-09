@@ -40,7 +40,9 @@ function tHoverUI(button) --textBoxHover Highlight, I could have use this to oth
 	-- to be use by this function.
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
 		if button.mcb == true then -- wondering what mcb is for? its basically for this...
-			love.graphics.setColor(0.5,1,0)		--changes color when clicked
+	--		love.graphics.setColor(0.5,1,0)		--changes color when clicked(for test)
+	--							for example, that means I can
+	--							run functions here if mouse is clicked
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 						--offset will be adjusted here because they arent
 							--supposed to have colliders for image(ib)
