@@ -43,6 +43,9 @@ function Options:new()
 	--Nvr mind, we have button.mcb, no need to pass function inside parameter since I could just run them
 	--here, and they works like actual button, when clicked it'll be true, when keyreleased it'll be false,
 	--good example of this is the starting first game menu NewGame button
+	self.help.runOnce = false
+	self.help.mcb_func_true = function ()
+	end
 
 	self.look={}
 	self.look.i = love.graphics.newImage(self.directory.."look_for_items.png")
@@ -60,6 +63,10 @@ function Options:new()
 	self.look.setX = 0
 	self.look.setY = 0
 	self.look.ssm = false
+	self.look.runOnce = false
+	self.look.mcb_func_true = function ()
+	end
+
 
 	self.bag={}
 	self.bag.i = love.graphics.newImage(self.directory.."bag.png")
@@ -77,6 +84,10 @@ function Options:new()
 	self.bag.setX = 0
 	self.bag.setY = 0
 	self.bag.ssm = false
+	self.bag.runOnce = false
+	self.bag.mcb_func_true = function ()
+	end
+
 
 	table.insert(self.list,self.help)
 	table.insert(self.list,self.look)

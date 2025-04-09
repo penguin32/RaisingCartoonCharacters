@@ -33,24 +33,15 @@ function randomTrue(chance)--return true, chance means probability when it'll se
 	end
 end
 
-function tHoverUI(button) --textBoxHover Highlight, I could have use this to other layers
-	-- guess its not so unique, I may have to create a new files, that I can call it whenever I want to.
-	-- I'm calling it from here at this file now "someSimpleTools.lua"
-	-- if I'm going to call this from other UI types, i better have their equivalent attributes that's going
-	-- to be use by this function.
+function tHoverUI(button)
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
-		if button.mcb == true then -- wondering what mcb is for? its basically for this...
-	--		love.graphics.setColor(0.5,1,0)		--changes color when clicked(for test)
-	--							for example, that means I can
-	--							run functions here if mouse is clicked
+		if button.mcb == true and button.runOnce == false then
+			button.mcb_func_true()
+			button.mcb = false
+			button.runOnce = true --set true if a function is run
+			love.graphics.setColor(0,0,100) -- just testing, it shows up for main menu
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
-						--offset will be adjusted here because they arent
-							--supposed to have colliders for image(ib)
-							--but since I'm planning on using this with
-							--	LevelLoader.objects
-							--im not changing offset to this function.
 		else
-			--i can add a unique function, pass on the function parameter, to be called here
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 			if button.mBrushOnce then
 				if not(toggleMute) then
@@ -58,13 +49,16 @@ function tHoverUI(button) --textBoxHover Highlight, I could have use this to oth
 				end
 				button.mBrushOnce = false
 			end
-			if love.mouse.isDown(1) then --if mouse.isDown is being click
-				return true -- then so...
+			if love.mouse.isDown(1) and not(button.mcb) then
+				button.mcb = true
 			end
 		end
 	else
-		love.graphics.draw(button.i,button.x,button.y,0,button.s)--offset should be taken care
-		button.mBrushOnce = true			--at their own classes
-		return false -- changes mcb values if mouse.isDown is not clicked
+		love.graphics.draw(button.i,button.x,button.y,0,button.s)
+		button.mBrushOnce = true
+		if not(love.mouse.isDown(1)) and button.mcb then
+			button.mcb = false
+			button.runOnce = false  --set false if a mouse button is released
+		end
 	end
 end

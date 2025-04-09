@@ -9,7 +9,6 @@ function Layer0:new()
 	self.music:setVolume(0.1)
 	self.sfx_mClicked = love.audio.newSource(self.gA.."clicked-sfx-behold.ogg","static")
 	self.btn = {}
-	self.btn.freq = 0.25
 	self.titleImage={}
 	self.titleImage.i = love.graphics.newImage(self.directory.."mainmenu.png")
 	self.titleImage.x,self.titleImage.y = game.cartX,game.cartY
@@ -26,6 +25,16 @@ function Layer0:new()
 	self.btn.newgame.mBrushOnce = true -- play only once
 	self.btn.newgame.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
 	self.btn.newgame.mcb = false -- mouse clicked bool
+	self.btn.newgame.runOnce = false
+	self.btn.newgame.mcb_func_true = function ()
+		if not(toggleMute) then
+			self.sfx_mClicked:play()
+			self.music:stop()
+		end
+	--	self.btn.newgame.mcb = false
+		table.remove(LevelLoader.ui,#LevelLoader.ui)
+		LevelLoader.load(1,true)
+	end
 	self.btn.options = {}
 	self.btn.options.i = love.graphics.newImage(self.directory.."t_options.png")
 	self.btn.options.ib = love.graphics.newImage(self.directory.."tb_options.png")
@@ -37,6 +46,13 @@ function Layer0:new()
 	self.btn.options.mBrushOnce = true
 	self.btn.options.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
 	self.btn.options.mcb = false
+	self.btn.options.runOnce = false
+	self.btn.options.mcb_func_true = function ()
+		if not(toggleMute) then
+			self.sfx_mClicked:play()
+		end
+	--	self.btn.options.mcb = false
+	end
 	self.btn.album = {}
 	self.btn.album.i = love.graphics.newImage(self.directory.."t_album.png")
 	self.btn.album.ib = love.graphics.newImage(self.directory.."tb_album.png")
@@ -47,11 +63,21 @@ function Layer0:new()
 	self.btn.album.s = sT*gsr
 	self.btn.album.mBrushOnce = true
 	self.btn.album.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
-	self.btn.options.mcb = false
+	self.btn.album.mcb = false
+	self.btn.album.runOnce = false
+	self.btn.album.mcb_func_true = function ()
+		if not(toggleMute) then
+			self.sfx_mClicked:play()
+		end
+	--	self.btn.album.mcb = false
+	end
 end
 
 function Layer0:update(dt)
 	self:toggleMuteThis()
+	tHoverUI(self.btn.newgame)
+	tHoverUI(self.btn.options)
+	tHoverUI(self.btn.album)
 end
 
 function Layer0:toggleMuteThis()
@@ -72,33 +98,33 @@ end
 
 -- Unique functions:
 -- Special functions:
-function Layer0:mousepressed(mx,my)
-	self.btn.newgame.mcb = tHoverUI(self.btn.newgame)
-	self.btn.options.mcb = tHoverUI(self.btn.options)
-	self.btn.album.mcb = tHoverUI(self.btn.album)
-end
-
-function Layer0:mousereleased(mx,my) -- btn == 1 is not working :(
-	if self.btn.newgame.mcb == true then
-		if not(toggleMute) then
-			self.sfx_mClicked:play()
-			self.music:stop()
-		end
-		self.btn.newgame.mcb = false
-		table.remove(LevelLoader.ui,#LevelLoader.ui)
-		LevelLoader.load(1,true)
-	elseif self.btn.options.mcb == true then
-		if not(toggleMute) then
-			self.sfx_mClicked:play()
-		end
-		self.btn.options.mcb = false
-	elseif self.btn.album.mcb == true then
-		if not(toggleMute) then
-			self.sfx_mClicked:play()
-		end
-		self.btn.album.mcb = false
-	end
-end
+--function Layer0:mousepressed(mx,my)
+--	self.btn.newgame.mcb = tHoverUI(self.btn.newgame)
+--	self.btn.options.mcb = tHoverUI(self.btn.options)
+--	self.btn.album.mcb = tHoverUI(self.btn.album)
+--end
+--
+--function Layer0:mousereleased(mx,my) -- btn == 1 is not working :(
+--	if self.btn.newgame.mcb == true then
+--		if not(toggleMute) then
+--			self.sfx_mClicked:play()
+--			self.music:stop()
+--		end
+--		self.btn.newgame.mcb = false
+--		table.remove(LevelLoader.ui,#LevelLoader.ui)
+--		LevelLoader.load(1,true)
+--	elseif self.btn.options.mcb == true then
+--		if not(toggleMute) then
+--			self.sfx_mClicked:play()
+--		end
+--		self.btn.options.mcb = false
+--	elseif self.btn.album.mcb == true then
+--		if not(toggleMute) then
+--			self.sfx_mClicked:play()
+--		end
+--		self.btn.album.mcb = false
+--	end
+--end
 
 function Layer0:updateScaling()
 	self.titleImage.x,self.titleImage.y = game.cartX,game.cartY

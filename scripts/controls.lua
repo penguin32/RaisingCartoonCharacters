@@ -235,26 +235,26 @@ end
 
 function love.mousepressed(mx,my)
 	Player.Mouse.isPressed = true
-	if #LevelLoader.ui > 0 then
-		for i,v in ipairs(LevelLoader.ui)do
-			if v:is(Layer0) then
-				v:mousepressed(mx,my)
-			end
-		end
-	end
+--	if #LevelLoader.ui > 0 then
+--		for i,v in ipairs(LevelLoader.ui)do
+--			if v:is(Layer0) then
+--				v:mousepressed(mx,my)
+--			end
+--		end
+--	end
 --	if #LevelLoader.objects > 0  -- STOP! note to self, not all objects, should be clickable!,
 --					don't bloat shit.
 end
 
 function love.mousereleased(mx,my)
 	Player.Mouse.isPressed = false
-	if #LevelLoader.ui > 0 then
-		for i,v in ipairs(LevelLoader.ui)do
-			if v:is(Layer0) then
-				v:mousereleased(mx,my)
-			end
-		end
-	end
+--	if #LevelLoader.ui > 0 then
+--		for i,v in ipairs(LevelLoader.ui)do
+--			if v:is(Layer0) then
+--				v:mousereleased(mx,my)
+--			end
+--		end
+--	end
 end
 
 function love.mousemoved(mx,my,mdx,mdy)
