@@ -34,7 +34,7 @@ function Camera:update(dt)
 	Camera.super.update(self,dt)
 	self:viewport()
 	self:uviewport()
-	self.tcv.Follow,self.tcv.mlatch,self.tcv.mlatch2=latch(Player.Mouse.ptapCount==3 and Player.Mouse.timer<0,self.tcv.mlatch,self.tcv.mlatch2,self.tcv.Follow)
+	self.tcv.Follow,self.tcv.mlatch,self.tcv.mlatch2=latch(Player.Mouse.ptapCount==3 and Player.Mouse.timer<0 and not(love.mouse.isDown(1)),self.tcv.mlatch,self.tcv.mlatch2,self.tcv.Follow)
 	if self.tcv.Follow then
 		self:Follow(dt,game.middleX,game.middleY,cursor.x,cursor.y)
 		if self.options == 1 then
@@ -43,6 +43,12 @@ function Camera:update(dt)
 					for j,k in ipairs(v.list) do
 						if k.magnitude > 0 and k.ssm then
 							k.magnitude = k.magnitude - v.mov*dt
+							--to play its hiding animation first
+							--before going on the else-statement to remove these
+							--"Options" objects class.
+							--
+							--if k.magnitude never becomes less than or equal to zero
+							--then self.options would still be this option, which is '1'
 						else
 							table.remove(LevelLoader.ui,i)
 							self.options = 0

@@ -40,7 +40,7 @@ end
 
 function tHoverUI(button)
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
-		if button.mcb == true and button.runOnce == false then
+		if button.mcb == true and button.runOnce == false and not(love.mouse.isDown(1)) then
 			button.mcb_func_true()
 			button.runOnce = true --set true if a function is ran
 			button.mcb = false

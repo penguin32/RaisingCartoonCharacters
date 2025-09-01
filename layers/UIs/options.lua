@@ -109,7 +109,10 @@ function updateSwitch(thisThing) --"thisThing" aka "one of the Options" here, ak
 	--Because having this function run within mcb_func_true, always gets cut abruptly :(
 	--for it to work, it needed to be continually updated for as long as it can, which is why its
 	--preferable to just kept this running inside update(),
+	if thisThing.ssm then --ssm, it works! it prevent selected variable from being activated while the cursor
+		--hovers over it during its rotating animation.
 		thisThing.selected,thisThing.latch,thisThing.latch2 = latch( thisThing.mcb, thisThing.latch,thisThing.latch2,thisThing.selected)
+	end
 end
 function Options:update(dt)
 	for i,v in ipairs(self.list) do
@@ -121,6 +124,11 @@ function Options:update(dt)
 					--and re-opens them, v.ssm will be set initially back to false
 					--here, setting it true is for the camera.lua
 					--when its closes it has its animation base on that bool.
+					--
+			--Sept 1 2025:
+			--now needed for updateSwitch(v) and/or Camera:update() --> options == 1
+			--im gonna be also using this for preventing setting off boolean on ui options
+			--while the options animation is currently playing.
 		end
 		v.setY = v.magnitude*math.sin(v.ir)
 		v.setX = v.magnitude*math.cos(v.ir)
