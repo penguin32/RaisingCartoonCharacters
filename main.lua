@@ -1,4 +1,5 @@
 function love.load()
+	view_opacity = 0 --irl player's view screen, affected by Real time-day, Morning,Evening,Night.
 	origin = {x=0,y=0} --world origin, origin for all layers.
 	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
 	toggleMute = true		-- I can adjust these 2 statements here
@@ -94,13 +95,14 @@ function love.update(dt)
 	Player.update(dt)
 	LevelLoader.update(dt)
 	updateEveryScale()
+	--updatePlayerScreen()
 end
 
 function love.draw()
         love.graphics.setColor(1,1,1)
 	LevelLoader.draw()
 	love.graphics.setBackgroundColor(255,255,255)
-
+	drawPlayerScreen()
 	drawOutlines() --love.graphics.setColor(0.5,0,0)
 	drawBorders() -- 	0,0,0
 
@@ -148,6 +150,8 @@ function drawOutlines()
 	-- for Levels, hitbox, click area etc..
 		LevelLoader.drawOutlines()
 		love.graphics.print("Origin: x "..origin.x.." and y "..origin.y, game.cartX+30*gsr,game.cartY+120*gsr)
+
+		love.graphics.print("irl Time: "..os.date("%M"),game.cartX+30*gsr,game.cartY+200*gsr)
 	end
 end
 			--Remember to always set back the color that I've started with, (0.5,0,0)
@@ -160,4 +164,17 @@ function drawBorders()
         love.graphics.rectangle("fill",window.width-game.cartX,0,game.cartX,window.width) --right border
 	love.graphics.rectangle("fill",game.cartX,0,window.width-game.cartX,game.cartY) --top border
 	love.graphics.rectangle("fill",game.cartX,window.height-game.cartY,window.width-game.cartX,game.cartY)
+end
+
+function drawPlayerScreen() --purpose, for view_opacity
+	love.graphics.setColor(0,0,0,view_opacity)
+	love.graphics.rectangle("fill",game.cartX,0,window.width-game.cartX,window.width)
+end
+
+function updatePlayerScreen() --purpose, for view_opacity
+	if tonumber(os.date("%M")) > 40 then
+		view_opacity = 0.5
+	else
+		view_opacity = 0
+	end
 end

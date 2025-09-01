@@ -1,5 +1,10 @@
 --works by having some single bool to toggle on/off like a button(flip switch) doesn't have to be just keyboard
--- when trying to use this, you need a table ready with a 1.bool var(that's flip switch) and 2.two latches, and 3.set all those to false first
+-- when trying to use this, you need a table ready with a 1.bool var(that's flip switch) and 2.two latches, and 3.set all those to false first (wrong)
+-- correction: switch == false	, then outside-force-thefinger-to-flipit=false aka outsideForce=false
+-- 		latch 1 == true
+-- 		latch 2 == false
+-- 	for it to work!
+--	switch,latch1,latch2 = latch( outsideForce, latch1, latch2, switch)
 -- run this function on update() and it will return you a boolean variable that has been toggled
 function latch(flip,vlatch,vlatch2,tcs) 	--tcs stands for toggle current states, I need that so I'll have something to return
 	if flip == false and vlatch2 == true then
@@ -37,8 +42,8 @@ function tHoverUI(button)
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
 		if button.mcb == true and button.runOnce == false then
 			button.mcb_func_true()
-			button.mcb = false
 			button.runOnce = true --set true if a function is ran
+			button.mcb = false
 			love.graphics.setColor(0,0,100) -- just testing, it shows up for main menu
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 			love.graphics.setColor(1,1,1) -- only for this drawing, setting it back

@@ -44,6 +44,9 @@ function Options:new()
 	--here, and they works like actual button, when clicked it'll be true, when keyreleased it'll be false,
 	--good example of this is the starting first game menu NewGame button
 	self.help.runOnce = false
+	self.help.selected = false
+	self.help.latch = false
+	self.help.latch2 = true
 	self.help.mcb_func_true = function ()
 	end
 
@@ -64,6 +67,9 @@ function Options:new()
 	self.look.setY = 0
 	self.look.ssm = false
 	self.look.runOnce = false
+	self.look.selected = false
+	self.look.latch = false
+	self.look.latch2 = true
 	self.look.mcb_func_true = function ()
 	end
 
@@ -85,6 +91,9 @@ function Options:new()
 	self.bag.setY = 0
 	self.bag.ssm = false
 	self.bag.runOnce = false
+	self.bag.selected = false
+	self.bag.latch = false
+	self.bag.latch2 = true
 	self.bag.mcb_func_true = function ()
 	end
 
@@ -95,6 +104,13 @@ function Options:new()
 	self:updateScaling()
 end
 
+function updateSwitch(thisThing) --"thisThing" aka "one of the Options" here, aka help, look, bag...
+	--will continually update the options that is given, base on mcb
+	--Because having this function run within mcb_func_true, always gets cut abruptly :(
+	--for it to work, it needed to be continually updated for as long as it can, which is why its
+	--preferable to just kept this running inside update(),
+		thisThing.selected,thisThing.latch,thisThing.latch2 = latch( thisThing.mcb, thisThing.latch,thisThing.latch2,thisThing.selected)
+end
 function Options:update(dt)
 	for i,v in ipairs(self.list) do
 		if v.magnitude < self.circle.r and not(v.ssm) then
@@ -114,12 +130,20 @@ function Options:update(dt)
 	end
 	for i,v in ipairs(self.list) do
 		tHoverUI(v)
+		updateSwitch(v)
 	end
 end
 
 function Options:draw()
 	for i,v in ipairs(self.list) do
 		tHoverUI(v)
+
+		if showOutlines == true then
+			love.graphics.setColor(0,0,0)
+			love.graphics.print("selected: "..tostring(v.selected),v.x,v.y+v.w+20)
+			love.graphics.print("mcb: "..tostring(v.mcb),v.x,v.y+v.w+40)
+			love.graphics.setColor(1,1,1)
+		end
 	end
 end
 
