@@ -35,6 +35,9 @@ function Layer0:new()
 		table.remove(LevelLoader.ui,#LevelLoader.ui)
 		LevelLoader.load(1,true)
 	end
+	self.btn.newgame.tHover_timer = 0
+	self.btn.newgame.tHover_timer_limit = 0.025
+	self.btn.newgame.tHover_timer_const = 0.4
 	self.btn.options = {}
 	self.btn.options.i = love.graphics.newImage(self.directory.."t_options.png")
 	self.btn.options.ib = love.graphics.newImage(self.directory.."tb_options.png")
@@ -53,6 +56,9 @@ function Layer0:new()
 		end
 	--	self.btn.options.mcb = false
 	end
+	self.btn.options.tHover_timer = 0
+	self.btn.options.tHover_timer_limit = 0.025
+	self.btn.options.tHover_timer_const = 0.4
 	self.btn.album = {}
 	self.btn.album.i = love.graphics.newImage(self.directory.."t_album.png")
 	self.btn.album.ib = love.graphics.newImage(self.directory.."tb_album.png")
@@ -71,13 +77,16 @@ function Layer0:new()
 		end
 	--	self.btn.album.mcb = false
 	end
+	self.btn.album.tHover_timer = 0
+	self.btn.album.tHover_timer_limit = 0.025
+	self.btn.album.tHover_timer_const = 0.4
 end
 
 function Layer0:update(dt)
 	self:toggleMuteThis()
-	tHoverUI(self.btn.newgame)
-	tHoverUI(self.btn.options)
-	tHoverUI(self.btn.album)
+	tHoverUI(dt,self.btn.newgame)
+	tHoverUI(dt,self.btn.options)
+	tHoverUI(dt,self.btn.album)
 end
 
 function Layer0:toggleMuteThis()

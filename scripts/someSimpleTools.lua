@@ -41,24 +41,24 @@ end
 function tHoverUIDraw(button)
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
 		if button.mcb == true and button.runOnce == false and not(love.mouse.isDown(1)) then
-			love.graphics.setColor(0,0,100) -- just testing, it shows up for main menu
+			--hey you! shit here only run once!!
 			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
-			love.graphics.setColor(1,1,1) -- only for this drawing, setting it back
-
-			--this shows you that hovering over the selected area, to be precise, not pressing down on it
-			--will draw the image blue, which means this part of the if-statements runs, and that
-			--mcb_func_true() does runs.
 		else
-			love.graphics.draw(button.ib,button.x,button.y,0,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
+			love.graphics.draw(button.ib,button.x,button.y,button.tHover_timer,button.s,button.s,(button.ib:getWidth()-button.i:getWidth())/2,(button.i:getHeight()-button.ib:getHeight())/2)
 		end
 	else
-		love.graphics.draw(button.i,button.x,button.y,0,button.s)
+		love.graphics.draw(button.i,button.x,button.y,button.tHover_timer,button.s)
 	end
 end
 
-function tHoverUI(button,object,object2)
+function tHoverUI(dt,button,object,object2) 
 	object = object or nil --put an object/list here that I want to interact with it on my mcb_func_true()
 	if cursor.x > button.x and cursor.x < button.x + button.w and cursor.y > button.y and cursor.y < button.y + button.h then
+		if button.tHover_timer > button.tHover_timer_limit or button.tHover_timer < -button.tHover_timer_limit then
+			button.tHover_timer_const = -button.tHover_timer_const
+		end
+		button.tHover_timer = button.tHover_timer + button.tHover_timer_const*dt
+
 		if button.mcb == true and button.runOnce == false and not(love.mouse.isDown(1)) then
 			button.mcb_func_true(object)
 			button.runOnce = true --set true if a function is ran

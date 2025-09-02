@@ -2,6 +2,9 @@ Options = Object:extend()
 local sT = 1--choosen scale, name idea came from "scale text" to test out scaling of width and height
 			--button of layer0 text boxes.
 --Called by the players using it, which is the camera class, camera.lua
+	Options.directory = "layers/globalAssets/options/"
+	Options.gA = "layers/globalAssets/"
+
 
 function Options:new()
 	self.selectedOption = ""
@@ -12,9 +15,8 @@ function Options:new()
 		r = 300*gsr
 	}
 	self.mov = 800*gsr --move options velocity
-	self.directory = "layers/globalAssets/options/"
-	self.gA = "layers/globalAssets/"
-
+--	self.directory = "layers/globalAssets/options/"
+--	self.gA = "layers/globalAssets/"
 
 	self.help={}
 	self.help.name = "help"
@@ -51,7 +53,9 @@ function Options:new()
 	self.help.latch2 = true
 	self.help.mcb_func_true = function ()
 	end
-
+	self.help.tHover_timer = 0
+	self.help.tHover_timer_limit = 0.025
+	self.help.tHover_timer_const = 0.4
 	self.look={}
 	self.look.name = "look"
 	self.look.i = love.graphics.newImage(self.directory.."look_for_items.png")
@@ -75,8 +79,9 @@ function Options:new()
 	self.look.latch2 = true
 	self.look.mcb_func_true = function ()
 	end
-
-
+	self.look.tHover_timer = 0
+	self.look.tHover_timer_limit = 0.025
+	self.look.tHover_timer_const = 0.4
 	self.bag={}
 	self.bag.name = "bag"
 	self.bag.i = love.graphics.newImage(self.directory.."bag.png")
@@ -100,31 +105,13 @@ function Options:new()
 	self.bag.latch2 = true
 	self.bag.mcb_func_true = function ()
 	end
+	self.bag.tHover_timer = 0
+	self.bag.tHover_timer_limit = 0.025
+	self.bag.tHover_timer_const = 0.4
 
-	self.gBB = {} --goBackButton
-	self.gBB.i = love.graphics.newImage(self.directory.."goBack.png")
-	self.gBB.ib = love.graphics.newImage(self.directory.."goBack1.png")
-	--------------
-	self.gBB.w = self.gBB.i:getWidth()*sT*gsr
-	self.gBB.h = self.gBB.i:getHeight()*sT*gsr
-	self.gBB.x = game.cartX+(game.width*9/10)*gsr - self.gBB.w
-	self.gBB.y = game.cartY+(game.height*9/10)*gsr - self.gBB.h
-	self.gBB.s = sT*gsr	--note to self: keep this things updating because of gsr
-	self.gBB.mBrushOnce = true
-	self.gBB.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
-	self.gBB.mcb = false
-	self.gBB.runOnce = false
-	self.gBB.mcb_func_true = function (object)
-		for i,v in ipairs(object.list) do
-			if v.selected == true then
-				v.selected = false
-				v.latch = false
-				v.latch2 = true
-				object.selectedOption = ""
-			end
-		end
-	end
-
+	self:loadGoBackButton()
+	self:loadBag()
+	
 	table.insert(self.list,self.help)
 	table.insert(self.list,self.look)
 	table.insert(self.list,self.bag)
@@ -141,6 +128,7 @@ function updateSwitch(thisThing) --"thisThing" aka "one of the Options" here, ak
 		thisThing.selected,thisThing.latch,thisThing.latch2 = latch( thisThing.mcb, thisThing.latch,thisThing.latch2,thisThing.selected)
 	end
 end
+
 function Options:update(dt)
 	if self.selectedOption == "" then
 		for i,v in ipairs(self.list) do
@@ -165,7 +153,7 @@ function Options:update(dt)
 			v.ir = v.ir +0.5*dt
 		end
 		for i,v in ipairs(self.list) do
-			tHoverUI(v)
+			tHoverUI(dt,v)
 			updateSwitch(v)
 			if v.selected == true then
 				self.selectedOption = v.name
@@ -177,7 +165,7 @@ function Options:update(dt)
 		self.gBB.x = game.cartX+(game.width*9/10)*gsr - self.gBB.w
 		self.gBB.y = game.cartY+(game.height*9/10)*gsr - self.gBB.h
 		self.gBB.s = sT*gsr	--note to self: keep this things updating because of gsr
-		tHoverUI(self.gBB,self)
+		tHoverUI(dt,self.gBB,self)
 	end
 end
 
@@ -193,11 +181,53 @@ function Options:draw()
 			end
 		end
 	else
+		if self.selectedOption == "bag" then
+			self:loadBagDraw()
+		end
 		tHoverUIDraw(self.gBB)
 	end
 end
 
 --Unique functions:
+function Options:loadBag()
+	self.lBS = {} --loadBagSprites
+	self.lBS.front = love.graphics.newImage(self.directory.."bag-front.png")
+end
+
+function Options:loadBagDraw()
+	love.graphics.setColor(1,1,1)
+	love.graphics.draw(self.lBS.front,game.cartX,game.cartY,0,gsr) 
+end
+
+function Options:loadGoBackButton()
+	self.gBB = {} --goBackButton
+	self.gBB.i = love.graphics.newImage(self.directory.."goBack.png")
+	self.gBB.ib = love.graphics.newImage(self.directory.."goBack1.png")
+	--------------
+	self.gBB.w = self.gBB.i:getWidth()*sT*gsr
+	self.gBB.h = self.gBB.i:getHeight()*sT*gsr
+	self.gBB.x = game.cartX+(game.width*9/10)*gsr - self.gBB.w
+	self.gBB.y = game.cartY+(game.height*9/10)*gsr - self.gBB.h
+	self.gBB.s = sT*gsr	--note to self: keep this things updating because of gsr
+	self.gBB.mBrushOnce = true
+	self.gBB.mBrush = love.audio.newSource(self.gA.."brush-sfx-behold.ogg","static")
+	self.gBB.mcb = false
+	self.gBB.runOnce = false
+	self.gBB.mcb_func_true = function (object)
+		for i,v in ipairs(object.list) do
+			if v.selected == true then
+				v.selected = false
+				v.latch = false
+				v.latch2 = true
+				object.selectedOption = ""
+			end
+		end
+	end
+	self.gBB.tHover_timer = 0
+	self.gBB.tHover_timer_limit = 0.025
+	self.gBB.tHover_timer_const = 0.4
+end
+
 --Special functions:
 function Options:updateScaling()
 	self.circle.x = game.middleX
