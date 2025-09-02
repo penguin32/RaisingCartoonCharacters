@@ -91,9 +91,9 @@ end
 
 function Layer0:draw()
 	love.graphics.draw(self.titleImage.i,self.titleImage.x,self.titleImage.y,0,gsr)
-	tHoverUI(self.btn.newgame)
-	tHoverUI(self.btn.options)
-	tHoverUI(self.btn.album)
+	tHoverUIDraw(self.btn.newgame)
+	tHoverUIDraw(self.btn.options)
+	tHoverUIDraw(self.btn.album)
 end
 
 -- Unique functions:
