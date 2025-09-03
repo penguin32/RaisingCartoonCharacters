@@ -81,6 +81,7 @@ function love.load()
 	require "layers.globalCharacters.mymy.mymy"
 --globalObjects:
 	require "layers.globalObjects.shits.shit"
+	require "layers.globalObjects.pot"
 	require "layers.globalObjects.shits.shitTrails"
 --levels, all layers use for a specific levels:
 	require "layers.layer0.layer0"

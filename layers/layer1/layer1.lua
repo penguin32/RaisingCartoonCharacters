@@ -62,6 +62,9 @@ function Layer1:new(x,y,init_scale)
 --	table.insert(LevelLoader.objects,Shit(-150,650,0.3))
 --	table.insert(LevelLoader.objects,Shit(-50,650,1))
 
+	table.insert(LevelLoader.objects,Pot(-50,650,1))
+
+
 	self.updateScaling(self)
 end
 

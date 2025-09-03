@@ -1,5 +1,7 @@
 Player = {}
 
+Player.Onhand = {} --table.insert table of objects here --incorporating table variable with the bag,options.
+
 Player.Mouse = {
 	isPressed=false,
 	timer=0,	--start countdown, after isPressed == true
