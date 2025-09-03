@@ -160,12 +160,7 @@ function Options:update(dt)
 			end
 		end
 	else
-		self.gBB.w = self.gBB.i:getWidth()*sT*gsr
-		self.gBB.h = self.gBB.i:getHeight()*sT*gsr
-		self.gBB.x = game.cartX+(game.width*9/10)*gsr - self.gBB.w
-		self.gBB.y = game.cartY+(game.height*9/10)*gsr - self.gBB.h
-		self.gBB.s = sT*gsr	--note to self: keep this things updating because of gsr
-		tHoverUI(dt,self.gBB,self)
+		self:updateGoBackButton(dt)
 	end
 end
 
@@ -182,7 +177,7 @@ function Options:draw()
 		end
 	else
 		if self.selectedOption == "bag" then
-			self:loadBagDraw()
+			self:drawBag()
 		end
 		tHoverUIDraw(self.gBB)
 	end
@@ -192,10 +187,16 @@ end
 function Options:loadBag()
 	self.lBS = {} --loadBagSprites
 	self.lBS.front = love.graphics.newImage(self.directory.."bag-front.png")
+	self.lBS.front1 = love.graphics.newImage(self.directory.."bag-front1.png")
+	self.lBS.front2 = love.graphics.newImage(self.directory.."bag-front2.png")
+	self.lBS.front3 = love.graphics.newImage(self.directory.."bag-front3.png")
 end
 
-function Options:loadBagDraw()
+function Options:drawBag()
 	love.graphics.setColor(1,1,1)
+	love.graphics.draw(self.lBS.front1,game.cartX,game.cartY,0,gsr) 
+	love.graphics.draw(self.lBS.front2,cursor.x-450*gsr,cursor.y+150*gsr,-45,gsr) 
+	love.graphics.draw(self.lBS.front3,cursor.x-450*gsr,cursor.y+150*gsr,-45,gsr) 
 	love.graphics.draw(self.lBS.front,game.cartX,game.cartY,0,gsr) 
 end
 
@@ -226,6 +227,15 @@ function Options:loadGoBackButton()
 	self.gBB.tHover_timer = 0
 	self.gBB.tHover_timer_limit = 0.025
 	self.gBB.tHover_timer_const = 0.4
+end
+
+function Options:updateGoBackButton(dt)
+		self.gBB.w = self.gBB.i:getWidth()*sT*gsr
+		self.gBB.h = self.gBB.i:getHeight()*sT*gsr
+		self.gBB.x = game.cartX+(game.width*9/10)*gsr - self.gBB.w
+		self.gBB.y = game.cartY+(game.height*9/10)*gsr - self.gBB.h
+		self.gBB.s = sT*gsr	--note to self: keep this things updating because of gsr
+		tHoverUI(dt,self.gBB,self)
 end
 
 --Special functions:
