@@ -4,7 +4,7 @@ function Pot:new(x,y,spriteScale)
 	self.pot = love.graphics.newImage("layers/globalObjects/pot.png")
 	Pot.super.new(self,x,y,70*spriteScale,30*spriteScale,1,1,0,false) --group 1 btw
 
-	self.iss = spriteScale
+	self.iss = spriteScale --initial spriteScale
 	self.spriteScale = spriteScale*forZoomingIn
 	self:updateScaling()
 end
@@ -25,7 +25,7 @@ function Pot:offsetDraw()
 	end
 end
 
---Unique functions:
+--Unique Functions:
 --Special Functions:
 function Pot:mousepressed(mx,my,btn)
 end

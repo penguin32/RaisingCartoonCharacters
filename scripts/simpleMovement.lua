@@ -64,7 +64,7 @@ function SimpleMovement:Follow(dt,animal_x,animal_y,food_x,food_y) -- i could re
 		self.dx = self.dx + (self.v*self.base_cos*(self.base_da/50*gsr)*dt)
 		self.dy = self.dy + (self.v*self.base_sin*(self.base_da/50*gsr)*dt)
 	end
-end
+end 
 
 
 function SimpleMovement:RandomWalks(dt,freq)

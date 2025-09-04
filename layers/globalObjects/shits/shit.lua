@@ -3,8 +3,16 @@ Shit = Rectangle:extend()
 
 function Shit:new(x,y,spriteScale)
 	self.shit_1 = love.graphics.newImage("layers/globalObjects/shits/sprites/shit_1.png")
+	--having mentioned that objects in the same group does not collide with one another in the
+	--rectangle.lua
+	--is now false due to the fact of how mymy.lua observes collided objects in the function named
+	-- Mymy:ugCollider() --- soon to be god's work aka nobody user, running in the background
+	-- soley for updating collisions objects, a seer.
+	--
+	-- now even walls with "group 1" will collide with shit "group 1" because of how if-statements is
+	-- laid out, prioritizing shit's function first "self:setCollided"
 				      			      --group, below letter g
-	Shit.super.new(self,x,y,70*spriteScale,30*spriteScale,1,2,0,false)--init_scale are wierd
+	Shit.super.new(self,x,y,70*spriteScale,30*spriteScale,1,1,0,false)--init_scale are wierd
 	--your collider					--so its recommended to not change that for other obj
 	--which explains why init_scale is set to 1	--I tried, however i update self:updateScaling
 							--move that function on update()

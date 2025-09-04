@@ -328,14 +328,19 @@ function RectangleCollider:CollideToRectangle(obj)--i think this is redundant, b
 end
 
 --Special Functions:
-function RectangleCollider:iupdateScaling() --inherited updateScaling()
+--function RectangleCollider:iupdateScaling() --inherited updateScaling()
 	--//Well, I should already know that self.w and self.h are
 	--already being scaled from their respective classes,
 	--
 	--variables that are called here is indeed from those classes that inherits this class.
 	---maybe i can remove this, delete later in future, and treat class that are
 	---inherited differently from now on
-end
+	---
+	---
+	---see rectangle.lua
+	--- for Rectangle:updateCoordinates() If you worried about updating scaling for coordinates.
+
+--end
 
 function RectangleCollider:idrawOutlines() --inherited drawOutlines() -- remember theres a difference between
 						-- dx,dy and self.x,y

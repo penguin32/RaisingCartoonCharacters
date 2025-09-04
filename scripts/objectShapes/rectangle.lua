@@ -51,6 +51,22 @@ function Rectangle:updateCoordinates()
 	self.wo_to_dx = self.dx - origin.x 
 	self.wo_to_dy = self.dy - origin.y
 	self.x,self.y = self.wo_to_dx*forZoomingIn,self.wo_to_dy*forZoomingIn
+	--[[From what I can remember....
+	--love.graphics.translate affects this "self.x,self.y"
+	--, thats why we see the camera as a camera that pans the map,
+	--self.dx,self.dy, self.wo_to_dx/dy aka world origin to dx/dy is not affected by the function
+	--	love.graphics.translate(),
+	--	therefore for us to see it along with the camera, aka have the objects
+	--	be affected by love.graphics.translate() we must update it
+	--	runtime the (un-translated) coordinate aka this "dx/dy"
+	--	to this (translated) coordinate "self.x,self.y"
+	--	which are the (translated)variables use by love.graphics.draw(),
+	--
+	--	hence (un-translated) coordinates are updated in runtime like velocity or collision
+	--	and is not affected by zoom functionality and love.graphics.translation
+	--
+	--	its created such a way, for me to be able to have the zoom-in/zoom-out functionality added.
+	--]]--
 end
 
 function Rectangle:draw()

@@ -81,6 +81,10 @@ function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so r
 	self.odx = -self.init_w/2--offset dx , (not a coordinate, thats length)
 	self.ody = self.init_h/2 -- rewrite later this thing, some of odx is redundant
 	if #LevelLoader.objects > 0 then
+		--September 4 2025
+		--need to add a "nobody" user in this game, like god, invisible entity,
+		--that I can pass an object on it like "mymy" to do jobs solely for updating collisions between
+		--different objects.
 		for i,v in ipairs(LevelLoader.objects) do
 			if v:is(Shit) then--simple collision check, unsure, what
 				--gonna happen if there's two npc
@@ -91,7 +95,7 @@ function Mymy:ugCollider()--unscaled ground collider, for now, simple game, so r
 									--so that it doesn't drag itself across
 									--the wall
 				--group 0, usually walls for camera,
-				--group 1 walls for objects like this
+				--group 1 walls for objects like this aka mymy
 
 				for j,w in ipairs(self.ids) do
 					if w == v.id then
