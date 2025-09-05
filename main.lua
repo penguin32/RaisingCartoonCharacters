@@ -3,7 +3,8 @@ function love.load()
 	origin = {x=0,y=0} --world origin, origin for all layers.
 	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
 	toggleMute = true		-- I can adjust these 2 statements here
-	newForZoomingIn = 0.40
+	--newForZoomingIn = 0.40
+	newForZoomingIn = 1
 --	newForZoomingIn = 1		-- for testings,during developing.
 	forZoomingIn = 1	--Is used for attribs in game objects' like scaling/distances.
 				--multiplied beside game.scale,
@@ -44,7 +45,7 @@ function love.load()
 	game.middleX = game.cartX + game.width*(gsr)/2
 	game.middleY = game.cartY + game.height*(gsr)/2 -- Middle part of viewport,
 				-- Regardless of viewport's width & height ratio.
-	cursor = { x = 0, y = 0, visible = true }
+	cursor = { x = 0, y = 0, dx = 0, dy = 0, visible = true }
 	cursor.x, cursor.y = game.middleX, game.middleY
 --	love.mouse.setRelativeMode(true) -- Hides mouse cursor and lock mouse inside window,
 					-- not sure if I want to make an in game mouse.
@@ -82,7 +83,6 @@ function love.load()
 --globalObjects:
 	require "layers.globalObjects.shits.shit"
 	require "layers.globalObjects.pot"
-	require "layers.globalObjects.cursor"
 	require "layers.globalObjects.shits.shitTrails"
 --levels, all layers use for a specific levels:
 	require "layers.layer0.layer0"

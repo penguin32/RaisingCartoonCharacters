@@ -66,6 +66,14 @@ function Rectangle:updateCoordinates()
 	--	and is not affected by zoom functionality and love.graphics.translation
 	--
 	--	its created such a way, for me to be able to have the zoom-in/zoom-out functionality added.
+	--
+	--	x,y for translation of images/sprites,
+	--	dx,dy is untranslated hence used in collision instead, 
+	--
+	--	if im planning on making cursor objects that follows cursor.x,cursor.y,
+	--	I should just stay true, aka treat
+	--	cursor.x/y as if theyre dx and dy and have "cursor objects" exes and ys to be translated and
+	--		its dx,dy inplace to interact with colliders
 	--]]--
 end
 

@@ -54,7 +54,6 @@ function LevelLoader.draw()
 		end
 	end
 	love.graphics.pop()
-
 	if #LevelLoader.ui > 0 then
 		for i,v in ipairs(LevelLoader.ui)do
 			v:draw()

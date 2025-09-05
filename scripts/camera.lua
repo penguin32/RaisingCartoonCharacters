@@ -32,6 +32,9 @@ end
 
 function Camera:update(dt)
 	Camera.super.update(self,dt)
+	
+	cursor.dx, cursor.dy = self.dx+(cursor.x-game.middleX)/forZoomingIn,self.dy+(cursor.y-game.middleY)/forZoomingIn
+
 	self:viewport()
 	self:uviewport()
 	self.tcv.Follow,self.tcv.mlatch,self.tcv.mlatch2=latch(Player.Mouse.ptapCount==3 and Player.Mouse.timer<0 and not(love.mouse.isDown(1)),self.tcv.mlatch,self.tcv.mlatch2,self.tcv.Follow)
@@ -129,4 +132,29 @@ function Camera:drawOutlines()
 --	Okay, this rectangle is perfect!, now i just have to attach this to self.x and self.y
 	love.graphics.setColor(0,0,1)
 	love.graphics.rectangle("line",self.screen.x,self.screen.y,self.screen.w,self.screen.h)
+	love.graphics.print("dx,dy: "..self.dx..", "..self.dy,self.x,self.y+30)
+
+	love.graphics.setColor(0,0,0) --Cursor is a special one, its the only thing that is treated as an
+			--object but at the same time, it's not (it's UI)
+			-- it's like UI because its the Only drawing "aka graphics.circle" that need
+			-- to be compensated with respect to love.graphics.translation, because the
+			-- Camera is the center of it all, being the camera's dx dy being used for cursor's dx,dy
+			-- graphics.translation has a wierd effect on cursor.x and cursor.y
+			--
+			-- If I think of making it simmilar with the other functions in the objects that
+			-- updates their coordinates *see Circle:updateCoordinates() for example,
+			-- I should not do so...
+			-- cursor.x/y is soley only for love.mouse.getPosition() and thats final,
+			-- setting cursor.x/y to self.wo_to_dx*forZoomingIn for example, would fuck up
+			-- the Camera:Follow() function as it uses cursor.x/y
+			-- hence I compensated with the drawing problem by only using cursor.dx/dy and adjust from
+			-- that..
+			--
+			-- If I think I could use cursor.x/y, I wouldn't think its possible since those variables 
+			-- is not reliant on Camera.dx/dy that is moving along with respect to love.graphics.translate
+			-- and that the cursor.x/y's origin is stuck somewhere origin.x/y *the circle you'd see
+			-- the middle of the level's layer1 for example.
+	love.graphics.circle("fill",cursor.dx*forZoomingIn,cursor.dy*forZoomingIn,10*forZoomingIn) 
+	love.graphics.setColor(1,1,1)
+
 end

@@ -24,10 +24,6 @@ function Circle:new(x,y,velocity,init_r,init_scale,group,gameDev)
 	self:updateCoordinates()
 
 	self.svx,self.svy = 1,1	--use by setColliders thingy maybe to imitate bounce in shit
-
-	self.cfd, self.base_da = 0,0
-	self.base_cos,self.base_sin = 0,0
-	self.base_dai,self.base_damv = 5,1000
 end
 
 function Circle:update(dt)--Exist to stay consistent with Environment.update(dt) loops
@@ -37,7 +33,8 @@ end
 function Circle:draw()
 end
 
-function Circle:updateCoordinates()
+function Circle:updateCoordinates()-- Dont need this if I can just call it from :implement(SimpleMovemnt) class
+					--but up to you, if you want to implement or just inherit
 	self.wo_to_dx = self.dx - origin.x
 	self.wo_to_dy = self.dy - origin.y
 	self.x,self.y = self.wo_to_dx*forZoomingIn,self.wo_to_dy*forZoomingIn
@@ -52,8 +49,5 @@ function Circle:updateScaling()
 end
 
 function Circle:drawOutlines()
-	if showOutlines == true then
-	-- Just for testing... see collision shape.
-		love.graphics.circle("fill", self.x, self.y, self.r)
-	end
+	love.graphics.circle("fill", self.x, self.y, self.r)
 end

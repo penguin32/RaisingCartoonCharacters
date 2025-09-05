@@ -135,10 +135,11 @@ function Mymy:updateScaling()
 end
 
 function Mymy:drawOutlines()
-	love.graphics.setColor(0,100,1)
+	love.graphics.setColor(0,1,1)
 	love.graphics.rectangle("line",self.ox,self.oy,self.w,self.h)
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(0,0,1)
 	love.graphics.print("dx,dy :"..self.dx.." , "..self.dy,self.ox,self.oy)
+	love.graphics.print("x,y :"..self.x.." , "..self.y,self.ox,self.oy+30*gsr)
 	love.graphics.print("collided: "..tostring(self.collided),self.ox,self.oy+30)
 	love.graphics.print("collision: "..#self.ids,self.ox,self.oy+60)
 --	love.graphics.print("seed: "..self.id,self.ox,self.oy+90)

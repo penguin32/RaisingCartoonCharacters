@@ -268,6 +268,7 @@ function Player.drawOutlines() -- See player activity for testings.
 	love.graphics.circle("line",cursor.x,cursor.y,5)
 	love.graphics.print("ptapCount: "..Player.Mouse.ptapCount,cursor.x,cursor.y+15)
 	love.graphics.print("timer: "..Player.Mouse.timer,cursor.x,cursor.y+30)
+	love.graphics.print("x,y: "..cursor.x..", "..cursor.y,cursor.x,cursor.y+50)
 	if Player.Mouse.isPressed == true then
 		love.graphics.circle("fill",cursor.x,cursor.y,5)
 	end
