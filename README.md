@@ -1,6 +1,7 @@
 # RaisingCartoonCharacters
 A very simple fan-made game.
 
+git commit verify review test
 2025, April 2
 So grouping now is,
     object that is drawn on the floor, like, vomit,blood,carpet etc..
